@@ -3,7 +3,11 @@ import { Route } from 'react-router-dom';
   
 const FullLayout = ({component, path}) => {  
     return (  
-        <Route path={path} component={component}/>
+        <div>
+            This is the full layout.
+
+            <Route path={path} component={component}/>
+        </div>
     )  
 } 
   
