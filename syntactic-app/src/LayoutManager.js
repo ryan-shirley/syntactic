@@ -10,7 +10,7 @@ const LayoutManager = ({path, page, layout, exact }) => {
         return <AppLayout path={path} component={page} exact={exact}  />
     }
     else if(layout === 'full') {
-        return <FullLayout path={path} component={page} />
+        return <FullLayout path={path} component={page} exact={exact} />
     }
     else {
         return 'This layout does not exist.'
