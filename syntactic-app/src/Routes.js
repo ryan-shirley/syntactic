@@ -1,13 +1,22 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
+import LayoutManager from './LayoutManager'
 
 // Pages
 import Home from './pages/home'
 
+// All Routes to use the app layout
+const appLayoutRoutes = [
+    {
+        path: '/',
+        page: Home
+    }
+]
+
 const Routes = () => (
     <main>
         <Switch>
-            <Route exact path='/' component={Home}/>
+            { appLayoutRoutes.map((route) => ( <LayoutManager path={route.path} page={route.page} layout="app" key={route.path} /> )) }
         </Switch>
     </main>
 )
