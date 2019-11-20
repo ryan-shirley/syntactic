@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 import LayoutManager from './LayoutManager'
 
 // Pages
@@ -9,6 +9,11 @@ import ContentSeekerOnboarding from './pages/onboarding/ContentSeekerOnboarding'
 
 // All Routes to use the app layout
 const appLayoutRoutes = [
+    {
+        path: '/',
+        page: Home,
+        exact: true
+    },
     {
         path: '/about',
         page: About
@@ -26,9 +31,8 @@ const fullWithRoutes = [
 const Routes = () => (
     <main>
         <Switch>
-            <Route exact path="/" component={Home}/>
-            { appLayoutRoutes.map((route) => ( <LayoutManager path={route.path} page={route.page} layout="app" key={route.path} /> )) }
-            { fullWithRoutes.map((route) => ( <LayoutManager path={route.path} page={route.page} layout="full" key={route.path} /> )) }
+            { appLayoutRoutes.map((route) => ( <LayoutManager path={route.path} page={route.page} exact={route.exact ? true : false} layout="app" key={route.path} /> )) }
+            { fullWithRoutes.map((route) => ( <LayoutManager path={route.path} page={route.page} exact={route.exact ? true : false} layout="full" key={route.path} /> )) }
         </Switch>
     </main>
 )
