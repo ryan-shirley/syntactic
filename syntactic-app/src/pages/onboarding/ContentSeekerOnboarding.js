@@ -106,14 +106,16 @@ class ContentSeekerOnboarding extends React.Component {
         }
 
         return (
-            <div>
-                <p>Stage: {this.state.stage}</p>
-                <h2>{title}</h2>
-                <p>{helpText}</p>
-                
-                {form}
-                
-                {prevButton} {nextButton}
+            <div className="row">
+                <div className="col-12">
+                    <p>Stage: {this.state.stage}</p>
+                    <h2>{title}</h2>
+                    <p>{helpText}</p>
+                    
+                    {form}
+                    
+                    {prevButton} {nextButton}
+                </div>
             </div>
         )
     }
