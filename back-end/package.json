@@ -6,6 +6,7 @@
     "start": "PORT=4444 nodemon ./bin/www"
   },
   "dependencies": {
+    "@google-cloud/language": "^3.6.2",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
