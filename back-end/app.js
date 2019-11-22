@@ -3,9 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
 // Route Files
 var indexRouter = require('./routes/index');
+var onboardingrouter = require('./routes/onboarding');
 
 // Create Express app
 var app = express();
@@ -16,8 +18,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Allow react app
+app.use(cors());
+
 // Routes Defined
 app.use('/', indexRouter);
+app.use('/onboarding', onboardingrouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

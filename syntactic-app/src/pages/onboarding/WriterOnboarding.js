@@ -20,6 +20,7 @@ class WriterOnboarding extends React.Component {
         this.nextStage = this.nextStage.bind(this)
         this.prevStage = this.prevStage.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.completeOnboarding = this.completeOnboarding.bind(this)
     }
 
     /**
@@ -69,6 +70,19 @@ class WriterOnboarding extends React.Component {
      */
     completeOnboarding() {
         console.log('Onboarding Complete');
+
+        fetch('http://localhost:4444/onboarding/writer', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                bio: this.state.bio,
+                texts: this.state.texts,
+                links: this.state.links
+            }),
+        });
     }
 
     /**
