@@ -103,7 +103,7 @@ class ContentSeekerOnboarding extends React.Component {
 
         // Check for previous button
         if(prevButton) {
-            prevButton = <Button displayStyle='primary' onClick={this.prevStage}>Back</Button>
+            prevButton = <Button displayStyle='secondary' onClick={this.prevStage}>Back</Button>
         }
 
         return (
