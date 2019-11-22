@@ -8,7 +8,6 @@ class TextArea extends React.Component {
             value: this.props.value,
             label: this.props.label
         }
-
     }
 
     /**

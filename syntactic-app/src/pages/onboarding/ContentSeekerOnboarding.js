@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextArea } from '../../components/Form'
+import Button from '../../components/Button'
 
 class ContentSeekerOnboarding extends React.Component {
     constructor() {
@@ -8,7 +9,8 @@ class ContentSeekerOnboarding extends React.Component {
         this.state = {
             stage: 1,
             bio: '',
-            business: ''
+            business: '',
+            errors: ''
         }
 
         // Binding this to work in the callback
@@ -18,18 +20,21 @@ class ContentSeekerOnboarding extends React.Component {
     }
 
     /**
-     * nextStage() Advances to next stage in onboarding
+     * nextStage() Advances to next stage in onboarding.
+     * Checks if required data has be input.
      */
-    nextStage() {
-        // If at end of stages complete onboarding
-        if(this.state.stage === 4) {
-            this.completeOnboarding()
+    nextStage(reqData = null) {
+        if(reqData && this.state[reqData] === '') {
+            this.setState({ 
+                errors: `The ${reqData} field is required to move onto the next stage.`
+            })
         }
         else {
             let stage = this.state.stage + 1
 
             this.setState({ 
-                stage: stage
+                stage,
+                errors: ''
             })
         }
     }
@@ -41,7 +46,8 @@ class ContentSeekerOnboarding extends React.Component {
         let stage = this.state.stage - 1
 
         this.setState({ 
-            stage: stage
+            stage,
+            errors: ''
         })
     }
 
@@ -50,7 +56,7 @@ class ContentSeekerOnboarding extends React.Component {
      * and send user to account home
      */
     completeOnboarding() {
-        console.log('Onboarding Compelte');
+        console.log('Onboarding Complete');
     }
 
     /**
@@ -66,54 +72,51 @@ class ContentSeekerOnboarding extends React.Component {
     }
     
     render() {
-        let title, helpText, form, nextButton, nextButtonText, prevButton, displayPrevBtn
         let stage = this.state.stage
+        let title, text, nextButton, prevButton, form
 
-        // Change UI information depending on state
+        // Different form and text per stage
         if(stage === 1) {
             title = 'Setup your account.'
-            helpText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
-            nextButtonText = 'Get Started'
+            text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
+            nextButton = <Button displayStyle='primary' onClick={this.nextStage}>Get Started</Button>
         }
         else if(stage === 2) {
             title = 'Who are you?'
-            helpText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
+            text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
             form = <TextArea field='bio' value={this.state.bio} handleChange={this.handleChange} />
-            nextButtonText = 'Next'
+            nextButton = <Button displayStyle='primary' onClick={(e) => this.nextStage('bio')}>Next</Button>
         }
         else if(stage === 3) {
             title = 'Describe you business.'
-            helpText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
+            text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
             form = <TextArea field='business' value={this.state.business} handleChange={this.handleChange} />
-            nextButtonText = 'Next'
-            displayPrevBtn = true
+            nextButton = <Button displayStyle='primary' onClick={(e) => this.nextStage('business')}>Next</Button>
+            prevButton = true
         }
         else if(stage === 4) {
             title = 'You are ready to search for writers for your next big project.'
-            helpText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
-            nextButtonText = 'Finish'
-            displayPrevBtn = true
-        }
-
-        // Check for advancing button
-        if(nextButtonText) {
-            nextButton = <button type="button" className="btn btn-primary" onClick={this.nextStage}>{nextButtonText}</button>
+            text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
+            nextButton = <Button displayStyle='primary' onClick={this.completeOnboarding}>Finish</Button>
+            prevButton = true
         }
 
         // Check for previous button
-        if(displayPrevBtn) {
-            prevButton = <button type="button" className="btn btn-primary" onClick={this.prevStage}>Back</button>
+        if(prevButton) {
+            prevButton = <Button displayStyle='primary' onClick={this.prevStage}>Back</Button>
         }
 
         return (
             <div className="row">
                 <div className="col-12">
-                    <p>Stage: {this.state.stage}</p>
+
+                    <p>Stage: {stage}</p>
                     <h2>{title}</h2>
-                    <p>{helpText}</p>
+                    <p>{text}</p>
                     
                     {form}
-                    
+                    {this.state.errors} 
+
                     {prevButton} {nextButton}
                 </div>
             </div>
