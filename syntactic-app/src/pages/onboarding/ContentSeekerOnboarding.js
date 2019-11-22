@@ -10,7 +10,7 @@ class ContentSeekerOnboarding extends React.Component {
             stage: 1,
             bio: '',
             business: '',
-            errors: ''
+            error: ''
         }
 
         // Binding this to work in the callback
@@ -26,7 +26,7 @@ class ContentSeekerOnboarding extends React.Component {
     nextStage(reqData = null) {
         if(reqData && this.state[reqData] === '') {
             this.setState({ 
-                errors: `The ${reqData} field is required to move onto the next stage.`
+                error: `The ${reqData} field is required to move onto the next stage.`
             })
         }
         else {
@@ -34,7 +34,7 @@ class ContentSeekerOnboarding extends React.Component {
 
             this.setState({ 
                 stage,
-                errors: ''
+                error: ''
             })
         }
     }
@@ -47,7 +47,7 @@ class ContentSeekerOnboarding extends React.Component {
 
         this.setState({ 
             stage,
-            errors: ''
+            error: ''
         })
     }
 
@@ -84,13 +84,13 @@ class ContentSeekerOnboarding extends React.Component {
         else if(stage === 2) {
             title = 'Who are you?'
             text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
-            form = <TextArea field='bio' value={this.state.bio} handleChange={this.handleChange} />
+            form = <TextArea field='bio' value={this.state.bio} handleChange={this.handleChange} error={this.state.error} />
             nextButton = <Button displayStyle='primary' onClick={(e) => this.nextStage('bio')}>Next</Button>
         }
         else if(stage === 3) {
             title = 'Describe you business.'
             text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
-            form = <TextArea field='business' value={this.state.business} handleChange={this.handleChange} />
+            form = <TextArea field='business' value={this.state.business} handleChange={this.handleChange} error={this.state.error} />
             nextButton = <Button displayStyle='primary' onClick={(e) => this.nextStage('business')}>Next</Button>
             prevButton = true
         }
@@ -109,13 +109,11 @@ class ContentSeekerOnboarding extends React.Component {
         return (
             <div className="row">
                 <div className="col-12">
-
                     <p>Stage: {stage}</p>
                     <h2>{title}</h2>
                     <p>{text}</p>
                     
                     {form}
-                    {this.state.errors} 
 
                     {prevButton} {nextButton}
                 </div>
