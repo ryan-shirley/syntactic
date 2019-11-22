@@ -6,6 +6,7 @@ import LayoutManager from './LayoutManager'
 import Home from './pages/home'
 import About from './pages/about'
 import ContentSeekerOnboarding from './pages/onboarding/ContentSeekerOnboarding'
+import WriterOnboarding from './pages/onboarding/WriterOnboarding'
 
 // All Routes to use the app layout
 const appLayoutRoutes = [
@@ -25,6 +26,10 @@ const fullWithRoutes = [
     {
         path: '/onboarding/content-seeker',
         page: ContentSeekerOnboarding
+    },
+    {
+        path: '/onboarding/writer',
+        page: WriterOnboarding
     }
 ]
 
