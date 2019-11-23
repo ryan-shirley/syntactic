@@ -15,7 +15,7 @@ var onboardingrouter = require('./routes/onboarding');
 const mongoose = require('mongoose');
 
 let mongoDB = process.env.MONGODB_URI_LIVE || process.env.MONGODB_URI_DEV;
-mongoose.connect(mongoDB);
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
