@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -8,6 +10,15 @@ var cors = require('cors');
 // Route Files
 var indexRouter = require('./routes/index');
 var onboardingrouter = require('./routes/onboarding');
+
+// Set up Mongoose connection
+const mongoose = require('mongoose');
+
+let mongoDB = process.env.MONGODB_URI_LIVE || process.env.MONGODB_URI_DEV;
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Create Express app
 var app = express();

@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+// Require the controllers WHICH WE DID NOT CREATE YET!!
+const onboarding_controller = require('../controllers/onboarding.controller');
+
 /* POST Writer onboarding complete. */
 router.post('/writer', async (req, res) => {
     // Data from request
@@ -24,8 +27,8 @@ router.post('/writer', async (req, res) => {
     })
 })
 
-module.exports = router;
-
+/* PUT Onboard content seeker. */
+router.put('/content-seeker', onboarding_controller.onboard_content_seeker);
 
 
 /**
@@ -48,3 +51,5 @@ async function classifyText(text) {
     const [classification] = await client.classifyText({document});
     return classification
 }
+
+module.exports = router;
