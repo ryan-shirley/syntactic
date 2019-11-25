@@ -13,6 +13,7 @@ router.post('/writer', async (req, res) => {
     const texts = data.texts
     const links = data.links
     
+    // TODO: catch errors (remove json file and test for errors)
     const categories = await classifyText(texts[0])
 
     // console.log('Categories');
