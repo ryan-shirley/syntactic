@@ -24,7 +24,7 @@ router.post('/writer', async (req, res) => {
 
     res.send({
         response: 'Woo! 😃 We were able to get the categories from the text you provided.',
-        categories: categories
+        categories
     })
 })
 
