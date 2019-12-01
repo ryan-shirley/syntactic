@@ -9,20 +9,17 @@ exports.addText = async (req, res) => {
 
     let sepCats = await GOOGLE_NL_API.classifyText(text)
     
-    // Create Catgories
-    // TODO:: Migrate to seperate controller
+    // Loop through category array
     sepCats.map(categoryObj => {
         let { categories, confidence } = categoryObj
         let lastCat = categories.length - 1
 
+        // Loop though category individually
         categories.map((name, index) => {
-            // console.log(category);
-
-            // Check if category exists
             Category.findOne({ name })
                 .then(cat => {
                     if (!cat) {
-                        // No Category
+                        // Category doesn't exist in database
 
                         // Check is last item
                         if (lastCat === index) {
@@ -37,7 +34,6 @@ exports.addText = async (req, res) => {
                             // Create Category
                             CategoryController.createCategory(name)
                         }
-                        
                     }
                     else {
                         // Category exists
