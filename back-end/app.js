@@ -10,6 +10,7 @@ var cors = require('cors');
 // Route Files
 var indexRouter = require('./routes/index');
 var onboardingrouter = require('./routes/onboarding');
+var usersRouter = require('./routes/users');
 
 // Set up Mongoose connection
 const mongoose = require('mongoose');
@@ -35,6 +36,7 @@ app.use(cors());
 // Routes Defined
 app.use('/', indexRouter);
 app.use('/onboarding', onboardingrouter);
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

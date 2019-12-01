@@ -1,5 +1,7 @@
 import React from 'react';  
 import { Route } from 'react-router-dom';  
+
+import Navbar from '../components/Navbar'
   
 const AppLayout = ({component, path, exact}) => {  
 
@@ -7,9 +9,13 @@ const AppLayout = ({component, path, exact}) => {
 
     return (  
         <div>
-            This is the app layout.
+            <Navbar />
+            
+            <div className="container mt-5">
+                This is the app layout. <br />
 
-            {page}
+                {page}
+            </div>
         </div>
     )  
 } 

@@ -8,6 +8,9 @@ import About from './pages/about'
 import ContentSeekerOnboarding from './pages/onboarding/ContentSeekerOnboarding'
 import WriterOnboarding from './pages/onboarding/WriterOnboarding'
 
+import WriterHome from './pages/accounts/writer/WriterHome'
+import WriterAddText from './pages/accounts/writer/WriterAddText'
+
 // All Routes to use the app layout
 const appLayoutRoutes = [
     {
@@ -18,6 +21,14 @@ const appLayoutRoutes = [
     {
         path: '/about',
         page: About
+    },
+    {
+        path: '/writer/1',
+        page: WriterHome
+    },
+    {
+        path: '/addText',
+        page: WriterAddText
     }
 ]
 
