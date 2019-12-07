@@ -34,13 +34,16 @@ class WriterHome extends React.Component {
     render() {
         return (
             <div>
-                <p>Display account details here</p>
+                <h2>All categories</h2>
+                <Button displayStyle="primary" path="/addText">
+                    Add text
+                </Button>
 
-                <p>All categories</p>
-                <ul className="list-group">
+                <ul className="list-group mt-2">
                     {this.state.categories.map(cat => (
                         <li className="list-group-item">
-                            {cat.name}
+                            {cat.name} {typeof cat._parent_category_id === 'object' && ' - Parent is: ' + cat._parent_category_id.name}
+    
                             <br />
                             {cat.users.map(
                                 user =>
@@ -75,12 +78,6 @@ class WriterHome extends React.Component {
                         </li>
                     ))}
                 </ul>
-
-                <br />
-
-                <Button displayStyle="primary" path="/addText">
-                    Add text
-                </Button>
             </div>
         )
     }

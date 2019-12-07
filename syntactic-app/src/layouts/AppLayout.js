@@ -12,8 +12,6 @@ const AppLayout = ({component, path, exact}) => {
             <Navbar />
             
             <div className="container mt-5">
-                This is the app layout. <br />
-
                 {page}
             </div>
         </div>
