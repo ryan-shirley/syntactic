@@ -1,8 +1,13 @@
 const Category = require("../models/categories.model")
 
 exports.createCategory = function(name, user = null) {
-    let newCategory = new Category({ name, users: [user] })
-    newCategory.save(function(err) {
+    let newCategory = new Category({ name })
+
+    if(user) {
+        newCategory.users = [user]
+    }
+
+    newCategory.save(err => {
         if (err) {
             console.log(err)
         }
@@ -11,16 +16,16 @@ exports.createCategory = function(name, user = null) {
     })
 }
 
-exports.addUser = async function(catName, uid, confidence) {
+exports.addUser = async (catName, uid, confidence) => {
     const cat = await Category.findOne({ name: catName })
-    let userInCat = cat.users.some(function(el) {
+    let userInCat = cat.users.some(el => {
         return el._user_id == uid
     })
 
     // Check if user is already in
     if (userInCat) {
         // User in category
-        cat.users.forEach(function(user, index) {
+        cat.users.forEach((user, index) => {
             // Find user to update
             if (user._user_id == uid) {
                 let { articles_written, confidence } = cat.users[index]
