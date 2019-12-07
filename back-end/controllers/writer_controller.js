@@ -74,7 +74,7 @@ exports.addText = async (req, res) => {
         })
     } catch (error) {
         console.error(error)
-        res.status(500).send({ error })
+        res.status(422).send({ error })
     }
 }
 
