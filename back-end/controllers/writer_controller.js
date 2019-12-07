@@ -8,52 +8,65 @@ exports.addText = async (req, res) => {
     const { uid, text } = req.body
 
     let sepCats = await GOOGLE_NL_API.classifyText(text)
-    
+    // console.log(sepCats)
+
     // Loop through category array
-    sepCats.map(categoryObj => {
+    sepCats.map(async categoryObj => {
         let { categories, confidence } = categoryObj
-        let lastCat = categories.length - 1
 
-        // Loop though category individually
-        categories.map((name, index) => {
-            Category.findOne({ name })
-                .then(cat => {
-                    if (!cat) {
-                        // Category doesn't exist in database
+        console.log("The categories are: ", categories)
 
-                        // Check is last item
-                        if (lastCat === index) {
-                            // Create Category with user
-                            CategoryController.createCategory(name, {
-                                _user_id: '5dd92e71e5cfa00b6e369d52',
-                                articles_written: 1,
-                                confidence
-                            })
-                        }
-                        else {
-                            // Create Category
-                            CategoryController.createCategory(name)
-                        }
-                    }
-                    else {
-                        // Category exists
+        for (let i = 0; i < categories.length; i++) {
+            let name = categories[i]
 
-                        // Check is last item
-                        if (lastCat === index) {
-                            // console.log(`Last cat is: ${name}`)
-                            // Add user to category
-                            CategoryController.addUser(name, '5dd92e71e5cfa00b6e369d52', confidence)
-                        }
-                    }
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        })
+            let existStatus = await CategoryController.checkExists(name)
+
+            // console.log(`Checking exist status of: ${name}. It is`, existStatus.exists);
+
+            if (existStatus.exists) {
+                // Category exists
+
+                // Must be last in array to add
+                if (i === categories.length - 1) {
+                    // ADD User
+                    await CategoryController.addUser(
+                        name,
+                        "5dd92e71e5cfa00b6e369d52",
+                        confidence
+                    )
+                }
+            } else {
+                // Category DOESNT exist
+
+                // If first in array & only one in array - create WITHOUT parent - WITH User
+                if (i === 0 && categories.length === 1) {
+                    // Create category WITHOUT parent
+                    await CategoryController.createCategory(name, null, {
+                        _user_id: "5dd92e71e5cfa00b6e369d52",
+                        articles_written: 1,
+                        confidence
+                    })
+                } else if (i === categories.length - 1) {
+                    // Create category WITH parent - WITH User
+                    await CategoryController.createCategory(name, categories[i - 1], {
+                        _user_id: "5dd92e71e5cfa00b6e369d52",
+                        articles_written: 1,
+                        confidence
+                    })
+                } else {
+                    // Create category WITH parent - WITHOUT user
+                    await CategoryController.createCategory(
+                        name,
+                        categories[i - 1]
+                    )
+                }
+            }
+        }
     })
 
     res.send({
-        body: 'Woo 😀! Your text has been analysed and we have updated our database with these categories.',
+        body:
+            "Woo 😀! Your text has been analysed and we have updated our database with these categories.",
         categories: sepCats
     })
 }
