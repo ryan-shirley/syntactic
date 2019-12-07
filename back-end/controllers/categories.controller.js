@@ -14,9 +14,9 @@ exports.createCategory = (name, parent_name = null, user = null) => {
             // Check if parent category is required
             if (parent_name !== null) {
                 // Parent category required
-                console.log(
-                    `Trying to create category with parent: ${parent_name}. With ${name}`
-                )
+                // console.log(
+                //     `Trying to create category with parent: ${parent_name}. With ${name}`
+                // )
 
                 // Find parent category
                 Category.findOne({ name: parent_name }).then(cat => {
@@ -31,7 +31,7 @@ exports.createCategory = (name, parent_name = null, user = null) => {
                             reject(err)
                         }
 
-                        console.log(`Created category: ${name}`)
+                        // console.log(`Created category: ${name}`)
                         resolve(newCategory)
                     })
                 })
@@ -45,7 +45,7 @@ exports.createCategory = (name, parent_name = null, user = null) => {
                         reject(err)
                     }
 
-                    console.log(`Created category: ${name}`)
+                    // console.log(`Created category: ${name}`)
                     resolve(newCategory)
                 })
             }

@@ -14,8 +14,6 @@ exports.addText = async (req, res) => {
     sepCats.map(async categoryObj => {
         let { categories, confidence } = categoryObj
 
-        console.log("The categories are: ", categories)
-
         for (let i = 0; i < categories.length; i++) {
             let name = categories[i]
 
