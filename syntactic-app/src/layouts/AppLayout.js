@@ -16,7 +16,7 @@ const AppLayout = ({ component, path, exact }) => {
 
             <div className="container-fluid mt-5">
                 <div className="row">
-                    <div className="col-md-2"></div>
+                    <div className="col-md-2">This is where the sidebar will go.</div>
                     <div className="col-md-10">{page}</div>
                 </div>
             </div>
