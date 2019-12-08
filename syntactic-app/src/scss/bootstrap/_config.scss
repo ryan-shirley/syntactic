@@ -5,7 +5,7 @@
 
 
 // *** Standards
-// @import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/tables";
 @import "~bootstrap/scss/forms";
 @import "~bootstrap/scss/buttons";
 
@@ -17,15 +17,15 @@
 // @import "~bootstrap/scss/custom-forms";
 // @import "~bootstrap/scss/nav";
 @import "~bootstrap/scss/navbar";
-// @import "~bootstrap/scss/card";
+@import "~bootstrap/scss/card";
 // @import "~bootstrap/scss/breadcrumb";
 // @import "~bootstrap/scss/pagination";
-@import "~bootstrap/scss/badge";
+// @import "~bootstrap/scss/badge";
 // @import "~bootstrap/scss/jumbotron";
 // @import "~bootstrap/scss/alert";
 // @import "~bootstrap/scss/progress";
 // @import "~bootstrap/scss/media";
-@import "~bootstrap/scss/list-group";
+// @import "~bootstrap/scss/list-group";
 // @import "~bootstrap/scss/close";
 
 // *** Components w/ JavaScript
@@ -42,12 +42,17 @@
 // @import "~bootstrap/scss/utilities/display";
 // @import "~bootstrap/scss/utilities/embed";
 // @import "~bootstrap/scss/utilities/flex";
-// @import "~bootstrap/scss/utilities/float";
+@import "~bootstrap/scss/utilities/float";
+// @import "~bootstrap/scss/utilities/overflow";
 // @import "~bootstrap/scss/utilities/position";
 // @import "~bootstrap/scss/utilities/screenreaders";
+@import "~bootstrap/scss/utilities/shadows";
+// @import "~bootstrap/scss/utilities/sizing";
 @import "~bootstrap/scss/utilities/spacing";
+// @import "~bootstrap/scss/utilities/streatched-link";
 // @import "~bootstrap/scss/utilities/text";
 // @import "~bootstrap/scss/utilities/visibility";
+
 
 // Optional
 @import "~bootstrap/scss/reboot";

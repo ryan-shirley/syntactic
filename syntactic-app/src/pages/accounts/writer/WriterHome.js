@@ -33,52 +33,59 @@ class WriterHome extends React.Component {
 
     render() {
         return (
-            <div>
-                <h2>All categories</h2>
-                <Button displayStyle="primary" path="/addText">
-                    Add text
-                </Button>
+            <>
+                <div className="card shadow">
+                    <h3 className="card-header">
+                        All Categories
+                        <span className="float-right">
+                            <Button displayStyle="primary" path="/addText">
+                                Add text
+                            </Button>
+                        </span>
+                    </h3>
 
-                <ul className="list-group mt-2">
-                    {this.state.categories.map(cat => (
-                        <li className="list-group-item">
-                            {cat.name} {typeof cat._parent_category_id === 'object' && ' - Parent is: ' + cat._parent_category_id.name}
-    
-                            <br />
-                            {cat.users.map(
-                                user =>
-                                    user && (
-                                        <>
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary mb-1"
-                                                key={cat.name + '-articles_written'}
-                                            >
-                                                Articles Written
-                                                <span className="badge badge-light ml-2">
-                                                    {user.articles_written}
-                                                </span>
-                                            </button> 
-
-                                            <br />
-
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary"
-                                                key={cat.name + '-confidence'}
-                                            >
-                                                Confidence
-                                                <span className="badge badge-light ml-2">
-                                                    {user.confidence / user.articles_written}
-                                                </span>
-                                            </button>
-                                        </>
-                                    )
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                    <table className="table table-hover mb-0">
+                        <thead className="thead-light">
+                            <tr>
+                                <th scope="col" style={{width: '20%'}}>Name</th>
+                                <th scope="col" style={{width: '50%'}}>Parent</th>
+                                <th scope="col">Confidence</th>
+                                <th scope="col">Articles Written</th>
+                                <th scope="col">Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.categories.map(cat => (
+                                <tr key={cat.name}>
+                                    <th scope="row">{cat.name}</th>
+                                    <td>
+                                        {typeof cat._parent_category_id ===
+                                        "object"
+                                            ? cat._parent_category_id.name
+                                            : "–"}
+                                    </td>
+                                    <td>
+                                        {cat.users.length !== 0
+                                            ? (
+                                                  cat.users[0].confidence /
+                                                  cat.users[0].articles_written
+                                              ).toFixed(2) *
+                                                  100 +
+                                              "%"
+                                            : "–"}
+                                    </td>
+                                    <td>
+                                        {cat.users.length !== 0
+                                            ? cat.users[0].articles_written
+                                            : "–"}
+                                    </td>
+                                    <td>–</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </>
         )
     }
 }
