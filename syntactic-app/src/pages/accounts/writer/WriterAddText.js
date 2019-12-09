@@ -1,4 +1,5 @@
 import React from "react"
+import axios from 'axios';
 import { TextArea } from "../../../components/Form"
 import Button from "../../../components/Button"
 
@@ -39,42 +40,45 @@ class WriterAddText extends React.Component {
         } else {
             console.log("Submitting form")
 
-            fetch("http://localhost:4444/users/writer/newText", {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
+            axios.post('http://localhost:4444/users/writer/newText', {
                     uid: "userid",
                     text: this.state.text
                 })
-            })
-                .then(res => res.json()) // Parse output to json
-                .then(data => {
+                .then(res => {
                     console.log('Added text sucessfully');
-                    
+
                     this.props.history.push("/writer/1")
+                })
+                .catch(error => {
+                    console.log('Error');
+
+                    this.setState({
+                        error: error.response.data.details
+                    })
                 })
         }
     }
 
     render() {
         return (
-            <div>
-                <h2>Add text</h2>
-                <p>This is for your account</p>
-                <form>
-                    <TextArea
-                        field="text"
-                        handleChange={this.handleChange}
-                        error={this.state.error}
-                    />
+            <div className="card">
+                <div className="card-header">
+                    <h2>Add text</h2>
+                </div>
+                <div className="card-body">
+                    <p>This is for your account</p>
+                    <form>
+                        <TextArea
+                            field="text"
+                            handleChange={this.handleChange}
+                            error={this.state.error}
+                        />
 
-                    <Button displayStyle="primary" onClick={this.handleSubmit}>
-                        Submit
-                    </Button>
-                </form>
+                        <Button displayStyle="primary" onClick={this.handleSubmit}>
+                            Submit
+                        </Button>
+                    </form>
+                </div>
             </div>
         )
     }

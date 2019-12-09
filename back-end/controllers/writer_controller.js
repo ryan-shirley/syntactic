@@ -6,14 +6,20 @@ const Category = require("../models/categories.model")
 // Take text to categories and add to user
 exports.addText = async (req, res) => {
     try {
-        const { uid, text } = req.body
+        const {
+            uid,
+            text
+        } = req.body
 
         let sepCats = await GOOGLE_NL_API.classifyText(text)
         // console.log(sepCats)
 
         // Loop through category array
         sepCats.map(async categoryObj => {
-            let { categories, confidence } = categoryObj
+            let {
+                categories,
+                confidence
+            } = categoryObj
 
             for (let i = 0; i < categories.length; i++) {
                 let name = categories[i]
@@ -49,8 +55,7 @@ exports.addText = async (req, res) => {
                         // Create category WITH parent - WITH User
                         await CategoryController.createCategory(
                             name,
-                            categories[i - 1],
-                            {
+                            categories[i - 1], {
                                 _user_id: "5dd92e71e5cfa00b6e369d52",
                                 articles_written: 1,
                                 confidence
@@ -68,13 +73,14 @@ exports.addText = async (req, res) => {
         })
 
         res.send({
-            body:
-                "Woo 😀! Your text has been analysed and we have updated our database with these categories.",
+            body: "Woo 😀! Your text has been analysed and we have updated our database with these categories.",
             categories: sepCats
         })
     } catch (error) {
-        console.error(error)
-        res.status(422).send({ error })
+        // console.error(error)
+        console.log(error);
+        
+        res.status(500).send(error)
     }
 }
 
