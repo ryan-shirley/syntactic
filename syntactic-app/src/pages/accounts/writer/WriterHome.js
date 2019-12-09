@@ -14,6 +14,8 @@ class WriterHome extends React.Component {
      * componentDidMount() Get categories for user
      */
     componentDidMount() {
+        console.log('Getting categories');
+        
         fetch(
             "http://localhost:4444/users/writer/5dd92e71e5cfa00b6e369d52/categories",
             {
