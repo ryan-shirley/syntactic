@@ -1,23 +1,27 @@
-import React from 'react';  
-import { Route } from 'react-router-dom';  
+import React from "react"
+import { Route } from "react-router-dom"
 
-import Navbar from '../components/Navbar'
-  
-const AppLayout = ({component, path, exact}) => {  
+import Navbar from "../components/Navbar"
 
-    let page = exact ? <Route exact path={path} component={component}/> : <Route path={path} component={component}/>
+const AppLayout = ({ component, path, exact }) => {
+    let page = exact ? (
+        <Route exact path={path} component={component} />
+    ) : (
+        <Route path={path} component={component} />
+    )
 
-    return (  
+    return (
         <div>
             <Navbar />
-            
-            <div className="container mt-5">
-                This is the app layout. <br />
 
-                {page}
+            <div className="container-fluid mt-5">
+                <div className="row">
+                    <div className="col-md-2">This is where the sidebar will go.</div>
+                    <div className="col-md-10">{page}</div>
+                </div>
             </div>
         </div>
-    )  
-} 
-  
-export default AppLayout;  
+    )
+}
+
+export default AppLayout
