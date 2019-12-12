@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PORT=4444 nodemon ./bin/www"
+    "start": "PORT=4444 nodemon -r esm ./bin/www"
   },
   "dependencies": {
     "@google-cloud/language": "^3.6.2",
@@ -11,7 +11,9 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
     "express": "^4.16.4",
+    "firebase-admin": "^8.8.0",
     "http-errors": "~1.6.3",
     "mongoose": "^5.7.12",
     "morgan": "~1.9.1"
