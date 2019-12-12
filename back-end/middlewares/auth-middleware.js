@@ -18,11 +18,11 @@ export const checkIfAuthenticated = (req, res, next) => {
             const { authToken } = req
             const userInfo = await admin.auth().verifyIdToken(authToken)
             req.authId = userInfo.uid
-            console.log('User is authenticated');
+            console.log('- - User is authenticated');
             
             return next()
         } catch (e) {
-            console.log('User is not authenticated');
+            console.log('– - User is not authenticated');
             return res
                 .status(401)
                 .send({ error: "You are not authorized to make this request" })
