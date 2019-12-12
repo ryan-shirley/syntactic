@@ -1,2 +1,5 @@
 
 back-end/syntactic-iadt-year-4-fb-firebase-adminsdk-auth.json
+.DS_Store
+syntactic-front-end-redux/.env
+syntactic-front-end-redux/.prettierrc
