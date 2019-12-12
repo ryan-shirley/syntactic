@@ -6,6 +6,7 @@ import CategoryDetails from './components/categories/CategoryDetails'
 import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import CreateCategory from './components/categories/CreateCategory'
+import './App.scss';
 
 class App extends Component {
   render() {
