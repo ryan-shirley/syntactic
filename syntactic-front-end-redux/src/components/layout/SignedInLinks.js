@@ -3,6 +3,9 @@ import { NavLink } from "react-router-dom"
 import { connect } from "react-redux"
 import { signOut } from "../../store/actions/authActions"
 
+/**
+ * SignedInLinks() Links for main navigation only for authenticated users
+ */
 const SignedInLinks = props => {
     return (
         <React.Fragment>
@@ -28,7 +31,7 @@ const SignedInLinks = props => {
                         alt="Profile"
                     />
                     <div className="media-body">
-                    <h5 className="mt-0 mb-0">{props.displayName}</h5>
+                    <h5 className="mt-0 mb-0">{props.profile.displayName ? props.profile.displayName : props.auth.displayName}</h5>
                         Writer
                     </div>
                 </a>

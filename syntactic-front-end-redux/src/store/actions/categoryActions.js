@@ -18,6 +18,10 @@ export const createCategory = project => {
     }
 }
 
+/**
+ * fetchCategories() Get all the categories for
+ * the individual writer that they have written on.
+ */
 export function fetchCategories() {
     return (dispatch, getState, { getFirebase }) => {
         console.log("Fetching Categories")
@@ -27,9 +31,7 @@ export function fetchCategories() {
             .auth()
             .currentUser.getIdToken(/* forceRefresh */ true)
             .then(function(token) {
-                // Send token to your backend via HTTPS
-                // console.log(idToken);
-
+                // TODO: replace UID with actual users UID
                 axios
                     .get(
                         API_URL +

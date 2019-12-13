@@ -6,9 +6,9 @@ import { connect } from "react-redux"
 
 const Navbar = props => {
     const { auth, profile } = props
-    // console.log(auth);
+
     const links = auth.uid ? (
-        <SignedInLinks displayName={auth.displayName} />    
+        <SignedInLinks profile={profile} auth={auth} />
     ) : (
         <SignedOutLinks />
     )
@@ -34,19 +34,16 @@ const Navbar = props => {
                 className="collapse navbar-collapse"
                 id="navbarSupportedContent"
             >
-                <ul className="navbar-nav ml-auto">
-                    {links}
-                </ul>
-                
+                <ul className="navbar-nav ml-auto">{links}</ul>
             </div>
         </nav>
     )
 }
 
 const mapStateToProps = state => {
-    // console.log(state);
     return {
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        profile: state.auth
     }
 }
 

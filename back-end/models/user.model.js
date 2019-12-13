@@ -11,12 +11,12 @@ let UserSchema = new mongoose.Schema({
         required: true, 
         max: 100
     },
-    // email: {
-    //     type: String, 
-    //     required: true, 
-    //     unique: true,
-    //     max: 100
-    // },
+    email: {
+        type: String, 
+        required: true, 
+        unique: true,
+        max: 100
+    },
     // password: {
     //     type: String, 
     //     required: true, 
@@ -40,6 +40,11 @@ let UserSchema = new mongoose.Schema({
             type: String, 
             required: false
         }
+    },
+    uid: {
+        type: String, 
+        required: true, 
+        max: 100
     },
 });
 

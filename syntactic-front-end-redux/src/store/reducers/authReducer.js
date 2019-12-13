@@ -9,6 +9,7 @@ const authReducer = (state = initState, action) => {
             
             return {
                 ...state,
+                displayName: action.displayName,
                 authError: action.err.message
             }
 
@@ -17,6 +18,7 @@ const authReducer = (state = initState, action) => {
             
             return {
                 ...state,
+                displayName: action.displayName,
                 authError: null
             }
 
@@ -28,6 +30,7 @@ const authReducer = (state = initState, action) => {
             console.log("signup success")
             return {
                 ...state,
+                displayName: action.displayName,
                 authError: null
             }
 

@@ -2,7 +2,7 @@ const User = require("../models/user.model")
 import admin from "../firebase-service"
 
 exports.signUp = async (req, res) => {
-    const { first_name, last_name, email, password } = req.body
+    const { first_name, last_name, email, password, uid } = req.body
 
     try {
         // Create new user in Mongo DB
@@ -10,7 +10,8 @@ exports.signUp = async (req, res) => {
             first_name,
             last_name,
             email,
-            completed_onboarding: false
+            completed_onboarding: false,
+            uid
         })
 
         const newUser = await mongoUser.save()
@@ -25,7 +26,7 @@ exports.signUp = async (req, res) => {
         //   });
         
 
-        return res.status(201).json(userRecord)
+        return res.status(201).json(newUser)
     } catch (err) {
         // TODO: Handle Errors here
         console.log(err)
