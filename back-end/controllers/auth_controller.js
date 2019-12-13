@@ -1,6 +1,9 @@
 const User = require("../models/user.model")
 import admin from "../firebase-service"
 
+/**
+ * signUp() Saves new user into Monogo
+ */
 exports.signUp = async (req, res) => {
     const { first_name, last_name, email, password, uid } = req.body
 
