@@ -4,16 +4,16 @@ import { Redirect } from "react-router-dom"
 
 class Dashboard extends Component {
     componentDidMount() {
-        const { auth } = this.props
+        // const { auth } = this.props
         
-        if (!auth.uid) return <Redirect to="/signin" />
+        // if (!auth.uid) return <Redirect to="/signin" />
 
         console.log("Conponent did mount")
     }
 
     render() {
         const { auth, categories } = this.props
-        if (!auth.uid) return <Redirect to="/signin" />
+        // if (!auth.uid) return <Redirect to="/signin" />
 
         return (
             <div>
