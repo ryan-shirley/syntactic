@@ -39,6 +39,7 @@ const Navbar = props => {
                         This is data
                     </li>
                 </ul>
+                {links}
             </div>
         </nav>
     )
