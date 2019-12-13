@@ -1,4 +1,5 @@
 import axios from "axios"
+const API_URL = "http://localhost:4444"
 
 export const createCategory = project => {
     return (dispatch, getState) => {
@@ -18,47 +19,38 @@ export const createCategory = project => {
 }
 
 export function fetchCategories() {
-    // const categories = [
-    //     { id: "1", title: "Test", content: "this is data" },
-    //     { id: "2", title: "Test 2", content: "this is data 2" }
-    // ]
     return (dispatch, getState, { getFirebase }) => {
         console.log("Fetching Categories")
         const firebase = getFirebase()
 
-        // const token = await auth.currentUser.getIdToken();
-        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(token) {
-            // Send token to your backend via HTTPS
-            // console.log(idToken);
+        firebase
+            .auth()
+            .currentUser.getIdToken(/* forceRefresh */ true)
+            .then(function(token) {
+                // Send token to your backend via HTTPS
+                // console.log(idToken);
 
-            axios
-            .get(
-                "http://localhost:4444/users/writer/5dd92e71e5cfa00b6e369d52/categories",
-                { headers: { authorization: `Bearer ${token}` } }
-            )
-            .then(res => {
-                const categories = res.data.categories
+                axios
+                    .get(
+                        API_URL +
+                            "/users/writer/5dd92e71e5cfa00b6e369d52/categories",
+                        { headers: { authorization: `Bearer ${token}` } }
+                    )
+                    .then(res => {
+                        const categories = res.data.categories
 
-                dispatch({ type: "FETCH_CATEGORIES_SUCCESS", categories })
+                        dispatch({
+                            type: "FETCH_CATEGORIES_SUCCESS",
+                            categories
+                        })
+                    })
+                    .catch(error => {
+                        dispatch({ type: "FETCH_CATEGORIES_ERROR" })
+                    })
             })
-            .catch(error => {
-                dispatch({ type: "FETCH_CATEGORIES_ERROR" })
+            .catch(function(error) {
+                // Handle error
+                dispatch({ type: "FIREBASE_AUTH_GET_TOKEN_ERROR" })
             })
-
-          }).catch(function(error) {
-            // Handle error
-          });
-
-        
-
-        // dispatch({ type: "FETCH_CATEGORIES_SUCCESS", categories })
-
-        // dispatch(fetchProductsBegin())
-        // return fakeGetProducts()
-        //     .then(json => {
-        //         dispatch(fetchProductsSuccess(json.products))
-        //         return json.products
-        //     })
-        //     .catch(error => dispatch(fetchProductsFailure(error)))
     }
 }
