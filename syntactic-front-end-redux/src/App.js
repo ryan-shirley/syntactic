@@ -8,6 +8,7 @@ import CategoryDetails from "./components/categories/CategoryDetails"
 import SignIn from "./components/auth/SignIn"
 import SignUp from "./components/auth/SignUp"
 import CreateCategory from "./components/categories/CreateCategory"
+import NotFound404 from "./components/pages/NotFound404"
 import "./App.css"
 
 class App extends Component {
@@ -43,6 +44,7 @@ class App extends Component {
                                         path="/create"
                                         component={CreateCategory}
                                     /> */}
+                                    <Route path="*" component={NotFound404} />
                                 </Switch>
                             </div>
                         </div>
