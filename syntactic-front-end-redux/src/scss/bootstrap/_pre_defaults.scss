@@ -1,2 +1,11 @@
 // Colour System
+$primary: #172B4D;
+$primary-text-light: #8B96BC;
+$primary-dark: darken($primary, 10%);
 
+$orange: #FF6200;
+
+$theme-colors: (
+    primary-dark: $primary-dark,
+    orange: $orange
+);
