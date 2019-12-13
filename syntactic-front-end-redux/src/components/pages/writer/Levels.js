@@ -1,14 +1,17 @@
 import React, { Component } from "react"
+import { fetchCategories } from "../../../store/actions/categoryActions"
+import CategoryList from "../../categories/CategoryList"
 import { connect } from "react-redux"
 import { Redirect } from "react-router-dom"
 
-class Dashboard extends Component {
+class Levels extends Component {
     componentDidMount() {
         const { auth } = this.props
         
         if (!auth.uid) return <Redirect to="/signin" />
 
         console.log("Conponent did mount")
+        this.props.dispatch(fetchCategories())
     }
 
     render() {
@@ -17,7 +20,7 @@ class Dashboard extends Component {
 
         return (
             <div>
-                This is the dashboard
+                <CategoryList categories={categories} />
             </div>
         )
     }
@@ -26,8 +29,9 @@ class Dashboard extends Component {
 const mapStateToProps = state => {
     // console.log(state);
     return {
+        categories: state.category.categories,
         auth: state.firebase.auth
     }
 }
 
-export default connect(mapStateToProps)(Dashboard)
+export default connect(mapStateToProps)(Levels)

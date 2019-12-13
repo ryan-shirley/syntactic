@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 const CategoryList = ({ categories }) => {
     return (
         <div className="card shadow">
-            <h3 className="card-header">All Categories</h3>
+            <h3 className="card-header">All Categories - Levels</h3>
 
             <table className="table table-hover mb-0">
                 <thead className="thead-light">
