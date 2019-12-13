@@ -34,7 +34,7 @@ let UserSchema = new mongoose.Schema({
     profile: {
         bio: {
             type: String, 
-            required: true
+            required: false
         },
         business: {
             type: String, 

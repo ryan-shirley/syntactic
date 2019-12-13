@@ -20,36 +20,42 @@ class SignIn extends Component {
     render() {
         const { authError, auth } = this.props
         if (auth.uid) return <Redirect to="/dashboard" />
-        
+
         return (
-            <div className="container">
-                <form className="white" onSubmit={this.handleSubmit}>
-                    <h5 className="grey-text text-darken-3">Sign In</h5>
-                    <div className="input-field">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            onChange={this.handleChange}
-                        />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            onChange={this.handleChange}
-                        />
-                    </div>
-                    <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">
-                            Login
-                        </button>
-                        <div className="center red-text">
-                            {authError ? <p>{authError}</p> : null}
+            <div className="card">
+                <div className="card-header">Login</div>
+                <div className="card-body">
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="email">Email address</label>
+                            <input
+                                type="email"
+                                id="email"
+                                onChange={this.handleChange}
+                                className="form-control"
+                            />
                         </div>
-                    </div>
-                </form>
+
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                onChange={this.handleChange}
+                                className="form-control"
+                            />
+                        </div>
+                        {authError && (
+                            <p>
+                                <span className="badge badge-pill badge-danger">
+                                    {authError}
+                                </span>
+                            </p>
+                        )}
+
+                        <button className="btn btn-primary">Login</button>
+                    </form>
+                </div>
             </div>
         )
     }

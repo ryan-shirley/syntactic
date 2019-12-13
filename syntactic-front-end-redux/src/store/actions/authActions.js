@@ -1,3 +1,6 @@
+import axios from "axios"
+const API_URL = "http://localhost:4444"
+
 export const signIn = credentials => {
     return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
@@ -6,6 +9,8 @@ export const signIn = credentials => {
             .auth()
             .signInWithEmailAndPassword(credentials.email, credentials.password)
             .then(() => {
+                console.log(firebase.auth().currentUser)
+
                 dispatch({ type: "LOGIN_SUCCESS" })
             })
             .catch(err => {
@@ -28,25 +33,27 @@ export const signOut = () => {
 }
 
 export const signUp = newUser => {
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
-        const firestore = getFirestore()
+
+        console.log("Trying to sign up")
 
         firebase
             .auth()
             .createUserWithEmailAndPassword(newUser.email, newUser.password)
             .then(resp => {
-                return firestore
-                    .collection("users")
-                    .doc(resp.user.uid)
-                    .set({
-                        firstName: newUser.firstName,
-                        lastName: newUser.lastName,
-                        initials: newUser.firstName[0] + newUser.lastName[0]
+                console.log("New user signed up on Firebase!", resp)
+
+                axios
+                    .post(API_URL + "/signup", newUser)
+                    .then(resp => {
+                        console.log("New user signed up on Mongo DB!", resp.data)
+
+                        dispatch({ type: "SIGNUP_SUCCESS" })
                     })
-            })
-            .then(() => {
-                dispatch({ type: "SIGNUP_SUCCESS" })
+                    .catch(err => {
+                        dispatch({ type: "SIGNUP_ERROR", err })
+                    })
             })
             .catch(err => {
                 dispatch({ type: "SIGNUP_ERROR", err })

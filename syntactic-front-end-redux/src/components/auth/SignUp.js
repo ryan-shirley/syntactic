@@ -5,10 +5,10 @@ import { signUp } from "../../store/actions/authActions"
 
 class SignUp extends Component {
     state = {
+        first_name: "",
+        last_name: "",
         email: "",
-        password: "",
-        firstName: "",
-        lastName: ""
+        password: ""
     }
     handleChange = e => {
         this.setState({
@@ -21,52 +21,73 @@ class SignUp extends Component {
     }
     render() {
         const { auth, authError } = this.props
-        if (auth.uid) return <Redirect to="/" />
+        if (auth.uid) return <Redirect to="/dashboard" />
+
         return (
-            <div className="container">
-                <form className="white" onSubmit={this.handleSubmit}>
-                    <h5 className="grey-text text-darken-3">Sign Up</h5>
-                    <div className="input-field">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            onChange={this.handleChange}
-                        />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            onChange={this.handleChange}
-                        />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="firstName">First Name</label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            onChange={this.handleChange}
-                        />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="lastName">Last Name</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            onChange={this.handleChange}
-                        />
-                    </div>
-                    <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">
-                            Sign Up
-                        </button>
-                        <div className="center red-text">
-                            {authError ? <p>{authError}</p> : null}
+            <div className="card">
+                <div className="card-header">Sign Up</div>
+                <div className="card-body">
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label htmlFor="first_name">
+                                        First Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="first_name"
+                                        onChange={this.handleChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label htmlFor="last_name">Last Name</label>
+                                    <input
+                                        type="text"
+                                        id="last_name"
+                                        onChange={this.handleChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <div className="form-group">
+                            <label htmlFor="email">Email address</label>
+                            <input
+                                type="email"
+                                id="email"
+                                onChange={this.handleChange}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                onChange={this.handleChange}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        {authError && (
+                            <p>
+                                <span className="badge badge-pill badge-danger">
+                                    {authError}
+                                </span>
+                            </p>
+                        )}
+
+                        <button className="btn btn-primary">Sign Up</button>
+                    </form>
+                </div>
             </div>
         )
     }
