@@ -28,7 +28,7 @@ const SignedInLinks = props => {
                         alt="Profile"
                     />
                     <div className="media-body">
-                        <h5 className="mt-0 mb-0">Ryan Shirley</h5>
+                    <h5 className="mt-0 mb-0">{props.displayName}</h5>
                         Writer
                     </div>
                 </a>
