@@ -8,7 +8,7 @@ const Navbar = props => {
     const { auth, profile } = props
     // console.log(auth);
     const links = auth.uid ? (
-        <SignedInLinks profile={profile} />
+        <SignedInLinks profile={profile} />    
     ) : (
         <SignedOutLinks />
     )
@@ -34,12 +34,10 @@ const Navbar = props => {
                 className="collapse navbar-collapse"
                 id="navbarSupportedContent"
             >
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        This is data
-                    </li>
+                <ul className="navbar-nav ml-auto">
+                    {links}
                 </ul>
-                {links}
+                
             </div>
         </nav>
     )
