@@ -13,7 +13,8 @@ import Dashboard from "./components/dashboard/Dashboard"
 
 // Pages - Auth - Writer Only
 import Levels from "./components/pages/writer/Levels"
-// import CreateCategory from "./components/categories/CreateCategory"
+import OnboardingWriter from "./components/pages/writer/Onboarding"
+import WriterOnboarding from "./components/categories/CreateCategory"
 
 // Page - Auth - Content Seeker Only
 
@@ -46,6 +47,10 @@ const fullWithRoutes = [
     {
         path: '/signup',
         page: SignUp
+    },
+    {
+        path: '/onboarding/writer',
+        page: OnboardingWriter
     },
     {
         path: '*',

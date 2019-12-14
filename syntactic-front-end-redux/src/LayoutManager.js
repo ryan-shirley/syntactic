@@ -12,7 +12,7 @@ class LayoutManager extends Component {
     componentDidMount() {
         const { auth } = this.props
 
-        // Check for user object in store
+        // Get user information if not already in store
         if (
             Object.entries(auth.user).length === 0 &&
             auth.user.constructor === Object
@@ -37,6 +37,11 @@ class LayoutManager extends Component {
         const { completed_onboarding, uid } = auth.user
         if (uid && !completed_onboarding) {
             console.log("User has not completed onboarding")
+            
+
+            if(!path.includes("/onboarding/")) {
+                return <Redirect to="/onboarding/writer" />
+            }
         }
 
         // Redirect if auth and not authorised
