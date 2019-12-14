@@ -54,25 +54,31 @@ export const signUp = newUser => {
                 const displayName = `${newUser.first_name} ${newUser.last_name}`
 
                 // Add display name to Firebase profile
-                result.user.updateProfile({
-                    displayName
-                })
-                // console.log("New user signed up on Firebase!", result)
-
-                newUser.uid = result.user.uid
-
-                axios
-                    .post(API_URL + "/signup", newUser)
-                    .then(resp => {
-                        // console.log(
-                        //     "New user signed up on Mongo DB!",
-                        //     resp.data
-                        // )
-
-                        dispatch({ type: "SIGNUP_SUCCESS", displayName })
+                result.user
+                    .updateProfile({
+                        displayName
                     })
-                    .catch(err => {
-                        dispatch({ type: "SIGNUP_ERROR", err })
+                    .then(() => {
+                        // console.log("New user signed up on Firebase!", result)
+
+                        newUser.uid = result.user.uid
+
+                        axios
+                            .post(API_URL + "/signup", newUser)
+                            .then(resp => {
+                                // console.log(
+                                //     "New user signed up on Mongo DB!",
+                                //     resp.data
+                                // )
+                                firebase.reloadAuth().then(() => {
+                                    console.log("reloaded auth")
+                                    dispatch({ type: "SIGNUP_SUCCESS" })
+                                })
+                            })
+                            .catch(err => {
+                                dispatch({ type: "SIGNUP_ERROR", err })
+                            })
+                        
                     })
             })
             .catch(err => {

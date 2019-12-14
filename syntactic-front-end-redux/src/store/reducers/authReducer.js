@@ -18,7 +18,6 @@ const authReducer = (state = initState, action) => {
             
             return {
                 ...state,
-                displayName: action.displayName,
                 authError: null
             }
 
@@ -30,12 +29,14 @@ const authReducer = (state = initState, action) => {
             console.log("signup success")
             return {
                 ...state,
-                displayName: action.displayName,
+                // displayName: action.displayName,
                 authError: null
             }
 
         case "SIGNUP_ERROR":
             console.log("signup error")
+            console.log(action.err);
+            
             return {
                 ...state,
                 authError: action.err.response.data.message

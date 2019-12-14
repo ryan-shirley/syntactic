@@ -31,8 +31,8 @@ const SignedInLinks = props => {
                         alt="Profile"
                     />
                     <div className="media-body">
-                    <h5 className="mt-0 mb-0">{props.profile.displayName ? props.profile.displayName : props.auth.displayName}</h5>
-                        Writer
+                    <h5 className="mt-0 mb-0">{props.auth.displayName}</h5>
+                        Writer*
                     </div>
                 </a>
                 <div
