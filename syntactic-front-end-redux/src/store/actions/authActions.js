@@ -78,11 +78,48 @@ export const signUp = newUser => {
                             .catch(err => {
                                 dispatch({ type: "SIGNUP_ERROR", err })
                             })
-                        
                     })
             })
             .catch(err => {
                 dispatch({ type: "SIGNUP_ERROR", err })
+            })
+    }
+}
+
+/**
+ * getUser() Get the user that is current logged in
+ */
+export const getUser = () => {
+    return (dispatch, getState, { getFirebase }) => {
+        const firebase = getFirebase()
+
+        console.log("Getting User")
+
+        firebase
+            .auth()
+            .currentUser.getIdToken(/* forceRefresh */ true)
+            .then(token => {
+                axios
+                    .get(
+                        API_URL +
+                            "/user",
+                        { headers: { authorization: `Bearer ${token}` } }
+                    )
+                    .then(res => {
+                        let user = res.data
+
+                        dispatch({
+                            type: "FETCH_USER_SUCCESS",
+                            user
+                        })
+                    })
+                    .catch(error => {
+                        dispatch({ type: "FETCH_USER_ERROR" }, error)
+                    })
+            })
+            .catch(function(error) {
+                // Handle error
+                dispatch({ type: "FIREBASE_AUTH_GET_TOKEN_ERROR" })
             })
     }
 }

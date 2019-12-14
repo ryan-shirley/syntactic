@@ -45,7 +45,7 @@ app.use(cors())
 // Routes Defined
 app.use("/", indexRouter)
 app.use("/onboarding", onboardingrouter)
-app.use("/users", usersRouter)
+app.use("/user", usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

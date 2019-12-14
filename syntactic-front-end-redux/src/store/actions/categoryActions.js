@@ -35,7 +35,7 @@ export function fetchCategories() {
                 axios
                     .get(
                         API_URL +
-                            "/users/writer/5dd92e71e5cfa00b6e369d52/categories",
+                            "/user/writer/5dd92e71e5cfa00b6e369d52/categories",
                         { headers: { authorization: `Bearer ${token}` } }
                     )
                     .then(res => {

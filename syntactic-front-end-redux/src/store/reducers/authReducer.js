@@ -1,4 +1,5 @@
 const initState = {
+    user: {},
     authError: null
 }
 
@@ -9,7 +10,6 @@ const authReducer = (state = initState, action) => {
             
             return {
                 ...state,
-                displayName: action.displayName,
                 authError: action.err.message
             }
 
@@ -29,7 +29,6 @@ const authReducer = (state = initState, action) => {
             console.log("signup success")
             return {
                 ...state,
-                // displayName: action.displayName,
                 authError: null
             }
 
@@ -41,6 +40,19 @@ const authReducer = (state = initState, action) => {
                 ...state,
                 authError: action.err.response.data.message
             }
+        case "FETCH_USER_SUCCESS":
+
+            return {
+                ...state,
+                user: action.user,
+                authError: null
+            }
+            case "FETCH_USER_ERROR":
+
+                return {
+                    ...state,
+                    authError: action.error
+                }
 
         default:
             return state
