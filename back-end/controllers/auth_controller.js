@@ -19,7 +19,12 @@ exports.signUp = async (req, res) => {
             last_name,
             email,
             completed_onboarding: false,
-            uid
+            uid,
+            role: [
+                {
+                    name: 'writer'
+                }
+            ]
         })
 
         const newUser = await mongoUser.save()
