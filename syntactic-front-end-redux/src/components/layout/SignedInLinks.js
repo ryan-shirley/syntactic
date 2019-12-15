@@ -31,8 +31,8 @@ const SignedInLinks = props => {
                         alt="Profile"
                     />
                     <div className="media-body">
-                    <h5 className="mt-0 mb-0">{props.auth.displayName}</h5>
-                        Writer*
+                        <h5 className="mt-0 mb-0">{props.user.first_name} {props.user.last_name}</h5>
+                        <span className="role">{props.user.role && props.user.role.map(role => role.name.toUpperCase())}</span>
                     </div>
                 </a>
                 <div
