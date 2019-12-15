@@ -33,15 +33,19 @@ class LayoutManager extends Component {
         } = this.props
 
         // Redirect if haven't completed onboarding
-        // TODO: Don't redirect if path contains /onboarding/
         const { completed_onboarding, uid } = auth.user
         if (uid && !completed_onboarding) {
-            console.log("User has not completed onboarding")
-            
-
-            if(!path.includes("/onboarding/")) {
+            // console.log("User has not completed onboarding")
+            if (!path.includes("/onboarding/")) {
                 return <Redirect to="/onboarding/writer" />
             }
+        } else if (
+            uid &&
+            completed_onboarding &&
+            path.includes("/onboarding/")
+        ) {
+            // console.log("User has completed onboarding")
+            return <Redirect to="/dashboard" />
         }
 
         // Redirect if auth and not authorised

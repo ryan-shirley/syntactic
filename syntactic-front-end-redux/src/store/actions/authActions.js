@@ -92,8 +92,7 @@ export const signUp = newUser => {
 export const getUser = () => {
     return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
-
-        console.log("Getting User")
+        // console.log("Getting User")
 
         firebase
             .auth()

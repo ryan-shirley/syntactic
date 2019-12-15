@@ -53,6 +53,12 @@ const authReducer = (state = initState, action) => {
                     ...state,
                     authError: action.error
                 }
+            case "FIREBASE_AUTH_GET_TOKEN_ERROR":
+
+                return {
+                    ...state,
+                    authError: action.error
+                }
 
         default:
             return state

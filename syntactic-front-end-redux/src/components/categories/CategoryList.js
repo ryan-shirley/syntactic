@@ -1,11 +1,20 @@
 import React from "react"
-import CategorySummary from "./CategorySummary"
 import { Link } from "react-router-dom"
 
 const CategoryList = ({ categories }) => {
     return (
         <div className="card shadow">
-            <h3 className="card-header">All Categories - Levels</h3>
+            <h3 className="card-header">
+                All Categories - Levels
+                <Link
+                    to="/add-content"
+                    className="btn btn-primary float-right"
+                    role="button"
+                    aria-disabled="true"
+                >
+                    Add Content
+                </Link>
+            </h3>
 
             <table className="table table-hover mb-0">
                 <thead className="thead-light">

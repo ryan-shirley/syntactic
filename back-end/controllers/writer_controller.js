@@ -1,25 +1,27 @@
-const User = require("../models/user.model")
 const GOOGLE_NL_API = require("./google_nl_api.controller")
 const CategoryController = require("./categories.controller")
 const Category = require("../models/categories.model")
+import admin from "../firebase-service"
 
-// Take text to categories and add to user
-exports.addText = async (req, res) => {
+/**
+ * addContent() Take text and categoriese. 
+ * Save categories with user
+ */
+exports.addContent = async (req, res) => {
     try {
-        const {
-            uid,
-            text
-        } = req.body
-
+        const { text } = req.body
+        const { authToken } = req
+        
+        // Get uid for user from firebase
+        const userInfo = await admin.auth().verifyIdToken(authToken)
+        const { uid } = userInfo
+        
+        // Categorise text
         let sepCats = await GOOGLE_NL_API.classifyText(text)
-        // console.log(sepCats)
 
         // Loop through category array
         sepCats.map(async categoryObj => {
-            let {
-                categories,
-                confidence
-            } = categoryObj
+            let { categories, confidence } = categoryObj
 
             for (let i = 0; i < categories.length; i++) {
                 let name = categories[i]
@@ -36,7 +38,7 @@ exports.addText = async (req, res) => {
                         // ADD User
                         await CategoryController.addUser(
                             name,
-                            "5dd92e71e5cfa00b6e369d52",
+                            uid,
                             confidence
                         )
                     }
@@ -47,7 +49,7 @@ exports.addText = async (req, res) => {
                     if (i === 0 && categories.length === 1) {
                         // Create category WITHOUT parent
                         await CategoryController.createCategory(name, null, {
-                            _user_id: "5dd92e71e5cfa00b6e369d52",
+                            uid,
                             articles_written: 1,
                             confidence
                         })
@@ -55,8 +57,9 @@ exports.addText = async (req, res) => {
                         // Create category WITH parent - WITH User
                         await CategoryController.createCategory(
                             name,
-                            categories[i - 1], {
-                                _user_id: "5dd92e71e5cfa00b6e369d52",
+                            categories[i - 1],
+                            {
+                                uid,
                                 articles_written: 1,
                                 confidence
                             }
@@ -73,22 +76,25 @@ exports.addText = async (req, res) => {
         })
 
         res.send({
-            body: "Woo 😀! Your text has been analysed and we have updated our database with these categories.",
+            body:
+                "Woo 😀! Your text has been analysed and we have updated our database with these categories.",
             categories: sepCats
         })
     } catch (error) {
         // console.error(error)
-        console.log(error);
-        
-        res.status(500).send(error)
+        console.log(error)
+
+        res.status(500).json(error)
     }
 }
 
-// Get categories from user
+/**
+ * getCategories() Get all the categories for an individual writer.
+ */
 exports.getCategories = async (req, res) => {
-    const id = req.params.id
+    const { id: uid } = req.params
 
-    const categories = await Category.find().populate('_parent_category_id')
+    const categories = await Category.find({ 'users.uid': uid })
 
     res.send({
         categories

@@ -14,7 +14,7 @@ import Dashboard from "./components/dashboard/Dashboard"
 // Pages - Auth - Writer Only
 import Levels from "./components/pages/writer/Levels"
 import OnboardingWriter from "./components/pages/writer/Onboarding"
-import WriterOnboarding from "./components/categories/CreateCategory"
+import AddContent from "./components/pages/writer/AddContent"
 
 // Page - Auth - Content Seeker Only
 
@@ -29,6 +29,11 @@ const appLayoutRoutes = [
     {
         path: '/levels',
         page: Levels,
+        auth: true
+    },
+    {
+        path: '/add-content',
+        page: AddContent,
         auth: true
     }
 ]

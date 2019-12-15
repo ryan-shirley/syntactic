@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
 
 let UserSchema = new mongoose.Schema({
-    _user_id: {
-        type: mongoose.Schema.Types.ObjectId,
+    uid: {
+        type: String,
         required: true
     },
     articles_written: {
@@ -21,7 +21,7 @@ let CategoriesSchema = new mongoose.Schema({
         required: true
     },
     _parent_category_id: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: false
     },
     users: {

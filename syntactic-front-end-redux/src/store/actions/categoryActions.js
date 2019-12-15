@@ -29,13 +29,16 @@ export function fetchCategories() {
 
         firebase
             .auth()
-            .currentUser.getIdToken(/* forceRefresh */ true)
-            .then(function(token) {
-                // TODO: replace UID with actual users UID
+            .currentUser.getIdToken(true)
+            .then(token => {
+                // Current logged in user
+                let user = firebase.auth().currentUser;
+                const uid = user.uid
+
                 axios
                     .get(
                         API_URL +
-                            "/user/writer/5dd92e71e5cfa00b6e369d52/categories",
+                            `/user/writer/${uid}/categories`,
                         { headers: { authorization: `Bearer ${token}` } }
                     )
                     .then(res => {
@@ -50,9 +53,9 @@ export function fetchCategories() {
                         dispatch({ type: "FETCH_CATEGORIES_ERROR" })
                     })
             })
-            .catch(function(error) {
+            .catch(error => {
                 // Handle error
-                dispatch({ type: "FIREBASE_AUTH_GET_TOKEN_ERROR" })
+                dispatch({ type: "FIREBASE_AUTH_GET_TOKEN_ERROR", error })
             })
     }
 }
