@@ -24,7 +24,6 @@ export const createCategory = project => {
  */
 export function fetchCategories() {
     return (dispatch, getState, { getFirebase }) => {
-        console.log("Fetching Categories")
         const firebase = getFirebase()
 
         firebase
