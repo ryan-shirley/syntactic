@@ -10,7 +10,8 @@ class Button extends React.Component {
             return <button
             type="button"
             className={ "btn btn-" + props.displayStyle + (props.classes ?  " " + props.classes : '')}
-            onClick={props.onClick}>{props.children}</button>
+            onClick={props.onClick}
+            disabled={props.disabled}>{props.children} </button>
         }
         else if(props.path) {
             return (
@@ -21,7 +22,8 @@ class Button extends React.Component {
                 }}
                 className={"btn btn-" + props.displayStyle + (props.classes ?  " " + props.classes : '')}
                 role="button"
-                aria-disabled="true">{props.children}</Link>
+                aria-disabled="true"
+                disabled={props.disabled}>{props.children}</Link>
             )
         }
         

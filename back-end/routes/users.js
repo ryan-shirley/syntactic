@@ -12,6 +12,8 @@ const user_controller = require("../controllers/User/user_controller")
  * All Users
  */
 router.get("/", checkIfAuthenticated, user_controller.getUser)
+router.post("/update-bio", checkIfAuthenticated, user_controller.updateBio)
+router.put("/finish-onboarding", checkIfAuthenticated, user_controller.finishOnboarding)
 
 /**
  * Writer Routes

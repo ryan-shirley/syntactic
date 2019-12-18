@@ -122,3 +122,13 @@ export const getUser = () => {
             })
     }
 }
+
+/**
+ * updateOnboardingStatus() Update onboarding stats to completed
+ */
+export const updateOnboardingStatus = () => {
+    return (dispatch, getState, { getFirebase }) => {
+        console.log('Updating onboarding status');
+        dispatch({ type: "COMPLETE_ONBOARDING" })
+    }
+}
