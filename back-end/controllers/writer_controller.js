@@ -94,7 +94,12 @@ exports.addContent = async (req, res) => {
 exports.getCategories = async (req, res) => {
     const { id: uid } = req.params
 
-    const categories = await Category.find({ 'users.uid': uid })
+    const categories = await Category.find({ "users.uid": uid }).populate({
+        path: "_parent_category_id",
+        populate: {
+            path: "_parent_category_id"
+        }
+    })
 
     res.send({
         categories
