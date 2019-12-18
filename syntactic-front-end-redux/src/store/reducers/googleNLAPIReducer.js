@@ -1,4 +1,6 @@
 const initState = {
+    completed: false,
+    processing: false,
     error: null
 }
 
@@ -13,6 +15,12 @@ const googleNLAPIReducer = (state = initState, action) => {
         case "ADD_CONTENT_SUCCESS":
             return {
                 ...state,
+                error: null
+            }
+        case "PROCESSING_CONTENT":
+            return {
+                ...state,
+                processing: true,
                 error: null
             }
         default:

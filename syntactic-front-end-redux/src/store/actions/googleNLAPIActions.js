@@ -14,6 +14,8 @@ export const addContent = text => {
             .auth()
             .currentUser.getIdToken(true)
             .then(token => {
+                dispatch({ type: "PROCESSING_CONTENT" })
+
                 axios
                     .post(API_URL + "/user/writer/add-content", {text}, {
                         headers: { authorization: `Bearer ${token}` }
