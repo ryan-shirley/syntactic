@@ -20,7 +20,7 @@ export const updateBio = newBio => {
                 dispatch({ type: "PROCESSING_TRUE" })
 
                 axios
-                    .post(API_URL + "/user/update-bio", {newBio}, {
+                    .put(API_URL + "/user/update-bio", { newBio }, {
                         headers: { authorization: `Bearer ${token}` }
                     })
                     .then(res => {
