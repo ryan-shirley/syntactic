@@ -104,27 +104,58 @@ exports.getCategories = async (req, res) => {
     // Format with parent at top level
     let formattedCategories = categories.map(category => {
         const { _id, name, users } = category
+        let userStats = users.find(user => user.uid === uid)
+
+        // Get stats for user
+        let stats
+        if(userStats) {
+            stats = {
+                confidence: (userStats.confidence / userStats.articles_written).toFixed(2),
+                articles_written: userStats.articles_written
+            }
+        }
+        
         
         // Check for parent
         if(category._parent_category_id) {
             // console.log('Has parent');
             const { _id: subId, name: subName, users: subUsers, _parent_category_id: subParent } = category._parent_category_id 
+            let subUserStats = subUsers.find(user => user.uid === uid)
+            
+            // Get stats for user
+            let subStats
+            if(subUserStats) {
+                subStats = {
+                    confidence: (subUserStats.confidence / subUserStats.articles_written).toFixed(2),
+                    articles_written: subUserStats.articles_written
+                }
+            }
 
             if(subParent) {
                 const { _id: sub2Id, name: sub2Name, users: sub2Users } = subParent
+                let sub2UserStats = sub2Users.find(user => user.uid === uid)
+
+                // Get stats for user
+                let sub2Stats
+                if(sub2UserStats) {
+                    sub2Stats = {
+                        confidence: (sub2UserStats.confidence / sub2UserStats.articles_written).toFixed(2),
+                        articles_written: sub2UserStats.articles_written
+                    }
+                }
 
                 return {
                     _id: sub2Id,
                     name: sub2Name,
-                    users: sub2Users,
+                    stats: sub2Stats,
                     sub_category: {
                         _id: subId,
                         name: subName,
-                        users: subUsers,
+                        stats: subStats,
                         sub_category: {
                             _id,
                             name,
-                            users
+                            stats
                         }
                     }
                 }
@@ -133,17 +164,17 @@ exports.getCategories = async (req, res) => {
                 return {
                     _id: subId,
                     name: subName,
-                    users: subUsers,
+                    stats: subStats,
                     sub_category: {
                         _id,
                         name,
-                        users
+                        stats
                     }
                 }
             }
         }
-
-        return category
+        
+        return { _id, name, stats }
     })
 
     res.send({

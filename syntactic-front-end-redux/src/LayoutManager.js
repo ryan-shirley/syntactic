@@ -12,11 +12,8 @@ class LayoutManager extends Component {
     constructor(props) {
         super(props)
 
-        const { uid } = props.firebaseAuth
-
         // Get user information if not already in store
-        console.log(uid);
-        
+        const { uid } = props.firebaseAuth
         if (uid) {
             props.dispatch(getUser())
         }
