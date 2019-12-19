@@ -110,7 +110,7 @@ exports.getCategories = async (req, res) => {
         let stats
         if(userStats) {
             stats = {
-                confidence: (userStats.confidence / userStats.articles_written).toFixed(2),
+                confidence: (userStats.confidence / userStats.articles_written).toFixed(2) * 100,
                 articles_written: userStats.articles_written
             }
         }
@@ -126,7 +126,7 @@ exports.getCategories = async (req, res) => {
             let subStats
             if(subUserStats) {
                 subStats = {
-                    confidence: (subUserStats.confidence / subUserStats.articles_written).toFixed(2),
+                    confidence: (subUserStats.confidence / subUserStats.articles_written).toFixed(2) * 100,
                     articles_written: subUserStats.articles_written
                 }
             }
@@ -139,7 +139,7 @@ exports.getCategories = async (req, res) => {
                 let sub2Stats
                 if(sub2UserStats) {
                     sub2Stats = {
-                        confidence: (sub2UserStats.confidence / sub2UserStats.articles_written).toFixed(2),
+                        confidence: (sub2UserStats.confidence / sub2UserStats.articles_written).toFixed(2) * 100,
                         articles_written: sub2UserStats.articles_written
                     }
                 }
