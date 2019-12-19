@@ -1,0 +1,13 @@
+.navbar-nav .nav-link {
+    &.media {
+        background: none;
+        border: none;
+        text-align: left;
+        color: $white;
+
+        &:hover, &:focus {
+            color: $white;
+            outline: none;
+        }
+    }
+}
