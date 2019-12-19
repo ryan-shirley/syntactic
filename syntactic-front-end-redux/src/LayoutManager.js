@@ -9,7 +9,7 @@ import FullLayout from "./layouts/FullLayout"
 import { getUser } from "./store/actions/authActions"
 
 class LayoutManager extends Component {
-    componentDidMount() {
+    componentWillMount() {
         const { auth } = this.props
 
         // Get user information if not already in store
