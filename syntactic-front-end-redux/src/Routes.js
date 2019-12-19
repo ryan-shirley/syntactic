@@ -55,7 +55,8 @@ const fullWithRoutes = [
     },
     {
         path: '/onboarding/writer',
-        page: OnboardingWriter
+        page: OnboardingWriter,
+        auth: true
     },
     {
         path: '*',

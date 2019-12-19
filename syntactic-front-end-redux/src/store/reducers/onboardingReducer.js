@@ -9,9 +9,11 @@ const initState = {
 }
 
 const onboardingReducer = (state = initState, action) => {
+    let stage, error
+
     switch (action.type) {
         case "PREVIOUS_STAGE":
-            let stage = state.stage - 1
+            stage = state.stage - 1
 
             return {
                 ...state,
@@ -45,7 +47,7 @@ const onboardingReducer = (state = initState, action) => {
                 error: ''
             }
         case "UPDATE_BIO_ERROR":
-            let error = action.error.details || action.error
+            error = action.error.details || action.error
 
             return {
                 ...state,
