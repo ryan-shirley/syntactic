@@ -14,7 +14,8 @@ const store = createStore(
     rootReducer,
     compose(
         applyMiddleware(thunk.withExtraArgument({ getFirebase })),
-        reactReduxFirebase(fbConfig, { attachAuthIsReady: true })
+        reactReduxFirebase(fbConfig, { attachAuthIsReady: true }),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
 )
 
