@@ -4,7 +4,7 @@ const Category = require("../models/categories.model")
 import admin from "../firebase-service"
 
 /**
- * addContent() Take text and categoriese. 
+ * addContent() Take text and categorise. 
  * Save categories with user
  */
 exports.addContent = async (req, res) => {
@@ -101,7 +101,52 @@ exports.getCategories = async (req, res) => {
         }
     })
 
+    // Format with parent at top level
+    let formattedCategories = categories.map(category => {
+        const { _id, name, users } = category
+        
+        // Check for parent
+        if(category._parent_category_id) {
+            // console.log('Has parent');
+            const { _id: subId, name: subName, users: subUsers, _parent_category_id: subParent } = category._parent_category_id 
+
+            if(subParent) {
+                const { _id: sub2Id, name: sub2Name, users: sub2Users } = subParent
+
+                return {
+                    _id: sub2Id,
+                    name: sub2Name,
+                    users: sub2Users,
+                    sub_category: {
+                        _id: subId,
+                        name: subName,
+                        users: subUsers,
+                        sub_category: {
+                            _id,
+                            name,
+                            users
+                        }
+                    }
+                }
+            }
+            else {
+                return {
+                    _id: subId,
+                    name: subName,
+                    users: subUsers,
+                    sub_category: {
+                        _id,
+                        name,
+                        users
+                    }
+                }
+            }
+        }
+
+        return category
+    })
+
     res.send({
-        categories
+        categories: formattedCategories
     })
 }

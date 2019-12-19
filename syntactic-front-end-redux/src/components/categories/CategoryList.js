@@ -33,30 +33,80 @@ const CategoryList = ({ categories }) => {
                 <tbody>
                     {categories &&
                         categories.map(cat => (
-                            <tr key={cat.name}>
-                                <th scope="row">{cat.name}</th>
-                                <td>
-                                    {typeof cat._parent_category_id === "object"
-                                        ? cat._parent_category_id.name
-                                        : "–"}
-                                </td>
-                                <td>
-                                    {cat.users.length !== 0
-                                        ? (
-                                              cat.users[0].confidence /
-                                              cat.users[0].articles_written
-                                          ).toFixed(2) *
-                                              100 +
-                                          "%"
-                                        : "–"}
-                                </td>
-                                <td>
-                                    {cat.users.length !== 0
-                                        ? cat.users[0].articles_written
-                                        : "–"}
-                                </td>
-                                <td>–</td>
-                            </tr>
+                            <React.Fragment>
+                                <tr key={cat._id}>
+                                    <th scope="row">{cat.name}</th>
+                                    <td>
+                                        {typeof cat._parent_category_id === "object"
+                                            ? cat._parent_category_id.name
+                                            : "–"}
+                                    </td>
+                                    <td>
+                                        {cat.users.length !== 0
+                                            ? (
+                                                cat.users[0].confidence /
+                                                cat.users[0].articles_written
+                                            ).toFixed(2) *
+                                                100 +
+                                            "%"
+                                            : "–"}
+                                    </td>
+                                    <td>
+                                        {cat.users.length !== 0
+                                            ? cat.users[0].articles_written
+                                            : "–"}
+                                    </td>
+                                    <td>–</td>
+                                </tr>
+                                {cat.sub_category && (
+                                    <tr key={cat.sub_category._id}>
+                                        <th scope="row">{cat.sub_category.name}</th>
+                                        <td>
+                                            {cat.name}
+                                        </td>
+                                        <td>
+                                            {cat.sub_category.users.length !== 0
+                                                ? (
+                                                    cat.sub_category.users[0].confidence /
+                                                    cat.sub_category.users[0].articles_written
+                                                ).toFixed(2) *
+                                                    100 +
+                                                "%"
+                                                : "–"}
+                                        </td>
+                                        <td>
+                                            {cat.sub_category.users.length !== 0
+                                                ? cat.sub_category.users[0].articles_written
+                                                : "–"}
+                                        </td>
+                                        <td>–</td>
+                                    </tr>
+                                )}
+                                {cat.sub_category && cat.sub_category.sub_category && (
+                                    <tr key={cat.sub_category.sub_category._id}>
+                                        <th scope="row">{cat.sub_category.sub_category.name}</th>
+                                        <td>
+                                            {cat.sub_category.name}
+                                        </td>
+                                        <td>
+                                            {cat.sub_category.sub_category.users.length !== 0
+                                                ? (
+                                                    cat.sub_category.sub_category.users[0].confidence /
+                                                    cat.sub_category.sub_category.users[0].articles_written
+                                                ).toFixed(2) *
+                                                    100 +
+                                                "%"
+                                                : "–"}
+                                        </td>
+                                        <td>
+                                            {cat.sub_category.sub_category.users.length !== 0
+                                                ? cat.sub_category.sub_category.users[0].articles_written
+                                                : "–"}
+                                        </td>
+                                        <td>–</td>
+                                    </tr>
+                                )}
+                            </React.Fragment>
                         ))}
                 </tbody>
             </table>
