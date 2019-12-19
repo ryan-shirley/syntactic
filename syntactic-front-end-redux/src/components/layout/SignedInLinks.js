@@ -8,17 +8,16 @@ import { signOut } from "../../store/actions/authActions"
  */
 const SignedInLinks = props => {
     return (
-        <React.Fragment>
+        <>
             <li className="nav-item">
                 <NavLink to="/" className="nav-link">
                     Home
                 </NavLink>
             </li>
             <li className="nav-item dropdown">
-                <a
+                <button
                     className="nav-link media"
                     id="navbarDropdownMenuLink"
-                    role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
@@ -34,17 +33,17 @@ const SignedInLinks = props => {
                         <h5 className="mt-0 mb-0">{props.user.first_name} {props.user.last_name}</h5>
                         <span className="role">{props.user.role && props.user.role.map(role => role.name.toUpperCase())}</span>
                     </div>
-                </a>
+                </button>
                 <div
                     className="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
                 >
-                    <a className="dropdown-item" onClick={props.signOut}>
+                    <button className="dropdown-item" onClick={props.signOut}>
                         Log Out
-                    </a>
+                    </button>
                 </div>
             </li>
-        </React.Fragment>
+        </>
     )
 }
 

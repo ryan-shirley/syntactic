@@ -33,7 +33,7 @@ const CategoryList = ({ categories }) => {
                 <tbody>
                     {categories &&
                         categories.map(cat => (
-                            <React.Fragment>
+                            <>
                                 <tr key={cat._id}>
                                     <th scope="row">{cat.name}</th>
                                     <td>
@@ -106,7 +106,7 @@ const CategoryList = ({ categories }) => {
                                         <td>–</td>
                                     </tr>
                                 )}
-                            </React.Fragment>
+                            </>
                         ))}
                 </tbody>
             </table>
