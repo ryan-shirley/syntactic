@@ -32,9 +32,10 @@ class LayoutManager extends Component {
         // Route details
         const { page, middleware } = route
         // Middleware
-        const { type, restricted = false } = middleware
+        const { type, restricted = false, role: restrictedRole = false } = middleware
         const loggedIn = fbAuth.uid || false
-
+        
+        
         // Public Route
         if(type === "public") {
             if(loggedIn && restricted) {
@@ -45,7 +46,7 @@ class LayoutManager extends Component {
         // Private Route
         else if (type === 'private') {
             let { user } = auth // User object from Monogo
-
+            
             if(!loggedIn) {
                 console.log("Not authorised. Redirecting..")
                 return <Redirect to="/signin" />
@@ -53,6 +54,9 @@ class LayoutManager extends Component {
             else if(!user.uid) { // No user profile
                 // Wait for user to be loaded
                 return 'Waiting for user profile to be loaded'
+            }
+            else if(restrictedRole && user.role[0].name !== restrictedRole) {
+                return <Redirect to="/dashboard" />
             }
             else if(!user.completed_onboarding) {
                 console.log("User has not completed onboarding")

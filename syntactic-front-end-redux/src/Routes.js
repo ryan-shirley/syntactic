@@ -32,14 +32,16 @@ const appLayoutRoutes = [
         path: '/levels',
         page: Levels,
         middleware: {
-            type: 'private'
+            type: 'private',
+            role: 'writer'
         }
     },
     {
         path: '/add-content',
         page: AddContent,
         middleware: {
-            type: 'private'
+            type: 'private',
+            role: 'writer'
         }
     }
 ]
@@ -74,7 +76,8 @@ const fullWithRoutes = [
         path: '/onboarding/writer',
         page: OnboardingWriter,
         middleware: {
-            type: 'private'
+            type: 'private',
+            role: 'writer'
         }
     },
     {
