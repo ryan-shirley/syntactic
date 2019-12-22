@@ -5,7 +5,7 @@ var router = express.Router()
 import { checkIfAuthenticated, checkifWriter } from "../middlewares/auth-middleware"
 
 // Controllers
-const writer_controller = require("../controllers/writer_controller")
+const writer_controller = require("../controllers/Writer/writer_controller")
 const user_controller = require("../controllers/User/user_controller")
 
 /* 

@@ -1,21 +1,21 @@
-const GOOGLE_NL_API = require("./google_nl_api.controller")
-const CategoryController = require("./categories.controller")
-const Category = require("../models/categories.model")
-import admin from "../firebase-service"
+const GOOGLE_NL_API = require("../google_nl_api.controller")
+const CategoryController = require("./../categories.controller")
+const Category = require("../../models/categories.model")
+import admin from "../../firebase-service"
 
 /**
- * addContent() Take text and categorise. 
+ * addContent() Take text and categorise.
  * Save categories with user
  */
 exports.addContent = async (req, res) => {
     try {
         const { text } = req.body
         const { authToken } = req
-        
+
         // Get uid for user from firebase
         const userInfo = await admin.auth().verifyIdToken(authToken)
         const { uid } = userInfo
-        
+
         // Categorise text
         let sepCats = await GOOGLE_NL_API.classifyText(text)
 
@@ -36,11 +36,7 @@ exports.addContent = async (req, res) => {
                     // Must be last in array to add
                     if (i === categories.length - 1) {
                         // ADD User
-                        await CategoryController.addUser(
-                            name,
-                            uid,
-                            confidence
-                        )
+                        await CategoryController.addUser(name, uid, confidence)
                     }
                 } else {
                     // Category DOESNT exist
@@ -108,38 +104,57 @@ exports.getCategories = async (req, res) => {
 
         // Get stats for user
         let stats
-        if(userStats) {
+        if (userStats) {
             stats = {
-                confidence: (userStats.confidence / userStats.articles_written).toFixed(2) * 100,
+                confidence:
+                    (userStats.confidence / userStats.articles_written).toFixed(
+                        2
+                    ) * 100,
                 articles_written: userStats.articles_written
             }
         }
-        
-        
+
         // Check for parent
-        if(category._parent_category_id) {
+        if (category._parent_category_id) {
             // console.log('Has parent');
-            const { _id: subId, name: subName, users: subUsers, _parent_category_id: subParent } = category._parent_category_id 
+            const {
+                _id: subId,
+                name: subName,
+                users: subUsers,
+                _parent_category_id: subParent
+            } = category._parent_category_id
             let subUserStats = subUsers.find(user => user.uid === uid)
-            
+
             // Get stats for user
             let subStats
-            if(subUserStats) {
+            if (subUserStats) {
                 subStats = {
-                    confidence: (subUserStats.confidence / subUserStats.articles_written).toFixed(2) * 100,
+                    confidence:
+                        (
+                            subUserStats.confidence /
+                            subUserStats.articles_written
+                        ).toFixed(2) * 100,
                     articles_written: subUserStats.articles_written
                 }
             }
 
-            if(subParent) {
-                const { _id: sub2Id, name: sub2Name, users: sub2Users } = subParent
+            if (subParent) {
+                const {
+                    _id: sub2Id,
+                    name: sub2Name,
+                    users: sub2Users
+                } = subParent
                 let sub2UserStats = sub2Users.find(user => user.uid === uid)
 
                 // Get stats for user
                 let sub2Stats
-                if(sub2UserStats) {
+                if (sub2UserStats) {
                     sub2Stats = {
-                        confidence: (sub2UserStats.confidence / sub2UserStats.articles_written).toFixed(2) * 100,
+                        confidence:
+                            (
+                                sub2UserStats.confidence /
+                                sub2UserStats.articles_written
+                            ).toFixed(2) * 100,
                         articles_written: sub2UserStats.articles_written
                     }
                 }
@@ -159,8 +174,7 @@ exports.getCategories = async (req, res) => {
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 return {
                     _id: subId,
                     name: subName,
@@ -173,7 +187,7 @@ exports.getCategories = async (req, res) => {
                 }
             }
         }
-        
+
         return { _id, name, stats }
     })
 
