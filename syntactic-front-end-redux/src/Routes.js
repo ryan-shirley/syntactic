@@ -24,17 +24,23 @@ const appLayoutRoutes = [
     {
         path: '/dashboard',
         page: Dashboard,
-        auth: true
+        middleware: {
+            type: 'private'
+        }
     },
     {
         path: '/levels',
         page: Levels,
-        auth: true
+        middleware: {
+            type: 'private'
+        }
     },
     {
         path: '/add-content',
         page: AddContent,
-        auth: true
+        middleware: {
+            type: 'private'
+        }
     }
 ]
 
@@ -43,32 +49,51 @@ const fullWithRoutes = [
     {
         path: '/',
         page: Home,
-        exact: true
+        exact: true,
+        middleware: {
+            type: 'public'
+        }
     },
     {
         path: '/signin',
-        page: SignIn
+        page: SignIn,
+        middleware: {
+            type: 'public',
+            restricted: true
+        }
     },
     {
         path: '/signup',
-        page: SignUp
+        page: SignUp,
+        middleware: {
+            type: 'public',
+            restricted: true
+        }
     },
     {
         path: '/onboarding/writer',
         page: OnboardingWriter,
-        auth: true
+        middleware: {
+            type: 'private'
+        }
     },
     {
         path: '*',
-        page: NotFound404
+        page: NotFound404,
+        middleware: {
+            type: 'public'
+        }
     }
 ]
 
 const Routes = () => (
     <main>
         <Switch>
-            { appLayoutRoutes.map((route) => ( <LayoutManager authRequired={route.auth} path={route.path} page={route.page} exact={route.exact ? true : false} layout="app" key={route.path} /> )) }
-            { fullWithRoutes.map((route) => ( <LayoutManager authRequired={route.auth} path={route.path} page={route.page} exact={route.exact ? true : false} layout="full" key={route.path} /> )) }
+            { appLayoutRoutes.map((route) => ( <LayoutManager route={route} path={route.path} exact={route.exact ? true : false} layout="app" key={route.path} /> )) }
+            { fullWithRoutes.map((route) => ( <LayoutManager route={route} path={route.path} exact={route.exact ? true : false} layout="full" key={route.path} /> )) }
+
+            {/* { appLayoutRoutes.map((route) => ( <LayoutManager route={route} exact={route.exact ? true : false} layout="app" key={route.path} /> )) }
+            { fullWithRoutes.map((route) => ( <LayoutManager route={route} exact={route.exact ? true : false} layout="full" key={route.path} /> )) } */}
         </Switch>
     </main>
 )

@@ -13,7 +13,7 @@ class LayoutManager extends Component {
         super(props)
 
         // Get user information if not already in store
-        const { uid } = props.firebaseAuth
+        const { uid } = props.fbAuth
         if (uid) {
             props.dispatch(getUser())
         }
@@ -21,69 +21,81 @@ class LayoutManager extends Component {
 
     render() {
         const {
-            authRequired,
+            route,
             path,
-            page,
             exact,
             layout,
-            firebaseAuth,
+            fbAuth,
             auth
         } = this.props
 
-        // See if auth is required for route
-        if(authRequired) {
-            // Auth required
-            if(firebaseAuth.uid) {
-                // Is logged in
+        // Route details
+        const { page, middleware } = route
+        // Middleware
+        const { type, restricted = false } = middleware
+        const loggedIn = fbAuth.uid || false
 
-                let { user } = auth // User object from Monogo
-                if(!user) {
-                    // Wait for user to be loaded
-                    return 'Waiting for user object'
-                }
-
-                // Additional Middleware checks for auth routes
-
-                // --------------------------------------------------------
-                // Redirect onboarding - If completed or not
-                // --------------------------------------------------------
-                const { completed_onboarding, uid } = user
-                
-                if (uid && !completed_onboarding) {
-                    // console.log("User has not completed onboarding")
-                    if (!path.includes("/onboarding/")) {
-                        return <Redirect to="/onboarding/writer" />
-                    }
-                } else if (
-                    uid &&
-                    completed_onboarding &&
-                    path.includes("/onboarding/")
-                ) {
-                    // console.log("User has completed onboarding")
-                    return <Redirect to="/dashboard" />
-                }
+        // Public Route
+        if(type === "public") {
+            if(loggedIn && restricted) {
+                console.log("Restriced route. Redirecting..")
+                return <Redirect to="/dashboard" />
             }
-            else {
+        }
+        // Private Route
+        else if (type === 'private') {
+            let { user } = auth // User object from Monogo
+
+            if(!loggedIn) {
                 console.log("Not authorised. Redirecting..")
                 return <Redirect to="/signin" />
             }
+            else if(!user.uid) { // No user profile
+                // Wait for user to be loaded
+                return 'Waiting for user profile to be loaded'
+            }
+            else if(!user.completed_onboarding) {
+                console.log("User has not completed onboarding")
+                const { name: role } = user.role[0]
+
+                // Ensure user is not trying to complete onboarding
+                if (!path.includes("/onboarding/")) {
+                    // Redirect to correct onboarding
+                    if(role === 'writer') {
+                        return <Redirect to="/onboarding/writer" />
+                    }
+                    else if (role === 'content-seeker') {
+                        return <Redirect to="/onboarding/content-seeker" />
+                    }
+                    else {
+                        return `Role '${role}' is not valid.`
+                    }
+                }
+            }
+            else if (path.includes("/onboarding/")) {
+                console.log("User has completed onboarding")
+                return <Redirect to="/dashboard" />
+            }
+        }
+        else {
+            return `Oops 😅 this route type does not exist. Please contact the developer! Route type: ${type}.`
         }
 
-
         // Continue to get layouts
-        if (layout === "app") {
-            return <AppLayout path={path} component={page} exact={exact} />
-        } else if (layout === "full") {
-            return <FullLayout path={path} component={page} exact={exact} />
-        } else {
-            return "This layout does not exist."
+        switch (layout) {
+            case "app":
+                return <AppLayout path={path} component={page} exact={exact} />
+            case "full":
+                return <FullLayout path={path} component={page} exact={exact} />
+            default:
+                return "Oops this layout does not exist 😅"
         }
     }
 }
 
 const mapStateToProps = state => {
     return {
-        firebaseAuth: state.firebase.auth,
+        fbAuth: state.firebase.auth,
         auth: state.auth
     }
 }

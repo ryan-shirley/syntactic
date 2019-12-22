@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { signIn } from "../../store/actions/authActions"
-import { Redirect } from "react-router-dom"
 
 class SignIn extends Component {
     state = {
@@ -18,8 +17,7 @@ class SignIn extends Component {
         this.props.signIn(this.state)
     }
     render() {
-        const { authError, auth } = this.props
-        if (auth.uid) return <Redirect to="/dashboard" />
+        const { authError } = this.props
 
         return (
             <div className="card">
