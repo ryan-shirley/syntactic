@@ -2,7 +2,7 @@ var express = require("express")
 var router = express.Router()
 
 // Middlewares
-import { checkIfAuthenticated } from "../middlewares/auth-middleware"
+import { checkIfAuthenticated, checkifWriter } from "../middlewares/auth-middleware"
 
 // Controllers
 const writer_controller = require("../controllers/writer_controller")
@@ -20,7 +20,7 @@ router.put("/finish-onboarding", checkIfAuthenticated, user_controller.finishOnb
  */
 router.get(
     "/writer/:id/categories",
-    checkIfAuthenticated,
+    checkifWriter,
     writer_controller.getCategories
 )
 router.post("/writer/add-content",checkIfAuthenticated, writer_controller.addContent)
