@@ -70,10 +70,7 @@ export const signUp = newUser => {
                                 //     "New user signed up on Mongo DB!",
                                 //     resp.data
                                 // )
-                                firebase.reloadAuth().then(() => {
-                                    console.log("reloaded auth")
-                                    dispatch({ type: "SIGNUP_SUCCESS" })
-                                })
+                                dispatch({ type: "SIGNUP_SUCCESS" })
                             })
                             .catch(err => {
                                 dispatch({ type: "SIGNUP_ERROR", err })
@@ -98,6 +95,8 @@ export const getUser = () => {
             .auth()
             .currentUser.getIdToken(/* forceRefresh */ true)
             .then(token => {
+                dispatch({ type: "LOADING_USER" })
+
                 axios
                     .get(
                         API_URL +

@@ -9,16 +9,6 @@ import FullLayout from "./layouts/FullLayout"
 import { getUser } from "./store/actions/authActions"
 
 class LayoutManager extends Component {
-    constructor(props) {
-        super(props)
-
-        // Get user information if not already in store
-        const { uid } = props.fbAuth
-        if (uid) {
-            props.dispatch(getUser())
-        }
-    }
-
     render() {
         const {
             route,
@@ -45,13 +35,18 @@ class LayoutManager extends Component {
         }
         // Private Route
         else if (type === 'private') {
-            let { user } = auth // User object from Monogo
-            
+            let { user, loadingUser } = auth // User object from Monogo
+
             if(!loggedIn) {
                 console.log("Not authorised. Redirecting..")
                 return <Redirect to="/signin" />
             }
-            else if(!user.uid) { // No user profile
+            else if(user === null || (Object.keys(user).length === 0 && user.constructor === Object)) { // No user profile
+                // Load User details
+                if(!loadingUser) {
+                    this.props.dispatch(getUser())
+                }
+                
                 // Wait for user to be loaded
                 return 'Waiting for user profile to be loaded'
             }

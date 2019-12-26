@@ -1,5 +1,6 @@
 const initState = {
     user: {},
+    loadingUser: false,
     authError: null,
     signupSucess: false
 }
@@ -42,18 +43,25 @@ const authReducer = (state = initState, action) => {
                 ...state,
                 authError: action.err.response.data.message
             }
+        case "LOADING_USER":
+            return {
+                ...state,
+                loadingUser: true
+            }
         case "FETCH_USER_SUCCESS":
 
             return {
                 ...state,
                 user: action.user,
+                loadingUser: false,
                 authError: null
             }
             case "FETCH_USER_ERROR":
 
                 return {
                     ...state,
-                    authError: action.error
+                    authError: action.error,
+                    loadingUser: false
                 }
             case "FIREBASE_AUTH_GET_TOKEN_ERROR":
 
