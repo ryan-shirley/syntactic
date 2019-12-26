@@ -18,7 +18,8 @@ let UserSchema = new mongoose.Schema({
 let CategoriesSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     _parent_category_id: {
         type: mongoose.Schema.Types.ObjectId,
