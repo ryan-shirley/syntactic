@@ -1,9 +1,10 @@
 const mongoose = require("mongoose")
 
 let UserSchema = new mongoose.Schema({
-    uid: {
-        type: String,
-        required: true
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     },
     articles_written: {
         type: Number,

@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { connect } from "react-redux"
 import { default as ContentSeekerProjects } from "../pages/content-seeker/Projects"
 import { default as WriterProjects } from "../pages/writer/Projects"

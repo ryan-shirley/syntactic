@@ -1,7 +1,8 @@
 const initState = {
     completed: false,
     processing: false,
-    error: null
+    error: null,
+    briefResults: []
 }
 
 const googleNLAPIReducer = (state = initState, action) => {
@@ -11,6 +12,11 @@ const googleNLAPIReducer = (state = initState, action) => {
             return {
                 ...state,
                 error: action.error.details
+            }
+        case "ANALYSE_BRIEF_ERROR":
+            return {
+                ...state,
+                error: action.error
             }
         case "ADD_CONTENT_SUCCESS":
             return {
@@ -23,6 +29,19 @@ const googleNLAPIReducer = (state = initState, action) => {
                 processing: true,
                 error: null
             }
+        case "PROCESSING_BREIF":
+            return {
+                ...state,
+                processing: true,
+                error: null
+            }
+        case "ANALYSE_BRIEF_SUCCESS": {
+            return {
+                ...state,
+                processing: false,
+                briefResults: action.results
+            }
+        }
         default:
             return state
     }

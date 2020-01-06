@@ -11,6 +11,7 @@ var cors = require("cors")
 var indexRouter = require("./routes/index")
 var onboardingrouter = require("./routes/onboarding")
 var usersRouter = require("./routes/users")
+var nlpRouter = require("./routes/nlp")
 
 // Set up Mongoose connection
 var mongoose = require("mongoose")
@@ -44,6 +45,7 @@ app.use(cors())
 
 // Routes Defined
 app.use("/", indexRouter)
+app.use("/nlp", nlpRouter)
 app.use("/onboarding", onboardingrouter)
 app.use("/user", usersRouter)
 

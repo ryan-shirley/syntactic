@@ -63,14 +63,20 @@ class Onboarding extends Component {
                 title = 'Who are you?'
                 text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
                 form = <TextArea field='inputText' value={this.state.inputText} handleChange={this.handleChange} error={this.props.onboarding.error} />
-                buttons = <Button displayStyle='primary' onClick={(e) => this.props.updateBio(this.state.inputText)} disabled={this.props.onboarding.waitingForResponse}>Next</Button>
+                buttons = [
+                    prevButton, 
+                    <Button displayStyle='primary' onClick={(e) => this.props.updateBio(this.state.inputText)} disabled={this.props.onboarding.waitingForResponse}>Next</Button>
+                ]
 
                 break
             case 3: // Describe Business & Finish
                 title = 'Describe your business.'
                 text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
                 form = <TextArea field='inputText' value={this.state.inputText} handleChange={this.handleChange} error={this.props.onboarding.error} />
-                buttons = <Button displayStyle='primary' onClick={(e) => this.props.updateBusiness(this.state.inputText)} disabled={this.props.onboarding.waitingForResponse}>Next</Button>
+                buttons = [
+                    prevButton, 
+                    <Button displayStyle='primary' onClick={(e) => this.props.updateBusiness(this.state.inputText)} disabled={this.props.onboarding.waitingForResponse}>Next</Button>
+                ]
 
                 break
             case 4: // Finish
