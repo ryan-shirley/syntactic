@@ -11,6 +11,7 @@ import NotFound404 from "./components/pages/NotFound404"
 
 // Pages - Auth Required
 import Dashboard from "./components/dashboard/Dashboard"
+import Projects from "./components/pages/Projects"
 
 // Pages - Auth - Writer Only
 import Levels from "./components/pages/writer/Levels"
@@ -25,6 +26,13 @@ const appLayoutRoutes = [
     {
         path: '/dashboard',
         page: Dashboard,
+        middleware: {
+            type: 'private'
+        }
+    },
+    {
+        path: '/projects',
+        page: Projects,
         middleware: {
             type: 'private'
         }
