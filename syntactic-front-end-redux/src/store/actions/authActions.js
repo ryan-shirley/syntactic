@@ -43,7 +43,7 @@ export const signOut = () => {
  * signUp() Signs up a new user using Firebase Auth.
  * Sets display name in Firebase and creates user in MongoDB
  */
-export const signUp = newUser => {
+export const signUp = (newUser, role) => {
     return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
 
@@ -62,6 +62,7 @@ export const signUp = newUser => {
                         // console.log("New user signed up on Firebase!", result)
 
                         newUser.uid = result.user.uid
+                        newUser.role = role === "writer" ? "writer" : "content seeker"
 
                         axios
                             .post(API_URL + "/signup", newUser)
@@ -98,11 +99,9 @@ export const getUser = () => {
                 dispatch({ type: "LOADING_USER" })
 
                 axios
-                    .get(
-                        API_URL +
-                            "/user",
-                        { headers: { authorization: `Bearer ${token}` } }
-                    )
+                    .get(API_URL + "/user", {
+                        headers: { authorization: `Bearer ${token}` }
+                    })
                     .then(res => {
                         let user = res.data
 
@@ -127,7 +126,7 @@ export const getUser = () => {
  */
 export const updateOnboardingStatus = () => {
     return (dispatch, getState, { getFirebase }) => {
-        console.log('Updating onboarding status');
+        console.log("Updating onboarding status")
         dispatch({ type: "COMPLETE_ONBOARDING" })
     }
 }

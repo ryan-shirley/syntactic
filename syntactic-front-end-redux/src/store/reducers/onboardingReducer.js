@@ -2,6 +2,7 @@ const initState = {
     stage: 1,
     content: [],
     bio: '',
+    business: '',
     inputType: null,
     waitingForResponse: false,
     error: '',
@@ -54,6 +55,22 @@ const onboardingReducer = (state = initState, action) => {
                 waitingForResponse: false,
                 error
             }
+            case "UPDATE_BUSINESS_DESCRIPTION_SUCCESS":
+                return {
+                    ...state,
+                    business: action.newDesc,
+                    waitingForResponse: false,
+                    successfulResponse: true,
+                    error: ''
+                }
+            case "UPDATE_BUSINESS_DESCRIPTION_ERROR":
+                error = action.error.details || action.error
+    
+                return {
+                    ...state,
+                    waitingForResponse: false,
+                    error
+                }
         case "ADD_CONTENT_SUCCESS":
             const newContent = [...state['content'], action.text]
 

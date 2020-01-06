@@ -63,7 +63,7 @@ class LayoutManager extends Component {
                     if(role === 'writer') {
                         return <Redirect to="/onboarding/writer" />
                     }
-                    else if (role === 'content-seeker') {
+                    else if (role === 'content seeker') {
                         return <Redirect to="/onboarding/content-seeker" />
                     }
                     else {

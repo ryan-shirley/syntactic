@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 import { signUp } from "../../store/actions/authActions"
 
-class SignUp extends Component {
+class SignUpContentSeeker extends Component {
     state = {
         first_name: "",
         last_name: "",
@@ -21,11 +21,11 @@ class SignUp extends Component {
     }
     render() {
         const { auth, authError, signupSucess } = this.props
-        if (auth.uid && signupSucess) return <Redirect to="/onboarding/writer" />
+        if (auth.uid && signupSucess) return <Redirect to="/onboarding/content-seeker" />
 
         return (
             <div className="card">
-                <div className="card-header">Sign Up</div>
+                <div className="card-header">Content Seeker Sign Up</div>
                 <div className="card-body">
                     <form onSubmit={this.handleSubmit}>
                         <div className="row">
@@ -105,8 +105,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        signUp: creds => dispatch(signUp(creds))
+        signUp: creds => dispatch(signUp(creds, 'content-seeker'))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpContentSeeker)

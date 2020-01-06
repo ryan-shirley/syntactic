@@ -75,7 +75,7 @@ export const checkifContentSeeker = (req, res, next) => {
             User.findOne({ uid }, (err, user) => {
                 if (err) return res.status(400).json(err)
 
-                if(user.role[0].name === 'content-seeker') {
+                if(user.role[0].name === 'content seeker') {
                     return next()
                 }
                 else {

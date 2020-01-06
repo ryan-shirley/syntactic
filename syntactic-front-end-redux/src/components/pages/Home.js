@@ -12,8 +12,12 @@ class Home extends Component {
                     Sign In
                 </Link>
 
-                <Link className="btn btn-orange" to="/signup">
-                    Sign Up
+                <Link className="btn btn-orange mr-2" to="/writer-signup">
+                    Writer Sign Up
+                </Link>
+
+                <Link className="btn btn-orange" to="/content-seeker-signup">
+                    Content Seeker Sign Up
                 </Link>
             </div>
         )

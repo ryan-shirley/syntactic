@@ -5,7 +5,8 @@ import LayoutManager from './LayoutManager'
 // Pages - No Auth
 import Home from "./components/pages/Home"
 import SignIn from "./components/auth/SignIn"
-import SignUp from "./components/auth/SignUp"
+import SignUpWriter from "./components/auth/SignUpWriter"
+import SignUpContentSeeker from "./components/auth/SignUpContentSeeker"
 import NotFound404 from "./components/pages/NotFound404"
 
 // Pages - Auth Required
@@ -17,7 +18,7 @@ import OnboardingWriter from "./components/pages/writer/Onboarding"
 import AddContent from "./components/pages/writer/AddContent"
 
 // Page - Auth - Content Seeker Only
-
+import OnboardingContentSeeker from "./components/pages/content-seeker/Onboarding"
 
 // All Routes to use the app layout
 const appLayoutRoutes = [
@@ -65,8 +66,16 @@ const fullWithRoutes = [
         }
     },
     {
-        path: '/signup',
-        page: SignUp,
+        path: '/writer-signup',
+        page: SignUpWriter,
+        middleware: {
+            type: 'public',
+            restricted: true
+        }
+    },
+    {
+        path: '/content-seeker-signup',
+        page: SignUpContentSeeker,
         middleware: {
             type: 'public',
             restricted: true
@@ -78,6 +87,14 @@ const fullWithRoutes = [
         middleware: {
             type: 'private',
             role: 'writer'
+        }
+    },
+    {
+        path: '/onboarding/content-seeker',
+        page: OnboardingContentSeeker,
+        middleware: {
+            type: 'private',
+            role: 'content seeker'
         }
     },
     {

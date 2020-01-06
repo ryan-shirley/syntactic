@@ -2,7 +2,7 @@ var express = require("express")
 var router = express.Router()
 
 // Middlewares
-import { checkIfAuthenticated, checkifWriter } from "../middlewares/auth-middleware"
+import { checkIfAuthenticated, checkifWriter, checkifContentSeeker } from "../middlewares/auth-middleware"
 
 // Controllers
 const writer_controller = require("../controllers/Writer/writer_controller")
@@ -24,5 +24,11 @@ router.get(
     writer_controller.getCategories
 )
 router.post("/writer/add-content",checkIfAuthenticated, writer_controller.addContent)
+
+/**
+ * Content Seeker Routes
+ */
+router.put("/update-business-description", checkifContentSeeker, user_controller.updateBusinessDescription)
+
 
 module.exports = router
