@@ -143,7 +143,7 @@ exports.getCategories = async (req, res) => {
     }).select({
         _id: 1
     })
-    let userID = userIDObj._id
+    let userID = escape(userIDObj._id)
 
     const categories = await Category.find({ "users.user": userID }).populate({
         path: "_parent_category_id",
@@ -155,7 +155,8 @@ exports.getCategories = async (req, res) => {
     // Format with parent at top level
     let formattedCategories = categories.map(category => {
         const { _id, name, users } = category
-        let userStats = users.find(user => user.user === userID)
+        let userStats = users.find(user => escape(user.user) === userID)
+        
 
         // Get stats for user
         let stats
@@ -178,7 +179,7 @@ exports.getCategories = async (req, res) => {
                 users: subUsers,
                 _parent_category_id: subParent
             } = category._parent_category_id
-            let subUserStats = subUsers.find(user => user.user === userID)
+            let subUserStats = subUsers.find(user => escape(user.user) === userID)
 
             // Get stats for user
             let subStats
@@ -199,7 +200,7 @@ exports.getCategories = async (req, res) => {
                     name: sub2Name,
                     users: sub2Users
                 } = subParent
-                let sub2UserStats = sub2Users.find(user => user.user === userID)
+                let sub2UserStats = sub2Users.find(user => escape(user.user) === userID)
 
                 // Get stats for user
                 let sub2Stats
