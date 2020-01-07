@@ -71,7 +71,9 @@ exports.analyse = async (req, res) => {
                     cat_level1 = category.categories[0]
 
                     // Writers in this best (level 1) category
-                    let level1_categories = await Category.findOne({ name: cat_level1 })
+                    let level1_categories = await Category.findOne({ name: cat_level1 }).populate({
+                        path: "users.user"
+                    })
 
                     if(level1_categories === null) {
                         level1_writers = {
@@ -126,7 +128,9 @@ exports.analyse = async (req, res) => {
                     cat_level2 = category.categories[1]
 
                     // Writers in best (level 2) category
-                    let level2_categories = await Category.findOne({ name: cat_level2 })
+                    let level2_categories = await Category.findOne({ name: cat_level2 }).populate({
+                        path: "users.user"
+                    })
 
                     if(level2_categories === null) {
                         level2_writers = {
@@ -207,7 +211,9 @@ exports.analyse = async (req, res) => {
                     cat_level3 = category.categories[2]
 
                     // Writers in best (level 3) category
-                    let level3_categories = await Category.findOne({ name: cat_level3 })
+                    let level3_categories = await Category.findOne({ name: cat_level3 }).populate({
+                        path: "users.user"
+                    })
 
                     if(level3_categories === null) {
                         level3_writers = {

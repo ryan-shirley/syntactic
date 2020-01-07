@@ -38,6 +38,19 @@ class Projects extends Component {
     }
 
     render() {
+        const { briefResults, completed } = this.props.nlp
+        
+        let bestMatch = []
+
+        if(completed) {
+            for(let i = 0; i < briefResults.length; i++) {
+                let writers = briefResults[i].bestMatch.writers
+                if(writers.length) {
+                    bestMatch = [...bestMatch, ...writers]
+                }
+            }
+        }
+
         return (
             <div className="card">
                 <div className="card-header">Projects</div>
@@ -58,17 +71,15 @@ class Projects extends Component {
 
                     <hr className="mt-5" />
 
-                    {this.props.nlp.briefResults.bestMatch.writers.length !== 0 &&
-                        this.props.nlp.briefResults.map(category => (
-                            <>
-                                <h3>Category: {category.name} with confidence of {category.confidence}%</h3>
-                                <ul class="list-group mb-4">
-                                    {category.writers.map(writer => (
-                                    <li class="list-group-item">{ writer.user.first_name + ' ' + writer.user.last_name } - Written: {writer.articles_written} articles.</li>
-                                    ))}
-                                </ul>
-                            </>
-                        ))}
+                    {completed && bestMatch.length && (
+                        <>
+                            <h1>Results</h1>
+                            <h3>Best Match</h3>
+                            {bestMatch.map(writer => (
+                                <li className="list-group-item" key={writer.user._id}>{ writer.user.first_name + ' ' + writer.user.last_name } - Written: {writer.articles_written} articles.</li>
+                            ))}
+                        </>
+                    )}
                 </div>
             </div>
         )
