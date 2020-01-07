@@ -71,15 +71,19 @@ class Projects extends Component {
 
                     <hr className="mt-5" />
 
-                    {completed && bestMatch.length && (
+                    {completed && (bestMatch.length ? (
                         <>
-                            <h1>Results</h1>
-                            <h3>Best Matched Writers</h3>
+                            <h1>Category Results</h1>
+                            {briefResults.map(cat => (
+                                <li className="list-group-item" key={cat.bestMatch.category}>{cat.bestMatch.category}</li>
+                            ))}
+
+                            <h3 className="mt-4">Best Matched Writers</h3>
                             {bestMatch.map(writer => (
                                 <li className="list-group-item" key={writer.user._id}>{ writer.user.first_name + ' ' + writer.user.last_name } - Written: {writer.articles_written} articles.</li>
                             ))}
                         </>
-                    )}
+                    ) : 'No writers were matched here.')}
                 </div>
             </div>
         )
