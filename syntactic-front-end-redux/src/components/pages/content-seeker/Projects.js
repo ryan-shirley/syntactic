@@ -74,7 +74,7 @@ class Projects extends Component {
                     {completed && bestMatch.length && (
                         <>
                             <h1>Results</h1>
-                            <h3>Best Match</h3>
+                            <h3>Best Matched Writers</h3>
                             {bestMatch.map(writer => (
                                 <li className="list-group-item" key={writer.user._id}>{ writer.user.first_name + ' ' + writer.user.last_name } - Written: {writer.articles_written} articles.</li>
                             ))}
