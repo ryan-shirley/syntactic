@@ -56,10 +56,11 @@ exports.createCategory = (name, parent_name = null, user = null) => {
     })
 }
 
-exports.addUser = async (catName, uid, confidence) => {
+exports.addUser = async (catName, userID, confidence) => {
     const cat = await Category.findOne({ name: catName })
+    
     let userInCat = cat.users.some(el => {
-        return el.uid == uid
+        return escape(el.user) === escape(userID)
     })
 
     // Check if user is already in
@@ -67,7 +68,7 @@ exports.addUser = async (catName, uid, confidence) => {
         // User in category
         cat.users.forEach((user, index) => {
             // Find user to update
-            if (user.uid == uid) {
+            if (escape(user.user) === escape(userID)) {
                 cat.users[index].articles_written++
                 cat.users[index].confidence += confidence
                 return
@@ -78,7 +79,7 @@ exports.addUser = async (catName, uid, confidence) => {
     } else {
         // User not in category
         cat.users.push({
-            uid,
+            user: userID,
             articles_written: 1,
             confidence
         })

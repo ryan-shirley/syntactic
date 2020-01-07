@@ -1,6 +1,7 @@
 const GOOGLE_NL_API = require("../google_nl_api.controller")
 const CategoryController = require("./../categories.controller")
 const Category = require("../../models/categories.model")
+const User = require("../../models/user.model")
 import admin from "../../firebase-service"
 
 /**
@@ -9,77 +10,124 @@ import admin from "../../firebase-service"
  */
 exports.addContent = async (req, res) => {
     try {
-        const { text } = req.body
-        const { authToken } = req
+        const {
+            text
+        } = req.body
+        const {
+            authToken
+        } = req
 
         // Get uid for user from firebase
         const userInfo = await admin.auth().verifyIdToken(authToken)
-        const { uid } = userInfo
+        const {
+            uid
+        } = userInfo
+
+        // Get user id from mongo
+        let userIDObj = await User.findOne({
+            uid
+        }).select({
+            _id: 1
+        })
+        let userID = userIDObj._id
 
         // Categorise text
         let sepCats = await GOOGLE_NL_API.classifyText(text)
 
         // Loop through category array
         sepCats.map(async categoryObj => {
-            let { categories, confidence } = categoryObj
+            let {
+                categories,
+                confidence
+            } = categoryObj
 
-            for (let i = 0; i < categories.length; i++) {
-                let name = categories[i]
+            // TODO: Change UID to object ID
+            let cat_level1, cat_level2, cat_level3, level1_exists, level2_exists, level3_exists
+            switch (categories.length) {
+                case 1:
+                    cat_level1 = categories[0]
 
-                let existStatus = await CategoryController.checkExists(name)
-
-                // console.log(`Checking exist status of: ${name}. It is`, existStatus.exists);
-
-                if (existStatus.exists) {
-                    // Category exists
-
-                    // Must be last in array to add
-                    if (i === categories.length - 1) {
-                        // ADD User
-                        await CategoryController.addUser(name, uid, confidence)
-                    }
-                } else {
-                    // Category DOESNT exist
-
-                    // If first in array & only one in array - create WITHOUT parent - WITH User
-                    if (i === 0 && categories.length === 1) {
-                        // Create category WITHOUT parent
-                        await CategoryController.createCategory(name, null, {
-                            uid,
-                            articles_written: 1,
-                            confidence
-                        })
-                    } else if (i === categories.length - 1) {
-                        // Create category WITH parent - WITH User
+                    level1_exists = await CategoryController.checkExists(cat_level1)
+                    if (level1_exists.exists) {
+                        // Add user to present category
+                        await CategoryController.addUser(cat_level1, userID, confidence)
+                    } else {
+                        // Create Category with user
                         await CategoryController.createCategory(
-                            name,
-                            categories[i - 1],
-                            {
-                                uid,
+                            cat_level1,
+                            null, {
+                                user: userID,
                                 articles_written: 1,
                                 confidence
                             }
                         )
+                    }
+                    break
+                case 2:
+                    cat_level1 = categories[0]
+                    cat_level2 = categories[1]
+
+                    // Level 1
+                    level1_exists = await CategoryController.checkExists(cat_level1)
+                    if (!level1_exists.exists) await CategoryController.createCategory(cat_level1)
+
+                    // Level 2
+                    level2_exists = await CategoryController.checkExists(cat_level2)
+                    if (level2_exists.exists) {
+                        // Add user to present category
+                        await CategoryController.addUser(cat_level2, userID, confidence)
                     } else {
-                        // Create category WITH parent - WITHOUT user
+                        // Create Category with user
                         await CategoryController.createCategory(
-                            name,
-                            categories[i - 1]
+                            cat_level2,
+                            cat_level1, {
+                                user: userID,
+                                articles_written: 1,
+                                confidence
+                            }
                         )
                     }
-                }
+                    break
+                case 3:
+                    cat_level1 = categories[0]
+                    cat_level2 = categories[1]
+                    cat_level3 = categories[2]
+
+                    // Level 1
+                    level1_exists = await CategoryController.checkExists(cat_level1)
+                    if (!level1_exists.exists) await CategoryController.createCategory(cat_level1)
+
+                    // Level 2
+                    level2_exists = await CategoryController.checkExists(cat_level2)
+                    if (!level2_exists.exists) await CategoryController.createCategory(cat_level2, cat_level1)
+
+                    // Level 3
+                    level3_exists = await CategoryController.checkExists(cat_level3)
+                    if (level3_exists.exists) {
+                        // Add user to present category
+                        await CategoryController.addUser(cat_level3, userID, confidence)
+                    } else {
+                        // Create Category with user
+                        await CategoryController.createCategory(
+                            cat_level3,
+                            cat_level2, {
+                                user: userID,
+                                articles_written: 1,
+                                confidence
+                            }
+                        )
+                    }
+                    break
+                default:
             }
         })
 
         res.send({
-            body:
-                "Woo 😀! Your text has been analysed and we have updated our database with these categories.",
+            body: "Woo 😀! Your text has been analysed and we have updated our database with these categories.",
             categories: sepCats
         })
     } catch (error) {
         // console.error(error)
-        console.log(error)
-
         res.status(500).json(error)
     }
 }

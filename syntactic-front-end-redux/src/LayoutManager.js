@@ -23,7 +23,7 @@ class LayoutManager extends Component {
         const { page, middleware } = route
         // Middleware
         const { type, restricted = false, role: restrictedRole = false } = middleware
-        const loggedIn = fbAuth.uid || false
+        const loggedIn = fbAuth.uid ? true : false
         
         
         // Public Route
