@@ -68,7 +68,7 @@ export const analyse = text => {
                             }
                         )
                         .then(res => {
-                            dispatch({ type: "ANALYSE_BRIEF_SUCCESS", results: res.data.writers })
+                            dispatch({ type: "ANALYSE_BRIEF_SUCCESS", results: res.data.results })
                         })
                         .catch(error => {
                             // console.log(error);

@@ -41,7 +41,6 @@ exports.addContent = async (req, res) => {
                 confidence
             } = categoryObj
 
-            // TODO: Change UID to object ID
             let cat_level1, cat_level2, cat_level3, level1_exists, level2_exists, level3_exists
             switch (categories.length) {
                 case 1:

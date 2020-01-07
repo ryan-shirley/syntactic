@@ -58,7 +58,7 @@ class Projects extends Component {
 
                     <hr className="mt-5" />
 
-                    {this.props.nlp.briefResults.length !== 0 &&
+                    {this.props.nlp.briefResults.bestMatch.writers.length !== 0 &&
                         this.props.nlp.briefResults.map(category => (
                             <>
                                 <h3>Category: {category.name} with confidence of {category.confidence}%</h3>

@@ -2,7 +2,24 @@ const initState = {
     completed: false,
     processing: false,
     error: null,
-    briefResults: []
+    briefResults: {
+        bestMatch: {
+            category: '',
+            writers: []
+        },
+        writersAdditionalRelevantCats: {
+            category: '',
+            writers: []
+        },
+        writersLowerCat: {
+            category: '',
+            writers: []
+        },
+        writersSameL2Cat: {
+            category: '',
+            writers: []
+        },
+    }
 }
 
 const googleNLAPIReducer = (state = initState, action) => {
@@ -38,6 +55,7 @@ const googleNLAPIReducer = (state = initState, action) => {
         case "ANALYSE_BRIEF_SUCCESS": {
             return {
                 ...state,
+                completed: true,
                 processing: false,
                 briefResults: action.results
             }
