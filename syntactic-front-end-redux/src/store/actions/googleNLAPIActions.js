@@ -71,6 +71,7 @@ export const analyse = text => {
                             dispatch({ type: "ANALYSE_BRIEF_SUCCESS", results: res.data.writers })
                         })
                         .catch(error => {
+                            // console.log(error);
                             dispatch({
                                 type: "ANALYSE_BRIEF_ERROR",
                                 error: error.response.data.details

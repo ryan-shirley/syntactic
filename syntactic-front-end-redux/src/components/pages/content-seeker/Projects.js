@@ -61,15 +61,12 @@ class Projects extends Component {
                     {this.props.nlp.briefResults.length !== 0 &&
                         this.props.nlp.briefResults.map(category => (
                             <>
-                                <p>
-                                    Category: {category.name} with confidence of {category.confidence}%
-                                </p>
-                                <p>
-                                    Writers: 
+                                <h3>Category: {category.name} with confidence of {category.confidence}%</h3>
+                                <ul class="list-group mb-4">
                                     {category.writers.map(writer => (
-                                        writer.user.first_name + ' ' + writer.user.last_name
+                                    <li class="list-group-item">{ writer.user.first_name + ' ' + writer.user.last_name } - Written: {writer.articles_written} articles.</li>
                                     ))}
-                                </p>
+                                </ul>
                             </>
                         ))}
                 </div>

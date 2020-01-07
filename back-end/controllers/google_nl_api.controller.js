@@ -97,7 +97,7 @@ exports.analyse = async (req, res) => {
         }
         
         res.send({
-            categoriesMatched
+            writers
         })
     } catch (error) {
         console.error(error)
