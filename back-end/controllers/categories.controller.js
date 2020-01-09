@@ -47,7 +47,7 @@ exports.createCategory = (name, parent_name = null, user = null) => {
 
 exports.addUser = async (catName, userID, confidence) => {
     const cat = await Category.findOne({ name: catName })
-    
+
     let userInCat = cat.users.some(el => {
         return escape(el.user) === escape(userID)
     })
@@ -81,17 +81,16 @@ exports.checkExists = name => {
     return new Promise((resolve, reject) => {
         try {
             Category.findOne({ name }, (err, doc) => {
-                if(doc){
+                if (doc) {
                     resolve({
                         exists: true
                     })
-                }
-                else {
+                } else {
                     resolve({
                         exists: false
                     })
                 }
-            }); 
+            })
         } catch (error) {
             console.error(error)
             reject(error)
