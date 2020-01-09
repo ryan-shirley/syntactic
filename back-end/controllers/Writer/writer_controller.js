@@ -33,9 +33,11 @@ exports.addContent = async (req, res) => {
 
         // Categorise text
         let sepCats = await GOOGLE_NL_API.classifyText(text)
-
+        
         // Loop through category array
-        sepCats.map(async categoryObj => {
+        for(let i = 0; i < sepCats.length; i++) {
+            let categoryObj = sepCats[i]
+            
             let {
                 categories,
                 confidence
@@ -93,7 +95,10 @@ exports.addContent = async (req, res) => {
                     cat_level3 = categories[2]
 
                     // Level 1
+                    console.log('Before 1');
                     level1_exists = await CategoryController.checkExists(cat_level1)
+                    console.log('After 1');
+                    
                     if (!level1_exists.exists) await CategoryController.createCategory(cat_level1)
 
                     // Level 2
@@ -102,6 +107,7 @@ exports.addContent = async (req, res) => {
 
                     // Level 3
                     level3_exists = await CategoryController.checkExists(cat_level3)
+                    
                     if (level3_exists.exists) {
                         // Add user to present category
                         await CategoryController.addUser(cat_level3, userID, confidence)
@@ -119,7 +125,7 @@ exports.addContent = async (req, res) => {
                     break
                 default:
             }
-        })
+        }
 
         res.send({
             body: "Woo 😀! Your text has been analysed and we have updated our database with these categories.",

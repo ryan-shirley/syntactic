@@ -38,54 +38,209 @@ class Projects extends Component {
     }
 
     render() {
-        const { briefResults, completed } = this.props.nlp
-        
-        let bestMatch = []
+        const { briefResults, completed, processing } = this.props.nlp
 
-        if(completed) {
-            for(let i = 0; i < briefResults.length; i++) {
-                let writers = briefResults[i].bestMatch.writers
-                if(writers.length) {
-                    bestMatch = [...bestMatch, ...writers]
-                }
-            }
-        }
+        let categoriesMatched = briefResults.analysis
+        let results = briefResults.results
 
         return (
-            <div className="card">
-                <div className="card-header">Projects</div>
-                <div className="card-body">
-                    <form onSubmit={this.handleSubmit}>
-                        <TextArea
-                            field="text"
-                            value={this.state.text}
-                            handleChange={this.handleChange}
-                            error={this.props.nlp.error}
-                            label="Project Brief"
-                        />
+            <>
+                <div className="card mb-3">
+                    <div className="card-header">Projects</div>
+                    <div className="card-body">
+                        <form onSubmit={this.handleSubmit}>
+                            <TextArea
+                                field="text"
+                                value={this.state.text}
+                                handleChange={this.handleChange}
+                                error={this.props.nlp.error}
+                                label="Project Brief"
+                            />
 
-                        <button type="submit" className="btn btn-primary">
-                            Submit
-                        </button>
-                    </form>
-
-                    <hr className="mt-5" />
-
-                    {completed && (bestMatch.length ? (
-                        <>
-                            <h1>Category Results</h1>
-                            {briefResults.map(cat => (
-                                <li className="list-group-item" key={cat.bestMatch.category}>{cat.bestMatch.category}</li>
-                            ))}
-
-                            <h3 className="mt-4">Best Matched Writers</h3>
-                            {bestMatch.map(writer => (
-                                <li className="list-group-item" key={writer.user._id}>{ writer.user.first_name + ' ' + writer.user.last_name } - Written: {writer.articles_written} articles.</li>
-                            ))}
-                        </>
-                    ) : 'No writers were matched here.')}
+                            <button type="submit" className="btn btn-primary">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
+
+                <div className="card">
+                    <div className="card-header">Results</div>
+                    <div className="card-body">
+                        {processing ? (
+                            <p>Processing brief..</p>
+                        ) : (
+                            !completed && (
+                                <p>Waiting on brief to be submitted.</p>
+                            )
+                        )}
+
+                        {completed && (
+                            <>
+                                <h3>Categories Matched</h3>
+                                <ul class="list-group mb-4">
+                                    {categoriesMatched.length &&
+                                        categoriesMatched.map(category => (
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                {category.categories}
+                                                <span class="badge badge-primary badge-pill ml-3">
+                                                    Confidence:{" "}
+                                                    {(
+                                                        category.confidence *
+                                                        100
+                                                    ).toFixed(0)}
+                                                    %
+                                                </span>
+                                            </li>
+                                        ))}
+                                </ul>
+
+                                {results.map(result => (
+                                    <>
+                                        <h3>
+                                            Best Match for{" "}
+                                            <span class="badge badge-pill badge-success">
+                                                {result.bestMatch.category}
+                                            </span>
+                                        </h3>
+
+                                        {result.bestMatch.writers.length
+                                            ? result.bestMatch.writers.map(
+                                                  writer => (
+                                                      <span class="badge badge-pill badge-primary">
+                                                          {writer.user
+                                                              .first_name +
+                                                              " " +
+                                                              writer.user
+                                                                  .last_name}{" "}
+                                                          |{" "}
+                                                          {
+                                                              writer.articles_written
+                                                          }{" "}
+                                                          articles written
+                                                      </span>
+                                                  )
+                                              )
+                                            : "❌ No writers were found."}
+
+                                        <h3>Lower categories</h3>
+                                        {result.writersLowerCat.length
+                                            ? result.writersLowerCat.map(
+                                                  res => (
+                                                      <>
+                                                          <h3>
+                                                              <span class="badge badge-pill badge-success">
+                                                                  {res.category}
+                                                              </span>
+                                                          </h3>
+
+                                                          {res.writers.length
+                                                              ? res.writers.map(
+                                                                    writer => (
+                                                                        <span class="badge badge-pill badge-primary">
+                                                                            {writer
+                                                                                .user
+                                                                                .first_name +
+                                                                                " " +
+                                                                                writer
+                                                                                    .user
+                                                                                    .last_name}{" "}
+                                                                            |{" "}
+                                                                            {
+                                                                                writer.articles_written
+                                                                            }{" "}
+                                                                            articles
+                                                                            written
+                                                                        </span>
+                                                                    )
+                                                                )
+                                                              : "❌ No writers were found."}
+                                                      </>
+                                                  )
+                                              )
+                                            : "❌ No lower categories were found."}
+
+                                        <h3>Same Level 2 categories</h3>
+                                        {result.writersSameL2Cat.length
+                                            ? result.writersSameL2Cat.map(
+                                                  res => (
+                                                      <>
+                                                          <h3>
+                                                              <span class="badge badge-pill badge-success">
+                                                                  {res.category}
+                                                              </span>
+                                                          </h3>
+
+                                                          {res.writers.length
+                                                              ? res.writers.map(
+                                                                    writer => (
+                                                                        <span class="badge badge-pill badge-primary">
+                                                                            {writer
+                                                                                .user
+                                                                                .first_name +
+                                                                                " " +
+                                                                                writer
+                                                                                    .user
+                                                                                    .last_name}{" "}
+                                                                            |{" "}
+                                                                            {
+                                                                                writer.articles_written
+                                                                            }{" "}
+                                                                            articles
+                                                                            written
+                                                                        </span>
+                                                                    )
+                                                                )
+                                                              : "❌ No writers were found."}
+                                                      </>
+                                                  )
+                                              )
+                                            : "❌ No Same level 2 categories were found."}
+
+                                        <h3>Additional relevant categories</h3>
+                                        {result.writersAdditionalRelevantCats.length
+                                            ? result.writersAdditionalRelevantCats.map(
+                                                  res => (
+                                                      <>
+                                                          <h3>
+                                                              <span class="badge badge-pill badge-success">
+                                                                  {res.category}
+                                                              </span>
+                                                          </h3>
+
+                                                          {res.writers.length
+                                                              ? res.writers.map(
+                                                                    writer => (
+                                                                        <span class="badge badge-pill badge-primary">
+                                                                            {writer
+                                                                                .user
+                                                                                .first_name +
+                                                                                " " +
+                                                                                writer
+                                                                                    .user
+                                                                                    .last_name}{" "}
+                                                                            |{" "}
+                                                                            {
+                                                                                writer.articles_written
+                                                                            }{" "}
+                                                                            articles
+                                                                            written
+                                                                        </span>
+                                                                    )
+                                                                )
+                                                              : "❌ No writers were found."}
+                                                      </>
+                                                  )
+                                              )
+                                            : "❌ No additional relevant categories were found."}
+                                        <hr />
+                                    </>
+                                ))}
+                            </>
+                        )}
+                    </div>
+                </div>
+            </>
         )
     }
 }

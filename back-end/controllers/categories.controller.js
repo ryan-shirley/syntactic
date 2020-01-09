@@ -92,6 +92,8 @@ exports.checkExists = name => {
     return new Promise((resolve, reject) => {
         try {
             Category.findOne({ name }, (err, doc) => { 
+                console.log(doc);
+                
                 if(doc){
                     resolve({
                         exists: true
