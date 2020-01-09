@@ -95,9 +95,7 @@ exports.addContent = async (req, res) => {
                     cat_level3 = categories[2]
 
                     // Level 1
-                    console.log('Before 1');
                     level1_exists = await CategoryController.checkExists(cat_level1)
-                    console.log('After 1');
                     
                     if (!level1_exists.exists) await CategoryController.createCategory(cat_level1)
 

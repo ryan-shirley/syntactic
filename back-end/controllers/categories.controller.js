@@ -91,9 +91,7 @@ exports.addUser = async (catName, userID, confidence) => {
 exports.checkExists = name => {
     return new Promise((resolve, reject) => {
         try {
-            Category.findOne({ name }, (err, doc) => { 
-                console.log(doc);
-                
+            Category.findOne({ name }, (err, doc) => {
                 if(doc){
                     resolve({
                         exists: true
