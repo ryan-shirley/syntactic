@@ -31,9 +31,7 @@ exports.classifyText = async text => {
  * analyse() Analyse breif and get writers
  */
 exports.analyse = async (req, res) => {
-    const {
-        text
-    } = req.body
+    const { text } = req.body
 
     // Categorise text
     try {
