@@ -14,15 +14,9 @@ exports.createCategory = (name, parent_name = null, user = null) => {
             // Check if parent category is required
             if (parent_name !== null) {
                 // Parent category required
-                // console.log(
-                //     `Trying to create category with parent: ${parent_name}. With ${name}`
-                // )
 
                 // Find parent category
                 Category.findOne({ name: parent_name }).then(cat => {
-                    // console.log(
-                    //     `Found parent with name: ${parent_name}.`
-                    // )
                     newCategory._parent_category_id = cat._id
 
                     // Save category
@@ -31,21 +25,16 @@ exports.createCategory = (name, parent_name = null, user = null) => {
                             reject(err)
                         }
 
-                        // console.log(`Created category: ${name}`)
                         resolve(newCategory)
                     })
                 })
             } else {
                 // No parent category
-                // console.log(`Creating category: ${name}`)
-
                 // Save category
                 newCategory.save(err => {
                     if (err) {
                         reject(err)
                     }
-
-                    // console.log(`Created category: ${name}`)
                     resolve(newCategory)
                 })
             }
@@ -58,7 +47,7 @@ exports.createCategory = (name, parent_name = null, user = null) => {
 
 exports.addUser = async (catName, userID, confidence) => {
     const cat = await Category.findOne({ name: catName })
-    
+
     let userInCat = cat.users.some(el => {
         return escape(el.user) === escape(userID)
     })
@@ -91,18 +80,17 @@ exports.addUser = async (catName, userID, confidence) => {
 exports.checkExists = name => {
     return new Promise((resolve, reject) => {
         try {
-            Category.findOne({ name }, (err, doc) => { 
-                if(doc){
+            Category.findOne({ name }, (err, doc) => {
+                if (doc) {
                     resolve({
                         exists: true
                     })
-                }
-                else {
+                } else {
                     resolve({
                         exists: false
                     })
                 }
-            }); 
+            })
         } catch (error) {
             console.error(error)
             reject(error)

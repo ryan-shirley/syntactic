@@ -3,22 +3,27 @@ const initState = {
     processing: false,
     error: null,
     briefResults: {
-        bestMatch: {
-            category: '',
-            writers: []
-        },
-        writersAdditionalRelevantCats: {
-            category: '',
-            writers: []
-        },
-        writersLowerCat: {
-            category: '',
-            writers: []
-        },
-        writersSameL2Cat: {
-            category: '',
-            writers: []
-        },
+        analysis: [],
+        results: [
+            {
+                bestMatch: {
+                    category: '',
+                    writers: []
+                },
+                writersAdditionalRelevantCats: {
+                    category: '',
+                    writers: []
+                },
+                writersLowerCat: {
+                    category: '',
+                    writers: []
+                },
+                writersSameL2Cat: {
+                    category: '',
+                    writers: []
+                }
+            }
+        ]
     }
 }
 
