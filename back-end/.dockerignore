@@ -1,6 +1,0 @@
-.git
-.gitignore
-.prettierrc
-node_modules
-build
-npm-debug.log
