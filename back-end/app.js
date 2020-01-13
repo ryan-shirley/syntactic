@@ -24,7 +24,7 @@ mongoose
         useCreateIndex: true
     })
     .then(() => {
-        console.log("Connected to database!")
+        console.log(`Successfully connected to MongoDB Atlas!`)
     })
     .catch(error => {
         console.log("Connection failed!")
