@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "preinstall": "node gcpSetup.js",
+    "preinstall": "node gcpNLPSetup.js",
     "start": "node -r esm ./bin/www",
     "dev": "PORT=4444 nodemon -r esm ./bin/www"
   },
