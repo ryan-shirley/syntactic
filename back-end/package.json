@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PORT=4444 node -r esm ./bin/www",
+    "start": "node -r esm ./bin/www",
     "dev": "PORT=4444 nodemon -r esm ./bin/www"
   },
   "dependencies": {
