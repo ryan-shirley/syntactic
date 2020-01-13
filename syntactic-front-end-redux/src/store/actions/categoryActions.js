@@ -1,5 +1,5 @@
 import axios from "axios"
-const API_URL = "http://localhost:4444"
+const API_URL = process.env.REACT_APP_BACKEND_API
 
 export const createCategory = project => {
     return (dispatch, getState) => {
