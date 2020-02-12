@@ -45,9 +45,6 @@ import { checkIfAuthenticated } from "./api/middlewares/auth-middleware"
 app.use("/", require("./api/routes/root.controller"))
 app.use("/users", [checkIfAuthenticated], require("./api/routes/users.controller"))
 app.use("/analyse", [checkIfAuthenticated], require("./api/routes/analyse.controller"))
-// app.use("/user", usersRouter)
-// app.use("/nlp", nlpRouter)
-// app.use("/onboarding", onboardingrouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
