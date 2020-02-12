@@ -65,7 +65,7 @@ class Onboarding extends Component {
                 form = <TextArea field='inputText' value={this.state.inputText} handleChange={this.handleChange} error={this.props.onboarding.error} />
                 buttons = [
                     prevButton, 
-                    <Button displayStyle='primary' onClick={(e) => this.props.updateBio(this.state.inputText)} disabled={this.props.onboarding.waitingForResponse}>Next</Button>
+                    <Button displayStyle='primary' onClick={(e) => this.props.updateBio(this.props.user_id, this.state.inputText)} disabled={this.props.onboarding.waitingForResponse}>Next</Button>
                 ]
 
                 break
@@ -75,14 +75,14 @@ class Onboarding extends Component {
                 form = <TextArea field='inputText' value={this.state.inputText} handleChange={this.handleChange} error={this.props.onboarding.error} />
                 buttons = [
                     prevButton, 
-                    <Button displayStyle='primary' onClick={(e) => this.props.updateBusiness(this.state.inputText)} disabled={this.props.onboarding.waitingForResponse}>Next</Button>
+                    <Button displayStyle='primary' onClick={(e) => this.props.updateBusiness(this.props.user_id, this.state.inputText)} disabled={this.props.onboarding.waitingForResponse}>Next</Button>
                 ]
 
                 break
             case 4: // Finish
                 title = 'You are ready to search for writers for your next big project.'
                 text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
-                submitFormButton = <p><Button displayStyle='primary mt-3' onClick={this.props.finishOnboarding} disabled={this.props.onboarding.waitingForResponse}>Finish Onboarding</Button> {this.props.onboarding.error}</p>
+                submitFormButton = <p><Button displayStyle='primary mt-3' onClick={() => this.props.finishOnboarding(this.props.user_id)} disabled={this.props.onboarding.waitingForResponse}>Finish Onboarding</Button> {this.props.onboarding.error}</p>
 
                 break
             default:
@@ -122,17 +122,18 @@ class Onboarding extends Component {
 
 const mapStateToProps = state => {
     return {
-        onboarding: state.onboarding
+        onboarding: state.onboarding,
+        user_id: state.auth.user._id
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateBio: newBio => dispatch(updateBio(newBio)),
-        updateBusiness: newBusinessDesc => dispatch(updateBusiness(newBusinessDesc)),
+        updateBio: (user_id, newBio) => dispatch(updateBio(user_id, newBio)),
+        updateBusiness: (user_id, newBusinessDesc) => dispatch(updateBusiness(user_id, newBusinessDesc)),
         prevStage: () => dispatch(prevStage()),
         nextStage: () => dispatch(nextStage()),
-        finishOnboarding: () => dispatch(finishOnboarding()),
+        finishOnboarding: user_id => dispatch(finishOnboarding(user_id)),
         updateOnboardingStatus: () => dispatch(updateOnboardingStatus())
     }
 }

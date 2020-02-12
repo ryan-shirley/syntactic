@@ -63,7 +63,7 @@ class Onboarding extends Component {
                 title = 'Who are you?'
                 text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
                 form = <TextArea field='inputText' value={this.state.inputText} handleChange={this.handleChange} error={this.props.onboarding.error} />
-                buttons = <Button displayStyle='primary' onClick={(e) => this.props.updateBio(this.state.inputText)} disabled={this.props.onboarding.waitingForResponse}>Next</Button>
+                buttons = <Button displayStyle='primary' onClick={(e) => this.props.updateBio(this.props.user_id, this.state.inputText)} disabled={this.props.onboarding.waitingForResponse}>Next</Button>
 
                 break
             case 3: // Choose how to upload | Finish
@@ -75,7 +75,7 @@ class Onboarding extends Component {
 
                 // Only show finish button if added 3 or more pieces of content.
                 if(this.props.onboarding.content.length >= 3) {
-                    submitFormButton = <p><Button displayStyle='primary mt-3' onClick={this.props.finishOnboarding} disabled={this.props.onboarding.waitingForResponse}>Finish Onboarding</Button> {this.props.onboarding.error}</p>
+                    submitFormButton = <p><Button displayStyle='primary mt-3' onClick={() => this.props.finishOnboarding(this.props.user_id)} disabled={this.props.onboarding.waitingForResponse}>Finish Onboarding</Button> {this.props.onboarding.error}</p>
                 }
 
                 break
@@ -137,18 +137,19 @@ class Onboarding extends Component {
 
 const mapStateToProps = state => {
     return {
-        onboarding: state.onboarding
+        onboarding: state.onboarding,
+        user_id: state.auth.user._id
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateBio: newBio => dispatch(updateBio(newBio)),
+        updateBio: (user_id, newBio) => dispatch(updateBio(user_id, newBio)),
         prevStage: () => dispatch(prevStage()),
         nextStage: () => dispatch(nextStage()),
         loadContentInput: inputType => dispatch(loadContentInput(inputType)),
         addContentText: text => dispatch(addContentText(text)),
-        finishOnboarding: () => dispatch(finishOnboarding()),
+        finishOnboarding: user_id => dispatch(finishOnboarding(user_id)),
         updateOnboardingStatus: () => dispatch(updateOnboardingStatus())
     }
 }

@@ -4,7 +4,7 @@ const API_URL = process.env.REACT_APP_BACKEND_API
 /**
  * updateBio() Updates the users bio
  */
-export const updateBio = newBio => {
+export const updateBio = (user_id, newBio) => {
     return (dispatch, getState, { getFirebase }) => {
         // console.log('Updating bio');
 
@@ -20,7 +20,7 @@ export const updateBio = newBio => {
                 dispatch({ type: "PROCESSING_TRUE" })
 
                 axios
-                    .put(API_URL + "/user/update-bio", { newBio }, {
+                    .patch(API_URL + "/users/" + user_id, { newBio }, {
                         headers: { authorization: `Bearer ${token}` }
                     })
                     .then(res => {
@@ -41,7 +41,7 @@ export const updateBio = newBio => {
 /**
  * updateBusiness() Updates the users business description
  */
-export const updateBusiness = newDesc => {
+export const updateBusiness = (user_id, newDesc) => {
     return (dispatch, getState, { getFirebase }) => {
 
         if(newDesc === "") {
@@ -56,7 +56,7 @@ export const updateBusiness = newDesc => {
                 dispatch({ type: "PROCESSING_TRUE" })
 
                 axios
-                    .put(API_URL + "/user/update-business-description", { newDesc }, {
+                    .patch(API_URL + "/users/" + user_id, { newBusiness: newDesc }, {
                         headers: { authorization: `Bearer ${token}` }
                     })
                     .then(res => {
@@ -143,7 +143,7 @@ export const addContentText = text => {
 /**
  * finishOnboarding() Finish onboarding for user.
  */
-export const finishOnboarding = () => {
+export const finishOnboarding = user_id => {
     return (dispatch, getState, { getFirebase }) => {
         // console.log('Finishing onboarding');
         
@@ -155,7 +155,7 @@ export const finishOnboarding = () => {
                 dispatch({ type: "PROCESSING_TRUE" })
 
                 axios
-                    .put(API_URL + "/user/finish-onboarding", null, {
+                    .patch(API_URL + "/users/" + user_id, { newOnboardingStatus: true }, {
                         headers: { authorization: `Bearer ${token}` }
                     })
                     .then(res => {
