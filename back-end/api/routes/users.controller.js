@@ -42,8 +42,8 @@ router.route("/:id").patch(async (req, res) => {
 
         // Make sure same user updating
         if(oldUser.uid !== req.authId) {
-            return res.status(401).json({
-                code: 401,
+            return res.status(403).json({
+                code: 403,
                 message: 'You are not authorised to do this!'
             })
         }
