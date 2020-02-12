@@ -61,7 +61,7 @@ export const analyse = text => {
 
                     axios
                         .post(
-                            API_URL + "/nlp/analyse-brief",
+                            API_URL + "/analyse/brief",
                             { text },
                             {
                                 headers: { authorization: `Bearer ${token}` }
@@ -74,7 +74,7 @@ export const analyse = text => {
                             // console.log(error);
                             dispatch({
                                 type: "ANALYSE_BRIEF_ERROR",
-                                error: error.response.data.details
+                                error: error.response.data.message
                             })
                         })
                 })
