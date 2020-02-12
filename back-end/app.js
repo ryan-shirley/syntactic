@@ -8,12 +8,6 @@ var cookieParser = require("cookie-parser")
 var logger = require("morgan")
 var cors = require("cors")
 
-// Route Files
-// var indexRouter = require("./routes/index")
-// var onboardingrouter = require("./routes/onboarding")
-// var usersRouter = require("./routes/users")
-// var nlpRouter = require("./routes/nlp")
-
 // Set up Mongoose connection
 var mongoose = require("mongoose")
 let mongoDB = process.env.MONGODB_URI_LIVE || process.env.MONGODB_URI_DEV
@@ -44,12 +38,17 @@ app.use(express.static(path.join(__dirname, "public")))
 // Allow react app
 app.use(cors())
 
+// Middlewares
+import { checkIfAuthenticated} from "./api/middlewares/auth-middleware"
+
+
+
 // Routes Defined
-app.use("/", require("./api/routes/root"))
-// app.use("/", indexRouter)
+app.use("/", require("./api/routes/root.controller"))
+app.use("/users", [checkIfAuthenticated], require("./api/routes/users.controller"))
+// app.use("/user", usersRouter)
 // app.use("/nlp", nlpRouter)
 // app.use("/onboarding", onboardingrouter)
-// app.use("/user", usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

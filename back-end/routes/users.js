@@ -2,7 +2,7 @@ var express = require("express")
 var router = express.Router()
 
 // Middlewares
-import { checkIfAuthenticated, checkifWriter, checkifContentSeeker } from "../middlewares/auth-middleware"
+import { checkIfAuthenticated, checkifWriter, checkifContentSeeker } from "../api/middlewares/auth-middleware"
 
 // Controllers
 const writer_controller = require("../controllers/Writer/writer_controller")

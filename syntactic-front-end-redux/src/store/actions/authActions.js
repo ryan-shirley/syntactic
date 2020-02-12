@@ -99,7 +99,7 @@ export const getUser = () => {
                 dispatch({ type: "LOADING_USER" })
 
                 axios
-                    .get(API_URL + "/user", {
+                    .get(API_URL + "/users/current", {
                         headers: { authorization: `Bearer ${token}` }
                     })
                     .then(res => {

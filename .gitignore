@@ -5,3 +5,4 @@ syntactic-front-end-redux/.env
 syntactic-front-end-redux/.prettierrc
 syntactic-front-end-redux/src/App.css
 back-end/google-credentials.json
+back-end/google-nlp-service.json

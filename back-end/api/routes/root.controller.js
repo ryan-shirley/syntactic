@@ -1,8 +1,9 @@
 // Express
 const router = require("express").Router()
 
-// Controllers
-import UserService from "../../services/user"
+// Services
+// import UserService from "../../services/user.service"
+const UserService = require("../../services/user.service")
 
 /**
  * route('/register').post() Register new user
