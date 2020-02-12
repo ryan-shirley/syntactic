@@ -1,5 +1,5 @@
 const User = require("../models/user.model")
-import admin from "../firebase-service"
+import admin from "../config/firebase-service"
 
 /**
  * signUp() Saves new user into Monogo

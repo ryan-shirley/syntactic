@@ -1,4 +1,4 @@
-import admin from "../firebase-service"
+import admin from "../config/firebase-service"
 import User from "../models/user.model"
 
 const getAuthToken = (req, res, next) => {

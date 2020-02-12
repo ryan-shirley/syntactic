@@ -2,7 +2,7 @@ const GOOGLE_NL_API = require("../google_nl_api.controller")
 const CategoryController = require("./../categories.controller")
 const Category = require("../../models/categories.model")
 const User = require("../../models/user.model")
-import admin from "../../firebase-service"
+import admin from "../../config/firebase-service"
 
 /**
  * addContent() Take text and categorise.
