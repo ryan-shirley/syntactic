@@ -122,7 +122,7 @@ export const addContentText = text => {
                 dispatch({ type: "PROCESSING_TRUE" })
 
                 axios
-                    .post(API_URL + "/user/writer/add-content", { text }, {
+                    .post(API_URL + "/analyse/project", { text }, {
                         headers: { authorization: `Bearer ${token}` }
                     })
                     .then(res => {

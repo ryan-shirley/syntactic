@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(cors())
 
 // Middlewares
-import { checkIfAuthenticated} from "./api/middlewares/auth-middleware"
+import { checkIfAuthenticated } from "./api/middlewares/auth-middleware"
 
 // Routes Defined
 app.use("/", require("./api/routes/root.controller"))

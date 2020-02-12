@@ -1,5 +1,8 @@
 const Category = require("../models/categories.model")
 
+/**
+ * createCategory() Create new category
+ */
 exports.createCategory = (name, parent_name = null, user = null) => {
     return new Promise((resolve, reject) => {
         try {
@@ -45,6 +48,9 @@ exports.createCategory = (name, parent_name = null, user = null) => {
     })
 }
 
+/**
+ * addUser() Adds user to category
+ */
 exports.addUser = async (catName, userID, confidence) => {
     const cat = await Category.findOne({ name: catName })
 
@@ -77,6 +83,9 @@ exports.addUser = async (catName, userID, confidence) => {
     }
 }
 
+/**
+ * checkExists() Check if category exists by name
+ */
 exports.checkExists = name => {
     return new Promise((resolve, reject) => {
         try {

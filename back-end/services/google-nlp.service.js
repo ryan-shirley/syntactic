@@ -1,4 +1,8 @@
+// Models
 const Category = require("../models/categories.model")
+
+// Services
+const CategoryService = require("./category.service")
 
 /**
  * classifyText() Analyse text to find categories
@@ -313,6 +317,103 @@ exports.getWriters = async categoriesMatched => {
     }
 }
 
+/**
+ * addCategoriesToWriter() Add categories to writer
+ */
+exports.addCategoriesToWriter = async (cats, userID) => {
+    // Loop through category array
+    for(let i = 0; i < cats.length; i++) {
+        let categoryObj = cats[i]
+        
+        let {
+            categories,
+            confidence
+        } = categoryObj
+
+        let cat_level1, cat_level2, cat_level3, level1_exists, level2_exists, level3_exists
+        switch (categories.length) {
+            case 1:
+                cat_level1 = categories[0]
+
+                level1_exists = await CategoryService.checkExists(cat_level1)
+                if (level1_exists.exists) {
+                    // Add user to present category
+                    await CategoryService.addUser(cat_level1, userID, confidence)
+                } else {
+                    // Create Category with user
+                    await CategoryService.createCategory(
+                        cat_level1,
+                        null, {
+                            user: userID,
+                            articles_written: 1,
+                            confidence
+                        }
+                    )
+                }
+                break
+            case 2:
+                cat_level1 = categories[0]
+                cat_level2 = categories[1]
+
+                // Level 1
+                level1_exists = await CategoryService.checkExists(cat_level1)
+                if (!level1_exists.exists) await CategoryService.createCategory(cat_level1)
+
+                // Level 2
+                level2_exists = await CategoryService.checkExists(cat_level2)
+                if (level2_exists.exists) {
+                    // Add user to present category
+                    await CategoryService.addUser(cat_level2, userID, confidence)
+                } else {
+                    // Create Category with user
+                    await CategoryService.createCategory(
+                        cat_level2,
+                        cat_level1, {
+                            user: userID,
+                            articles_written: 1,
+                            confidence
+                        }
+                    )
+                }
+                break
+            case 3:
+                cat_level1 = categories[0]
+                cat_level2 = categories[1]
+                cat_level3 = categories[2]
+
+                // Level 1
+                level1_exists = await CategoryService.checkExists(cat_level1)
+                
+                if (!level1_exists.exists) await CategoryService.createCategory(cat_level1)
+
+                // Level 2
+                level2_exists = await CategoryService.checkExists(cat_level2)
+                if (!level2_exists.exists) await CategoryService.createCategory(cat_level2, cat_level1)
+
+                // Level 3
+                level3_exists = await CategoryService.checkExists(cat_level3)
+                
+                if (level3_exists.exists) {
+                    // Add user to present category
+                    await CategoryService.addUser(cat_level3, userID, confidence)
+                } else {
+                    // Create Category with user
+                    await CategoryService.createCategory(
+                        cat_level3,
+                        cat_level2, {
+                            user: userID,
+                            articles_written: 1,
+                            confidence
+                        }
+                    )
+                }
+                break
+            default:
+        }
+    }
+
+    return
+}
 /**
  * seperateCategories() Takes category string and seperates it out
  */
