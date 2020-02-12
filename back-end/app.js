@@ -1,5 +1,5 @@
 require("dotenv").config()
-require('newrelic');
+require("newrelic")
 
 var createError = require("http-errors")
 var express = require("express")
@@ -9,10 +9,10 @@ var logger = require("morgan")
 var cors = require("cors")
 
 // Route Files
-var indexRouter = require("./routes/index")
-var onboardingrouter = require("./routes/onboarding")
-var usersRouter = require("./routes/users")
-var nlpRouter = require("./routes/nlp")
+// var indexRouter = require("./routes/index")
+// var onboardingrouter = require("./routes/onboarding")
+// var usersRouter = require("./routes/users")
+// var nlpRouter = require("./routes/nlp")
 
 // Set up Mongoose connection
 var mongoose = require("mongoose")
@@ -45,10 +45,11 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(cors())
 
 // Routes Defined
-app.use("/", indexRouter)
-app.use("/nlp", nlpRouter)
-app.use("/onboarding", onboardingrouter)
-app.use("/user", usersRouter)
+app.use("/", require("./api/routes/root"))
+// app.use("/", indexRouter)
+// app.use("/nlp", nlpRouter)
+// app.use("/onboarding", onboardingrouter)
+// app.use("/user", usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
