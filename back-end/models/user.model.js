@@ -51,7 +51,8 @@ let UserSchema = new mongoose.Schema({
     uid: {
         type: String,
         required: true,
-        max: 100
+        max: 100,
+        unique: true
     }
 })
 
