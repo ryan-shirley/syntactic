@@ -2,7 +2,6 @@
 const router = require("express").Router()
 
 // Services
-// import UserService from "../../services/user.service"
 const UserService = require("../../services/user.service")
 
 /**
