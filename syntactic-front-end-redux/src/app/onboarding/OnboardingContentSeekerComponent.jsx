@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 
 // Components
-import Button from "../../components/Button"
-import { TextArea } from '../../components/Form'
+import Button from "../components/Button"
+import { TextArea } from '../components/Form'
 
 class OnboardingContentSeekerComponent extends Component {
     constructor(props) {

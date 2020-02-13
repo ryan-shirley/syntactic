@@ -1,7 +1,7 @@
 import React from "react"
 import { NavLink } from "react-router-dom"
 import { connect } from "react-redux"
-import { signOut } from "../../store/actions/authActions"
+import { signOut } from "../../../store/actions/authActions"
 
 /**
  * SignedInLinks() Links for main navigation only for authenticated users
