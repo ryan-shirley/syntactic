@@ -8,8 +8,7 @@ import OnboardingContentSeekerComponent from "./OnboardingContentSeekerComponent
 import {
     updateBio,
     updateBusiness,
-    prevStage,
-    nextStage,
+    moveStage,
     finishOnboarding
 } from "../../store/actions/onboardingActions"
 import { updateOnboardingStatus } from "../../store/actions/authActions"
@@ -24,13 +23,22 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        nextStage: () => dispatch(moveStage(1)),
+        prevStage: () => dispatch(moveStage(-1)),
         updateBio: (user_id, newBio) => dispatch(updateBio(user_id, newBio)),
-        updateBusiness: (user_id, newBusinessDesc) =>
-            dispatch(updateBusiness(user_id, newBusinessDesc)),
-        prevStage: () => dispatch(prevStage()),
-        nextStage: () => dispatch(nextStage()),
-        finishOnboarding: user_id => dispatch(finishOnboarding(user_id)),
-        updateOnboardingStatus: () => dispatch(updateOnboardingStatus())
+
+
+
+
+
+
+        
+
+
+        // updateBusiness: (user_id, newBusinessDesc) =>
+        //     dispatch(updateBusiness(user_id, newBusinessDesc)),
+        // finishOnboarding: user_id => dispatch(finishOnboarding(user_id)),
+        // updateOnboardingStatus: () => dispatch(updateOnboardingStatus())
     }
 }
 

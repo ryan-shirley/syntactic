@@ -3,7 +3,6 @@ import { Switch } from 'react-router-dom'
 import LayoutManager from './app/layout/LayoutManager'
 
 // Pages - No Auth
-// import Home from "./components/pages/Home"
 import Home from "./app/home/HomeContainer"
 import SignIn from "./components/auth/SignIn"
 // import SignUpWriter from "./components/auth/SignUpWriter"
@@ -12,14 +11,15 @@ import NotFound404 from "./components/pages/NotFound404"
 
 // Pages - Auth - Onboarding
 import OnboardingContentSeeker from "./app/onboarding/OnboardingContentSeekerContainer"
+import OnboardingWriter from "./app/onboarding/OnboardingWriterContainer"
 
 // Pages - Auth Required
-// import Dashboard from "./components/dashboard/Dashboard"
+import Dashboard from "./app/dashboard/DashboardContainer"
 // import Projects from "./components/pages/Projects"
 
 // Pages - Auth - Writer Only
 // import Levels from "./components/pages/writer/Levels"
-// import OnboardingWriter from "./components/pages/writer/Onboarding"
+
 // import AddContent from "./components/pages/writer/AddContent"
 
 // Page - Auth - Content Seeker Only
@@ -27,13 +27,13 @@ import OnboardingContentSeeker from "./app/onboarding/OnboardingContentSeekerCon
 
 // All Routes to use the app layout
 const appLayoutRoutes = [
-    // {
-    //     path: '/dashboard',
-    //     page: Dashboard,
-    //     middleware: {
-    //         type: 'private'
-    //     }
-    // },
+    {
+        path: '/dashboard',
+        page: Dashboard,
+        middleware: {
+            type: 'private'
+        }
+    },
     // {
     //     path: '/projects',
     //     page: Projects,
@@ -93,14 +93,14 @@ const fullWithRoutes = [
     //         restricted: true
     //     }
     // },
-    // {
-    //     path: '/onboarding/writer',
-    //     page: OnboardingWriter,
-    //     middleware: {
-    //         type: 'private',
-    //         role: 'writer'
-    //     }
-    // },
+    {
+        path: '/onboarding/writer',
+        page: OnboardingWriter,
+        middleware: {
+            type: 'private',
+            role: 'writer'
+        }
+    },
     {
         path: '/onboarding/content-seeker',
         page: OnboardingContentSeeker,

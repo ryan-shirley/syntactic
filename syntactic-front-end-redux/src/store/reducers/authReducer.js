@@ -69,7 +69,8 @@ const authReducer = (state = initState, action) => {
                     ...state,
                     authError: action.error
                 }
-            case "COMPLETE_ONBOARDING":
+                
+            case "AUTH_ONBOARDING_COMPLETED":
                 let user = state.user
                 user.completed_onboarding = true
                 
