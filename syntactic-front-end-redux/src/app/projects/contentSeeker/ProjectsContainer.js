@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { TextArea } from "../components/Form"
-import { analyse } from "../../store/actions/googleNLAPIActions"
+import { TextArea } from "../../components/Form"
+import { analyse } from "../../../store/actions/googleNLAPIActions"
 
-class Projects extends Component {
+class ProjectsContainer extends Component {
     constructor() {
         super()
 
@@ -258,4 +258,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Projects)
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer)

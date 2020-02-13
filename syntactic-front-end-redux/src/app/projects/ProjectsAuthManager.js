@@ -1,9 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
-import { default as ContentSeekerProjects } from "./ProjectsContentSeeker"
-import { default as WriterProjects } from "./ProjectsWriter"
+import { default as ContentSeekerProjects } from "./contentSeeker/ProjectsContainer"
+import { default as WriterProjects } from "./writer/ProjectsContainer"
 
-const Projects = props => {
+const ProjectsAuthManager = props => {
     const { user } = props
     const role = user.role[0].name
 
@@ -20,4 +20,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Projects)
+export default connect(mapStateToProps)(ProjectsAuthManager)

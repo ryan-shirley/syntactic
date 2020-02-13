@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 
-class Projects extends Component {
+class ProjectsContainer extends Component {
     render() {
-        return <div>This is content writer</div>
+        return <div>This is content for the writer</div>
     }
 }
 
@@ -13,4 +13,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Projects)
+export default connect(mapStateToProps)(ProjectsContainer)
