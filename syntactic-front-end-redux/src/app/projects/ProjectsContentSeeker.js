@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { TextArea } from "../../Form"
-import { analyse } from "../../../store/actions/googleNLAPIActions"
+import { TextArea } from "../components/Form"
+import { analyse } from "../../store/actions/googleNLAPIActions"
 
 class Projects extends Component {
     constructor() {

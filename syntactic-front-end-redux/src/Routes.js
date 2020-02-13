@@ -7,7 +7,7 @@ import Home from "./app/home/HomeContainer"
 import SignIn from "./components/auth/SignIn"
 // import SignUpWriter from "./components/auth/SignUpWriter"
 // import SignUpContentSeeker from "./components/auth/SignUpContentSeeker"
-import NotFound404 from "./components/pages/NotFound404"
+import NotFound404 from "./app/404"
 
 // Pages - Auth - Onboarding
 import OnboardingContentSeeker from "./app/onboarding/OnboardingContentSeekerContainer"
@@ -15,7 +15,7 @@ import OnboardingWriter from "./app/onboarding/OnboardingWriterContainer"
 
 // Pages - Auth Required
 import Dashboard from "./app/dashboard/DashboardContainer"
-// import Projects from "./components/pages/Projects"
+import Projects from "./app/projects/ProjectsAuthManager"
 
 // Pages - Auth - Writer Only
 // import Levels from "./components/pages/writer/Levels"
@@ -34,13 +34,13 @@ const appLayoutRoutes = [
             type: 'private'
         }
     },
-    // {
-    //     path: '/projects',
-    //     page: Projects,
-    //     middleware: {
-    //         type: 'private'
-    //     }
-    // },
+    {
+        path: '/projects',
+        page: Projects,
+        middleware: {
+            type: 'private'
+        }
+    },
     // {
     //     path: '/levels',
     //     page: Levels,
