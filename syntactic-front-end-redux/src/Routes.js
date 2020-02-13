@@ -4,9 +4,9 @@ import LayoutManager from './app/layout/LayoutManager'
 
 // Pages - No Auth
 import Home from "./app/home/HomeContainer"
-import SignIn from "./components/auth/SignIn"
-// import SignUpWriter from "./components/auth/SignUpWriter"
-// import SignUpContentSeeker from "./components/auth/SignUpContentSeeker"
+import SignIn from "./app/auth/SignIn"
+import SignUpWriter from "./app/auth/SignUpWriter"
+import SignUpContentSeeker from "./app/auth/SignUpContentSeeker"
 import NotFound404 from "./app/404"
 
 // Pages - Auth - Onboarding
@@ -77,22 +77,22 @@ const fullWithRoutes = [
             restricted: true
         }
     },
-    // {
-    //     path: '/writer-signup',
-    //     page: SignUpWriter,
-    //     middleware: {
-    //         type: 'public',
-    //         restricted: true
-    //     }
-    // },
-    // {
-    //     path: '/content-seeker-signup',
-    //     page: SignUpContentSeeker,
-    //     middleware: {
-    //         type: 'public',
-    //         restricted: true
-    //     }
-    // },
+    {
+        path: '/writer-signup',
+        page: SignUpWriter,
+        middleware: {
+            type: 'public',
+            restricted: true
+        }
+    },
+    {
+        path: '/content-seeker-signup',
+        page: SignUpContentSeeker,
+        middleware: {
+            type: 'public',
+            restricted: true
+        }
+    },
     {
         path: '/onboarding/writer',
         page: OnboardingWriter,
@@ -123,9 +123,6 @@ const Routes = () => (
         <Switch>
             { appLayoutRoutes.map((route) => ( <LayoutManager route={route} path={route.path} exact={route.exact ? true : false} layout="app" key={route.path} /> )) }
             { fullWithRoutes.map((route) => ( <LayoutManager route={route} path={route.path} exact={route.exact ? true : false} layout="full" key={route.path} /> )) }
-
-            {/* { appLayoutRoutes.map((route) => ( <LayoutManager route={route} exact={route.exact ? true : false} layout="app" key={route.path} /> )) }
-            { fullWithRoutes.map((route) => ( <LayoutManager route={route} exact={route.exact ? true : false} layout="full" key={route.path} /> )) } */}
         </Switch>
     </main>
 )
