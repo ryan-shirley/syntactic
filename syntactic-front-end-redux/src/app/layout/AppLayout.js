@@ -1,8 +1,8 @@
 import React from "react"
 import { Route } from "react-router-dom"
 
-import Navbar from "../components/layout/Navbar"
-import Sidebar from "../components/layout/Sidebar"
+import Navbar from "../../components/layout/Navbar"
+import Sidebar from "../../components/layout/Sidebar"
 
 const AppLayout = ({ component, path, exact }) => {
     let page = exact ? (

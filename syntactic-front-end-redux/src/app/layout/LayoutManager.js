@@ -3,10 +3,10 @@ import { connect } from "react-redux"
 import { Redirect } from "react-router-dom"
 
 // Layout
-import AppLayout from "./layouts/AppLayout"
-import FullLayout from "./layouts/FullLayout"
+import AppLayout from "./AppLayout"
+import FullLayout from "./FullLayout"
 
-import { getUser } from "./store/actions/authActions"
+import { getUser } from "../../store/actions/authActions"
 
 class LayoutManager extends Component {
     render() {

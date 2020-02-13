@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch } from 'react-router-dom'
-import LayoutManager from './LayoutManager'
+import LayoutManager from './app/layout/LayoutManager'
 
 // Pages - No Auth
 // import Home from "./components/pages/Home"
