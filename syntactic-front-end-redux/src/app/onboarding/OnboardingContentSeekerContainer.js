@@ -9,9 +9,8 @@ import {
     updateBio,
     updateBusiness,
     moveStage,
-    finishOnboarding
+    completeOnboarding
 } from "../../store/actions/onboardingActions"
-import { updateOnboardingStatus } from "../../store/actions/authActions"
 
 // Mapping
 const mapStateToProps = state => {
@@ -26,19 +25,8 @@ const mapDispatchToProps = dispatch => {
         nextStage: () => dispatch(moveStage(1)),
         prevStage: () => dispatch(moveStage(-1)),
         updateBio: (user_id, newBio) => dispatch(updateBio(user_id, newBio)),
-
-
-
-
-
-
-        
-
-
-        // updateBusiness: (user_id, newBusinessDesc) =>
-        //     dispatch(updateBusiness(user_id, newBusinessDesc)),
-        // finishOnboarding: user_id => dispatch(finishOnboarding(user_id)),
-        // updateOnboardingStatus: () => dispatch(updateOnboardingStatus())
+        updateBusiness: (user_id, newBusinessDesc) => dispatch(updateBusiness(user_id, newBusinessDesc)),
+        completeOnboarding: user_id => dispatch(completeOnboarding(user_id))
     }
 }
 

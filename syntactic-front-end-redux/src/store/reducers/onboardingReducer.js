@@ -43,6 +43,13 @@ const onboardingReducer = (state = initState, action) => {
                 requestProcessing: false
             }
 
+        case "BUSINESS_ADDED_SUCCESSFULLY":
+            return {
+                ...state,
+                business: action.value,
+                requestProcessing: false
+            }
+
         case "ONBOARDING_SET_INPUT_TYPE":
             return {
                 ...state,

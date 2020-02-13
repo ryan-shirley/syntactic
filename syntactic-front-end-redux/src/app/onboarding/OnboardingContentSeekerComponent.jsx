@@ -43,7 +43,7 @@ class OnboardingContentSeekerComponent extends Component {
     render() {
         // Once completed update status in store
         if (this.props.onboarding.completed) {
-            this.props.updateOnboardingStatus()
+            this.props.history.push('/dashboard')
         }
 
         let stage = this.props.onboarding.stage
@@ -81,7 +81,7 @@ class OnboardingContentSeekerComponent extends Component {
             case 4: // Finish
                 title = 'You are ready to search for writers for your next big project.'
                 text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
-                submitFormButton = <p><Button displayStyle='primary mt-3' onClick={() => this.props.finishOnboarding(this.props.user_id)} disabled={this.props.onboarding.waitingForResponse}>Finish Onboarding</Button> {this.props.onboarding.error}</p>
+                submitFormButton = <p><Button displayStyle='primary mt-3' onClick={() => this.props.completeOnboarding(this.props.user_id)} disabled={this.props.onboarding.waitingForResponse}>Finish Onboarding</Button> {this.props.onboarding.error}</p>
 
                 break
             default:
@@ -95,10 +95,6 @@ class OnboardingContentSeekerComponent extends Component {
                         <h5 className="card-header text-center">
                             <button type="button" className="btn btn-primary mr-3">
                                 Stage <span className="badge badge-light ml-2">{stage}</span>
-                            </button>
-
-                            <button type="button" className="btn btn-primary">
-                                Content amount <span className="badge badge-light ml-2">{this.props.onboarding.content.length}</span>
                             </button>
                         </h5>
                         <div className="card-body text-center">
