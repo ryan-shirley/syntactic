@@ -10,6 +10,7 @@ const projectsReducer = (state = initState, action) => {
         case "ALL_PROJECTS_REQUESTED":
             return {
                 ...state,
+                projects: [],
                 requestProcessing: true,
                 error: ""
             }
