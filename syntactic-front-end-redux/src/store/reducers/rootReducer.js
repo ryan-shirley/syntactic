@@ -10,7 +10,7 @@ import { firebaseReducer } from "react-redux-firebase"
  */
 const rootReducer = combineReducers({
     auth: authReducer,
-    nlp: googleNLAPIReducer,
+    // nlp: googleNLAPIReducer,
     category: categoryReducer,
     firebase: firebaseReducer,
     onboarding: onboardingReducer

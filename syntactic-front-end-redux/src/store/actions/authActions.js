@@ -5,6 +5,30 @@ const API_URL = process.env.REACT_APP_BACKEND_API
  * signIn() Signs in using Firebase Auth
  */
 export const signIn = credentials => {
+    let error = {
+        message: '',
+        fields: {}
+    }
+
+    // validate details were sent
+    if(!credentials.email) {
+        error.fields.email = "You must enter an email address!"
+    }
+    if(!credentials.password) {
+        error.fields.password = "You must enter a password!"
+    }
+    
+    // Check for errors
+    if(Object.entries(error.fields).length !== 0 && error.fields.constructor === Object) {
+        error.message = "You must fill out all the input fields."
+        
+        return dispatch => {
+            dispatch({ type: "ERROR_AUTH_NO_VALUE_INPUT", payload: error })
+        }
+    }
+    
+
+
     return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
 
@@ -13,12 +37,12 @@ export const signIn = credentials => {
             .signInWithEmailAndPassword(credentials.email, credentials.password)
             .then(() => {
                 dispatch({
-                    type: "LOGIN_SUCCESS",
+                    type: "FIREBASE_LOGIN_SUCCESS",
                     displayName: firebase.auth().currentUser.displayName
                 })
             })
             .catch(err => {
-                dispatch({ type: "LOGIN_ERROR", err })
+                dispatch({ type: "FIREBASE_LOGIN_ERROR", payload: { message: err.message } })
             })
     }
 }

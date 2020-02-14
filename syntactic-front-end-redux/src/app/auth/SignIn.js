@@ -17,7 +17,7 @@ class SignIn extends Component {
         this.props.signIn(this.state)
     }
     render() {
-        const { authError } = this.props
+        const { error } = this.props
 
         return (
             <div className="card">
@@ -31,7 +31,9 @@ class SignIn extends Component {
                                 id="email"
                                 onChange={this.handleChange}
                                 className="form-control"
+                                required
                             />
+                            {error && error.fields && <span className="badge badge-pill badge-danger">{error.fields.email}</span>}
                         </div>
 
                         <div className="form-group">
@@ -41,12 +43,14 @@ class SignIn extends Component {
                                 id="password"
                                 onChange={this.handleChange}
                                 className="form-control"
+                                required
                             />
+                            {error && error.fields && <span className="badge badge-pill badge-danger">{error.fields.password}</span>}
                         </div>
-                        {authError && (
+                        {error && !error.fields && (
                             <p>
                                 <span className="badge badge-pill badge-danger">
-                                    {authError}
+                                    {error.message}
                                 </span>
                             </p>
                         )}
@@ -61,7 +65,7 @@ class SignIn extends Component {
 
 const mapStateToProps = state => {
     return {
-        authError: state.auth.authError,
+        error: state.auth.error,
         auth: state.firebase.auth
     }
 }
