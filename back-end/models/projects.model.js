@@ -76,7 +76,8 @@ let ProjectsSchema = new mongoose.Schema({
         }
     },
     deliverables: {
-        type: [DeliverableSchema]
+        type: [DeliverableSchema],
+        default: undefined
     },
     content: {
         type: String
