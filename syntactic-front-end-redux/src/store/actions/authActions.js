@@ -32,6 +32,8 @@ export const signIn = credentials => {
     return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
 
+        dispatch({ type: "AUTH_REQUEST_PROCESSING_STARTED" })
+
         firebase
             .auth()
             .signInWithEmailAndPassword(credentials.email, credentials.password)
@@ -48,28 +50,14 @@ export const signIn = credentials => {
 }
 
 /**
- * signOut() Signs out using Firebase Auth
- */
-export const signOut = () => {
-    return (dispatch, getState, { getFirebase }) => {
-        const firebase = getFirebase()
-
-        firebase
-            .auth()
-            .signOut()
-            .then(() => {
-                dispatch({ type: "SIGNOUT_SUCCESS" })
-            })
-    }
-}
-
-/**
  * signUp() Signs up a new user using Firebase Auth.
  * Sets display name in Firebase and creates user in MongoDB
  */
 export const signUp = (newUser, role) => {
     return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
+
+        dispatch({ type: "AUTH_REQUEST_PROCESSING_STARTED" })
 
         firebase
             .auth()
@@ -89,24 +77,39 @@ export const signUp = (newUser, role) => {
                         newUser.role = role === "writer" ? "writer" : "content seeker"
 
                         axios
-                            .post(API_URL + "/signup", newUser)
+                            .post(API_URL + "/register", newUser)
                             .then(resp => {
-                                // console.log(
-                                //     "New user signed up on Mongo DB!",
-                                //     resp.data
-                                // )
-                                dispatch({ type: "SIGNUP_SUCCESS" })
+
+                                dispatch({ type: "SIGNUP_SUCCESS", payload: resp.data })
                             })
                             .catch(err => {
-                                dispatch({ type: "SIGNUP_ERROR", err })
+                                dispatch({ type: "SIGNUP_ERROR", payload: { message: err.response.data.message } })
                             })
                     })
             })
             .catch(err => {
-                dispatch({ type: "SIGNUP_ERROR", err })
+                dispatch({ type: "SIGNUP_ERROR", payload: { message: err } })
             })
     }
 }
+
+
+/**
+ * signOut() Signs out using Firebase Auth
+ */
+export const signOut = () => {
+    return (dispatch, getState, { getFirebase }) => {
+        const firebase = getFirebase()
+
+        firebase
+            .auth()
+            .signOut()
+            .then(() => {
+                dispatch({ type: "SIGNOUT_SUCCESS" })
+            })
+    }
+}
+
 
 /**
  * getUser() Get the user that is current logged in

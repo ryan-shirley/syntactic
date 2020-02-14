@@ -1,4 +1,5 @@
 const initState = {
+    requestProcessing: false,
     user: {},
     loadingUser: false,
     error: null
@@ -7,10 +8,27 @@ const initState = {
 const authReducer = (state = initState, action) => {
     switch (action.type) {
         // Success
+        case "AUTH_REQUEST_PROCESSING_STARTED":
+            return {
+                ...state,
+                requestProcessing: true,
+                error: null,
+            }
+
         case "FIREBASE_LOGIN_SUCCESS":
             return {
                 ...state,
+                requestProcessing: false,
                 error: null
+            }
+
+        case "SIGNUP_SUCCESS":
+            return {
+                ...state,
+                error: null,
+                signupSucess: true,
+                requestProcessing: false,
+                user: action.payload
             }
 
         case "AUTH_ONBOARDING_COMPLETED":
@@ -32,6 +50,14 @@ const authReducer = (state = initState, action) => {
         case "FIREBASE_LOGIN_ERROR":
             return {
                 ...state,
+                requestProcessing: false,
+                error: action.payload
+            }
+
+        case "SIGNUP_ERROR":
+            return {
+                ...state,
+                requestProcessing: false,
                 error: action.payload
             }
 
@@ -54,14 +80,6 @@ const authReducer = (state = initState, action) => {
         // case "SIGNOUT_SUCCESS":
         //     console.log("signout success")
         //     return state
-
-        // case "SIGNUP_SUCCESS":
-        //     console.log("signup success")
-        //     return {
-        //         ...state,
-        //         authError: null,
-        //         signupSucess: true
-        //     }
 
         // case "SIGNUP_ERROR":
         //     console.log("signup error")
