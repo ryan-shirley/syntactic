@@ -8,11 +8,7 @@ class ProjectsContainer extends Component {
         let message = requestProcessing ? 'Loading projects...' : error ? error : null
         
 
-        return (
-            <>
-                {message && <h3>{message}</h3>}
-            </>
-        )
+        return message && <h3>{message}</h3>
     }
 }
 
