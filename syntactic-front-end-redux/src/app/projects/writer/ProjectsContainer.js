@@ -3,13 +3,22 @@ import { connect } from "react-redux"
 
 class ProjectsContainer extends Component {
     render() {
-        return <div>This is content for the writer</div>
+        let { projects, requestProcessing, error } = this.props.projects
+
+        let message = requestProcessing ? 'Loading projects...' : error ? error : null
+        
+
+        return (
+            <>
+                {message && <h3>{message}</h3>}
+            </>
+        )
     }
 }
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth.profile
+        projects: state.projects
     }
 }
 

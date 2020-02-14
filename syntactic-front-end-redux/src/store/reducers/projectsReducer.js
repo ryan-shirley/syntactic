@@ -16,11 +16,20 @@ const projectsReducer = (state = initState, action) => {
             }
 
         case "PROJECTS_RECEIVED_SUCCESSFULLY":
-            return {
-                ...state,
-                projects: action.payload,
-                requestProcessing: false,
-                error: ""
+            if (action.payload.message) {
+                return {
+                    ...state,
+                    requestProcessing: false,
+                    error: action.payload.message
+                }
+            }
+            else {
+                return {
+                    ...state,
+                    projects: action.payload,
+                    requestProcessing: false,
+                    error: ""
+                }
             }
 
         // Errors

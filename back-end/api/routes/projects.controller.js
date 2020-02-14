@@ -33,7 +33,7 @@ router.route("/").get(async (req, res) => {
     // See if any projects were found
     if(!projects.length) {
         return res.status(200).json({
-            code: 200,
+            code: 204,
             message: "No projects were found"
         }) 
     }
