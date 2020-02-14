@@ -134,11 +134,11 @@ export const getUser = () => {
 
                         dispatch({
                             type: "FETCH_USER_SUCCESS",
-                            user
+                            payload: user
                         })
                     })
                     .catch(error => {
-                        dispatch({ type: "FETCH_USER_ERROR" }, error)
+                        dispatch({ type: "FETCH_USER_ERROR", payload: { messgae: error.message } } )
                     })
             })
             .catch(function(error) {

@@ -40,6 +40,21 @@ const authReducer = (state = initState, action) => {
                 user
             }
 
+        case "LOADING_USER":
+            return {
+                ...state,
+                loadingUser: true
+            } 
+
+            case "FETCH_USER_SUCCESS":
+            return {
+                ...state,
+                user: action.payload,
+                loadingUser: false,
+                error: null,
+                requestProcessing: false
+            }
+
         // Errors
         case "ERROR_AUTH_NO_VALUE_INPUT":
             return {
@@ -89,19 +104,7 @@ const authReducer = (state = initState, action) => {
         //         ...state,
         //         authError: action.err.response.data.message
         //     }
-        // case "LOADING_USER":
-        //     return {
-        //         ...state,
-        //         loadingUser: true
-        //     }
-        // case "FETCH_USER_SUCCESS":
-
-        //     return {
-        //         ...state,
-        //         user: action.user,
-        //         loadingUser: false,
-        //         authError: null
-        //     }
+        
         //     case "FETCH_USER_ERROR":
 
         //         return {
