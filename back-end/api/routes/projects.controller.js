@@ -1,6 +1,9 @@
 // Express
 const router = require("express").Router()
 
+// Middlewares
+import { checkifContentSeeker } from "../middlewares/auth-middleware"
+
 // Services
 const ProjectService = require("../../services/project.service")
 const UserService = require("../../services/user.service")
@@ -37,6 +40,26 @@ router.route("/").get(async (req, res) => {
 
     // Return new user
     return res.status(200).json(projects)
+})
+
+/**
+ * route('/').post() Create project
+ */
+router.route("/").post(checkifContentSeeker, async (req, res) => {
+    const projectDTO = req.body
+    const user = req.user
+
+    // Call to service layer - Business Logic
+    const project = await ProjectService.create(projectDTO, user._id).catch(error => {
+        return res.status(400).json({
+            code: 400,
+            message: error.message,
+            fields: error.errors
+        })
+    })
+
+    // Return new user
+    return res.status(201).json(project)
 })
 
 

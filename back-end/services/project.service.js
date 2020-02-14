@@ -1,4 +1,4 @@
-const Project = require("../models/categories.model")
+const Project = require("../models/projects.model")
 
 /**
  * getAllProjects() Return all users projects
@@ -11,4 +11,24 @@ exports.getAllProjects = async user => {
     })
 
     return projects
+}
+
+
+/**
+ * create() Create new project
+ */
+exports.create = async (projectDTO, user_id) => {
+    projectDTO.content_seeker_id = user_id
+
+    try {
+        // Create project in mongo
+        const project = new Project(projectDTO)
+
+        const newProject = await project.save()
+
+        return newProject
+    } catch (err) {
+        // console.log(err.errors)
+        throw err
+    }
 }
