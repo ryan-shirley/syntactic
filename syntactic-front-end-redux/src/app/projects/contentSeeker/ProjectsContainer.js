@@ -1,11 +1,12 @@
+// React
 import React, { Component } from "react"
+
+// Redux
 import { connect } from "react-redux"
-import { TextArea } from "../../components/Form"
-import { analyse } from "../../../store/actions/googleNLAPIActions"
 
 class ProjectsContainer extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
     }
 
     render() {
@@ -17,19 +18,10 @@ class ProjectsContainer extends Component {
     }
 }
 
-// const mapStateToProps = state => {
-//     return {
-//         auth: state.auth.profile,
-//         nlp: state.nlp
-//     }
-// }
+const mapStateToProps = state => {
+    return {
+        projects: state.projects
+    }
+}
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         analyse: text => dispatch(analyse(text))
-//     }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer)
-
-export default ProjectsContainer
+export default connect(mapStateToProps)(ProjectsContainer)
