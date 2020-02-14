@@ -68,7 +68,8 @@ let ProjectsSchema = new mongoose.Schema({
         },
         analysis: {
             type: Array
-        }
+        },
+        default: undefined
     },
     resources: {
         path: {
