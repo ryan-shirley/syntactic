@@ -15,6 +15,10 @@ const ProjectCreateContainer = props => {
 
     // Dynamic depending on route
     if(path === '/projects/create') {
+        if(props.projects.singleProject.title) {
+            props.clearSingleProject()
+        }
+
         return <OverviewComponent {...props} />
     }
     else {
@@ -31,7 +35,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        createProject: project => dispatch(createProject(project))
+        createProject: project => dispatch(createProject(project)),
+        clearSingleProject: () => dispatch({ type: "CLEAR_SINGLE_PROJECT"})
     }
 }
 

@@ -31,6 +31,12 @@ const projectsReducer = (state = initState, action) => {
                 error: ""
             }
 
+        case "CLEAR_SINGLE_PROJECT":
+            return {
+                ...state,
+                singleProject: {}
+            }
+
         case "PROJECTS_RECEIVED_SUCCESSFULLY":
             if (action.payload.message) {
                 return {
