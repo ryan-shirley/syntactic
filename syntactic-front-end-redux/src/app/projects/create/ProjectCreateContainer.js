@@ -14,15 +14,14 @@ const ProjectCreateContainer = props => {
     const path = props.location.pathname
 
     // Dynamic depending on route
-    if(path === '/projects/create') {
-        if(props.projects.singleProject.title) {
+    if (path === "/projects/create") {
+        if (props.projects.singleProject.title) {
             props.clearSingleProject()
         }
 
         return <OverviewComponent {...props} />
-    }
-    else {
-        return 'Project alread created but needs more creating'
+    } else {
+        return "Project alread created but needs more creating"
     }
 }
 
@@ -36,9 +35,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         createProject: project => dispatch(createProject(project)),
-        clearSingleProject: () => dispatch({ type: "CLEAR_SINGLE_PROJECT"})
+        clearSingleProject: () => dispatch({ type: "CLEAR_SINGLE_PROJECT" })
     }
 }
 
 // Export
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectCreateContainer)
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ProjectCreateContainer)
