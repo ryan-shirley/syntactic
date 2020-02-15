@@ -23,7 +23,7 @@ import Projects from "./app/projects/ProjectsAuthManager"
 // import AddContent from "./components/pages/writer/AddContent"
 
 // Page - Auth - Content Seeker Only
-
+import ProjectCreate from "./app/projects/create/ProjectCreateContainer"
 
 // All Routes to use the app layout
 const appLayoutRoutes = [
@@ -32,6 +32,15 @@ const appLayoutRoutes = [
         page: Dashboard,
         middleware: {
             type: 'private'
+        }
+    },
+    {
+        path: '/projects/create',
+        page: ProjectCreate,
+        exact: true,
+        middleware: {
+            type: 'private',
+            role: 'content seeker'
         }
     },
     {
