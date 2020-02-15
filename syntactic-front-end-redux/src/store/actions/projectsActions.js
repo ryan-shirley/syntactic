@@ -1,3 +1,4 @@
+import API from "../../utils/API"
 import axios from "axios"
 const API_URL = process.env.REACT_APP_BACKEND_API
 
@@ -27,6 +28,23 @@ export const getAllProjects = () => {
             .catch(error => {
                 // Handle error
                 dispatch({ type: "FIREBASE_AUTH_GET_TOKEN_ERROR", payload: { message: error } })
+            })
+    }
+}
+
+/**
+ * createProject() create new project
+ */
+export const createProject = projectDTO => {
+    return dispatch => {
+        dispatch({ type: "PROJECTS_REQUEST_SENT" })
+
+        API.send('post', '/projects', projectDTO)
+            .then(data => {
+                dispatch({ type: "PROJECT_CREATED_SUCCESSFULLY", payload: data })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
             })
     }
 }

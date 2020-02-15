@@ -1,5 +1,6 @@
 const initState = {
     projects: [],
+    singleProject: {},
     requestProcessing: false,
     error: ''
 }
@@ -12,6 +13,21 @@ const projectsReducer = (state = initState, action) => {
                 ...state,
                 projects: [],
                 requestProcessing: true,
+                error: ""
+            }
+
+        case "PROJECTS_REQUEST_SENT":
+            return {
+                ...state,
+                requestProcessing: true,
+                error: ""
+            }
+
+        case "PROJECT_CREATED_SUCCESSFULLY":
+            return {
+                ...state,
+                requestProcessing: false,
+                singleProject: action.payload,
                 error: ""
             }
 
@@ -33,7 +49,7 @@ const projectsReducer = (state = initState, action) => {
             }
 
         // Errors
-        case "ONBOARDING_REQUEST_ERROR":
+        case "PROJECTS_REQUEST_ERROR":
             return {
                 ...state,
                 error: action.payload,

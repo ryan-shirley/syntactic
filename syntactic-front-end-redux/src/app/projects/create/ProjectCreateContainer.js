@@ -6,47 +6,34 @@ import { connect } from "react-redux"
 
 // Components
 import OverviewComponent from "./OverviewComponent"
-// import { default as WriterProjects } from "./writer/ProjectsContainer"
 
 // Actions
-// import { getAllProjects } from "../../store/actions/projectsActions"
+import { createProject } from "../../../store/actions/projectsActions"
 
 const ProjectCreateContainer = props => {
     const path = props.location.pathname
-    
+
+    // Dynamic depending on route
     if(path === '/projects/create') {
-        return <OverviewComponent />
+        return <OverviewComponent {...props} />
     }
     else {
         return 'Project alread created but needs more creating'
     }
-
-    // const { user } = props
-    // const role = user.role[0].name
-
-    // // Request All projects
-    // props.getAllProjects()
-
-    // if (role === "writer") {
-    //     return <WriterProjects />
-    // } else if (role === "content seeker") {
-    //     return <ContentSeekerProjects />
-    // }
 }
 
 // Mapping
-// const mapStateToProps = state => {
-//     return {
-//         user: state.auth.user
-//     }
-// }
+const mapStateToProps = state => {
+    return {
+        projects: state.projects
+    }
+}
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         getAllProjects: () => dispatch(getAllProjects())
-//     }
-// }
+const mapDispatchToProps = dispatch => {
+    return {
+        createProject: project => dispatch(createProject(project))
+    }
+}
 
 // Export
-// export default connect(mapStateToProps, mapDispatchToProps)(ProjectCreate)
-export default ProjectCreateContainer
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectCreateContainer)
