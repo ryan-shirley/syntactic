@@ -1,6 +1,6 @@
 import authReducer from "./authReducer"
-import categoryReducer from "./categoryReducer"
-import googleNLAPIReducer from "./googleNLAPIReducer"
+// import categoryReducer from "./categoryReducer"
+// import googleNLAPIReducer from "./googleNLAPIReducer"
 import onboardingReducer from "./onboardingReducer"
 import projectsReducer from "./projectsReducer"
 import { combineReducers } from "redux"
