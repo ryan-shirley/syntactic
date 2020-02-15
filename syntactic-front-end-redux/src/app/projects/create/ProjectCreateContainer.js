@@ -1,5 +1,5 @@
 // React
-import React from "react"
+import React, { Component } from "react"
 
 // Redux
 import { connect } from "react-redux"
@@ -10,18 +10,26 @@ import OverviewComponent from "./OverviewComponent"
 // Actions
 import { createProject } from "../../../store/actions/projectsActions"
 
-const ProjectCreateContainer = props => {
-    const path = props.location.pathname
-
-    // Dynamic depending on route
-    if (path === "/projects/create") {
-        if (props.projects.singleProject.title) {
-            props.clearSingleProject()
+class ProjectCreateContainer extends Component {
+    /**
+     * componentWillMount() Clear single project state if creating new project
+     */
+    componentWillUnmount () {
+        const path = this.props.location.pathname
+        if (path !== "/projects/create") {
+            this.props.clearSingleProject()
         }
+    }
 
-        return <OverviewComponent {...props} />
-    } else {
-        return "Project alread created but needs more creating"
+    render() {
+        const path = this.props.location.pathname
+
+        // Dynamic depending on route
+        if (path === "/projects/create") {
+            return <OverviewComponent {...this.props} />
+        } else {
+            return "Project alread created but needs more creating"
+        }
     }
 }
 

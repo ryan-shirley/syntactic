@@ -38,8 +38,7 @@ class OverviewComponent extends Component {
         if (singleProject.title) {
             return (
                 <Redirect
-                    to={`/projects/${singleProject._id}`}
-                    replace={true}
+                    to={`/projects/${singleProject._id}/create`}
                 />
             )
         }
