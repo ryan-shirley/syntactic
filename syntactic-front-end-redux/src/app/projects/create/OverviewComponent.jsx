@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Alert, Form, Row, Col, Button } from "react-bootstrap"
+import { Alert, Form, Row, Col, Button, Spinner } from "react-bootstrap"
 import { Redirect } from "react-router-dom"
 
 class OverviewComponent extends Component {
@@ -33,14 +33,10 @@ class OverviewComponent extends Component {
     }
 
     render() {
-        const { error, singleProject } = this.props.projects
+        const { error, singleProject, requestProcessing } = this.props.projects
 
         if (singleProject.title) {
-            return (
-                <Redirect
-                    to={`/projects/${singleProject._id}/create`}
-                />
-            )
+            return <Redirect to={`/projects/${singleProject._id}/create`} />
         }
 
         return (
@@ -83,7 +79,22 @@ class OverviewComponent extends Component {
                             )}
                         </Form.Group>
 
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" disabled={requestProcessing}>
+                            {requestProcessing
+                                ? 
+                                    <>
+                                    <Spinner
+                                        as="span"
+                                        animation="grow"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                        className="mr-3"
+                                    />
+                                    Processing...
+                                    </>
+                                : "Submit"}
+                        </Button>
                     </Form>
                 </Col>
             </Row>
