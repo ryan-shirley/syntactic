@@ -35,6 +35,11 @@ class ProjectShowContainer extends Component {
     }
 
     render() {
+        if(this.props.requestProcessing) {
+            return <p>Loading...</p>
+        }
+
+        
         return (
             <div>
                 <h1>This is the project show page</h1>
@@ -47,7 +52,7 @@ class ProjectShowContainer extends Component {
 const mapStateToProps = state => {
     return {
         project: state.projects.singleProject,
-        processingRequest: state.projects.processingRequest,
+        requestProcessing: state.projects.requestProcessing,
         error: state.projects.error
     }
 }
