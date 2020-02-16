@@ -20,7 +20,7 @@ class ProjectsContainer extends Component {
                     New Project
                 </Link>
 
-                <ProjectsListContainer projects={projects} loading={this.props.projects.requestProcessing} />
+                <ProjectsListContainer projects={projects} loading={this.props.projects.requestProcessing} history={this.props.history} />
             </>
         )
     }

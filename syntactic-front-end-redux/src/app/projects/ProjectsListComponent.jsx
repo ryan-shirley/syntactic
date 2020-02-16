@@ -3,6 +3,20 @@ import { Table } from "react-bootstrap"
 import Moment from "react-moment"
 
 class ProjectsListComponent extends Component {
+    constructor(props) {
+        super(props)
+
+        // Binding this to work in the callback
+        this.onClick = this.onClick.bind(this)
+    }
+
+    /**
+     * onClick() Send to view project
+     */
+    onClick = id => {
+        this.props.history.push(`/projects/${id}`)
+    }
+
     render() {
         let { projects, loading } = this.props
 
@@ -21,7 +35,7 @@ class ProjectsListComponent extends Component {
                     <tbody>
                         {projects &&
                             projects.map(project => (
-                                <tr key={project._id}>
+                                <tr key={project._id} onClick={() => this.onClick(project._id)}>
                                     <td>{project.title}</td>
                                     <td>
                                         <Moment format="DD/MM/YYYY">

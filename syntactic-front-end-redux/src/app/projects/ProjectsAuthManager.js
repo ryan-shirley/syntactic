@@ -14,9 +14,9 @@ const ProjectsAuthManager = props => {
     props.getAllProjects()
 
     if (role === "writer") {
-        return <WriterProjects />
+        return <WriterProjects {...props} />
     } else if (role === "content seeker") {
-        return <ContentSeekerProjects />
+        return <ContentSeekerProjects {...props} />
     }
 }
 
