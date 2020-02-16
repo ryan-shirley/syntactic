@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { default as ContentSeekerProjects } from "./index/contentSeeker/ProjectsContainer"
-import { default as WriterProjects } from "./index/contentSeeker/writer/ProjectsContainer"
+import { default as WriterProjects } from "./index/writer/ProjectsContainer"
 
 // Actions
 import { getAllProjects } from "../../store/actions/projectsActions"
