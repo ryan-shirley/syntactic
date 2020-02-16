@@ -57,7 +57,7 @@ export const createProject = projectDTO => {
     return dispatch => {
         dispatch({ type: "PROJECTS_REQUEST_SENT" })
 
-        API.send('post', '/projects', projectDTO)
+        API.post('/projects', projectDTO)
             .then(data => {
                 dispatch({ type: "PROJECT_CREATED_SUCCESSFULLY", payload: data })
             }) 
