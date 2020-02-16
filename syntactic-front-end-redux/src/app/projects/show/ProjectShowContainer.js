@@ -12,7 +12,7 @@ class ProjectShowContainer extends Component {
     /**
      * componentWillMount() Load individual project
      */
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         let id = this.props.match.params.id
         this.props.getProject(id)
 
