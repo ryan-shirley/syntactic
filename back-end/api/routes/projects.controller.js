@@ -31,11 +31,11 @@ router.route("/").get(async (req, res) => {
     })
 
     // See if any projects were found
-    if(!projects.length) {
+    if (!projects.length) {
         return res.status(200).json({
             code: 204,
             message: "No projects were found"
-        }) 
+        })
     }
 
     // Return new user
@@ -48,7 +48,7 @@ router.route("/").get(async (req, res) => {
 router.route("/:id").get(async (req, res) => {
     const { authToken } = req
     const { id } = req.params
-    let userId = req.user._id
+    let user = req.user
 
     // Call to service layer - Get all users projects
     const project = await ProjectService.getProject(id).catch(error => {
@@ -57,21 +57,28 @@ router.route("/:id").get(async (req, res) => {
             message: error.message
         })
     })
-    
+
     // See if any project was found
-    if(!project.title) {
+    if (!project.title) {
         return res.status(204).json({
             code: 204,
             message: "No project was found"
-        }) 
+        })
     }
 
     // Check authorised to make request
-    if(project.content_seeker_id !== userId || project.writer_id !== userId) {
+    let authorised = true
+    if (user.role[0].name === "content seeker" && project.content_seeker_id.toString() !== user._id.toString()) {
+        authorised = false
+    } else if (user.role[0].name === "writer" && project.writer_id.toString() !== user._id.toString()) {
+        authorised = false
+    }
+    
+    if (!authorised) {
         return res.status(401).json({
             code: 401,
             message: "You are not authorized to make this request"
-        }) 
+        })
     }
 
     // Return new user
@@ -86,17 +93,18 @@ router.route("/").post(checkifContentSeeker, async (req, res) => {
     const user = req.user
 
     // Call to service layer - Business Logic
-    const project = await ProjectService.create(projectDTO, user._id).catch(error => {
-        return res.status(400).json({
-            code: 400,
-            message: error.message,
-            fields: error.errors
-        })
-    })
+    const project = await ProjectService.create(projectDTO, user._id).catch(
+        error => {
+            return res.status(400).json({
+                code: 400,
+                message: error.message,
+                fields: error.errors
+            })
+        }
+    )
 
     // Return new user
     return res.status(201).json(project)
 })
-
 
 module.exports = router

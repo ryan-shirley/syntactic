@@ -16,6 +16,7 @@ import OnboardingWriter from "./app/onboarding/OnboardingWriterContainer"
 // Pages - Auth Required
 import Dashboard from "./app/dashboard/DashboardContainer"
 import Projects from "./app/projects/ProjectsAuthManager"
+import ProjectShow from "./app/projects/show/ProjectShowContainer"
 
 // Pages - Auth - Writer Only
 // import Levels from "./components/pages/writer/Levels"
@@ -41,6 +42,14 @@ const appLayoutRoutes = [
         middleware: {
             type: 'private',
             role: 'content seeker'
+        }
+    },
+    {
+        path: '/projects/:id',
+        page: ProjectShow,
+        exact: true,
+        middleware: {
+            type: 'private'
         }
     },
     {
