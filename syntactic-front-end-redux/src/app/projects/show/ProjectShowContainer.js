@@ -1,5 +1,6 @@
 // React
 import React, { Component } from "react"
+import { Redirect } from "react-router-dom"
 
 // Redux
 import { connect } from "react-redux"
@@ -8,38 +9,32 @@ import { connect } from "react-redux"
 import { getProject } from "../../../store/actions/projectsActions"
 
 class ProjectShowContainer extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {}
-    }
-
     /**
-     * getDerivedStateFromProps() Load individual project 
+     * componentWillMount() Load individual project
      */
     componentWillMount() {
         let id = this.props.match.params.id
         this.props.getProject(id)
 
-        // const path = props.location.pathname
-
-        // // Project wasn't just created and don't have or currently fetching
-        // if (path !== "/projects/create" && !props.projects.justCreated && !props.projects.singleProject.title && !props.projects.requestProcessing && !props.projects.error.message) {
-        //     let id = props.match.params.id
-        //     props.getProject(id)
-        // } else if(path !== "/projects/create") {
-        //     console.log("Was just created")
-        // }
-
         return null
     }
 
     render() {
-        if(this.props.requestProcessing) {
+        if (this.props.requestProcessing) {
             return <p>Loading...</p>
         }
 
-        
+        // Check if project in creation state
+        let creatingStates = [
+            "draft",
+            "brief not sufficient",
+            "invitation pending",
+            "invitation rejected"
+        ]
+        if(creatingStates.includes(this.props.project.status)) {
+            return <Redirect to={`/projects/${this.props.project._id}/create`} />
+        }
+
         return (
             <div>
                 <h1>This is the project show page</h1>
@@ -68,4 +63,3 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(ProjectShowContainer)
-
