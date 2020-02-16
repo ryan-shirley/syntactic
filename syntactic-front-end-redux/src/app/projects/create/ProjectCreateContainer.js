@@ -24,7 +24,7 @@ class ProjectCreateContainer extends Component {
         const path = props.location.pathname
 
         // Project wasn't just created and don't have or currently fetching
-        if (path !== "/projects/create" && !props.projects.justCreated && !props.projects.singleProject.title && !props.projects.requestProcessing) {
+        if (path !== "/projects/create" && !props.projects.justCreated && !props.projects.singleProject.title && !props.projects.requestProcessing && !props.projects.error.message) {
             let id = props.match.params.id
             props.getProject(id)
         } else if(path !== "/projects/create") {

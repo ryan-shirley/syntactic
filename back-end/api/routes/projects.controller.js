@@ -48,6 +48,7 @@ router.route("/").get(async (req, res) => {
 router.route("/:id").get(async (req, res) => {
     const { authToken } = req
     const { id } = req.params
+    let userId = req.user._id
 
     // Call to service layer - Get all users projects
     const project = await ProjectService.getProject(id).catch(error => {
@@ -57,12 +58,19 @@ router.route("/:id").get(async (req, res) => {
         })
     })
     
-    
-    // See if any projects were found
+    // See if any project was found
     if(!project.title) {
         return res.status(204).json({
             code: 204,
             message: "No project was found"
+        }) 
+    }
+
+    // Check authorised to make request
+    if(project.content_seeker_id !== userId || project.writer_id !== userId) {
+        return res.status(401).json({
+            code: 401,
+            message: "You are not authorized to make this request"
         }) 
     }
 
