@@ -47,8 +47,11 @@ class ProjectCreateContainer extends Component {
     render() {
         const path = this.props.location.pathname
 
+        if(this.props.projects.error.code === 401) {
+            return this.props.projects.error.message
+        }
         // Dynamic depending on route
-        if (path === "/projects/create") {
+        else if (path === "/projects/create") {
             return <OverviewComponent {...this.props} />
         } else {
             return "Project alread created but needs more creating"
