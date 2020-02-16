@@ -18,7 +18,7 @@ class ProjectCreateContainer extends Component {
     }
 
     /**
-     * componentWillMount() Clear single project state if creating new project
+     * getDerivedStateFromProps() Load individual project 
      */
     static getDerivedStateFromProps(props, state) {
         const path = props.location.pathname
