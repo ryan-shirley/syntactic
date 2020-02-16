@@ -8,13 +8,36 @@ import { connect } from "react-redux"
 import OverviewComponent from "./OverviewComponent"
 
 // Actions
-import { createProject } from "../../../store/actions/projectsActions"
+import { createProject, getProject } from "../../../store/actions/projectsActions"
 
 class ProjectCreateContainer extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {}
+    }
+
     /**
      * componentWillMount() Clear single project state if creating new project
      */
-    componentWillUnmount () {
+    static getDerivedStateFromProps(props, state) {
+        const path = props.location.pathname
+
+        // Project wasn't just created and don't have or currently fetching
+        if (path !== "/projects/create" && !props.projects.justCreated && !props.projects.singleProject.title && !props.projects.requestProcessing) {
+            let id = props.match.params.id
+            props.getProject(id)
+        } else if(path !== "/projects/create") {
+            console.log("Was just created")
+        }
+
+        return null
+    }
+
+    /**
+     * componentWillMount() Clear single project state if creating new project
+     */
+    componentWillUnmount() {
         const path = this.props.location.pathname
         if (path !== "/projects/create") {
             this.props.clearSingleProject()
@@ -43,7 +66,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         createProject: project => dispatch(createProject(project)),
-        clearSingleProject: () => dispatch({ type: "CLEAR_SINGLE_PROJECT" })
+        clearSingleProject: () => dispatch({ type: "CLEAR_SINGLE_PROJECT" }),
+        getProject: id => dispatch(getProject(id))
     }
 }
 

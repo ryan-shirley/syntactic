@@ -13,6 +13,20 @@ exports.getAllProjects = async user => {
     return projects
 }
 
+/**
+ * getProject() Return project
+ */
+exports.getProject = async _id => {
+    let project = await Project.findOne({ _id }, function (err, project) {
+        if (err) throw err
+
+        return project
+    })
+    
+
+    return project
+}
+
 
 /**
  * create() Create new project

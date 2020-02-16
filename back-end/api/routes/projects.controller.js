@@ -43,6 +43,34 @@ router.route("/").get(async (req, res) => {
 })
 
 /**
+ * route('/:id').get() Return single project
+ */
+router.route("/:id").get(async (req, res) => {
+    const { authToken } = req
+    const { id } = req.params
+
+    // Call to service layer - Get all users projects
+    const project = await ProjectService.getProject(id).catch(error => {
+        return res.status(400).json({
+            code: 400,
+            message: error.message
+        })
+    })
+    
+    
+    // See if any projects were found
+    if(!project.title) {
+        return res.status(204).json({
+            code: 204,
+            message: "No project was found"
+        }) 
+    }
+
+    // Return new user
+    return res.status(200).json(project)
+})
+
+/**
  * route('/').post() Create project
  */
 router.route("/").post(checkifContentSeeker, async (req, res) => {

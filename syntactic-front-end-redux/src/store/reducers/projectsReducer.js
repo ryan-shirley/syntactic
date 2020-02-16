@@ -2,6 +2,7 @@ const initState = {
     projects: [],
     singleProject: {},
     requestProcessing: false,
+    justCreated: false,
     error: ''
 }
 
@@ -23,7 +24,7 @@ const projectsReducer = (state = initState, action) => {
                 error: ""
             }
 
-        case "PROJECT_CREATED_SUCCESSFULLY":
+        case "PROJECT_RECEIVED_SUCCESSFULLY":
             return {
                 ...state,
                 requestProcessing: false,
@@ -31,10 +32,20 @@ const projectsReducer = (state = initState, action) => {
                 error: ""
             }
 
+        case "PROJECT_CREATED_SUCCESSFULLY":
+            return {
+                ...state,
+                requestProcessing: false,
+                singleProject: action.payload,
+                justCreated: true,
+                error: ""
+            }
+
         case "CLEAR_SINGLE_PROJECT":
             return {
                 ...state,
-                singleProject: {}
+                singleProject: {},
+                justCreated: false
             }
 
         case "PROJECTS_RECEIVED_SUCCESSFULLY":
