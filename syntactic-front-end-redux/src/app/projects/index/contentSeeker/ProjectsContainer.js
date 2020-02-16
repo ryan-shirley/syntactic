@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 
 // Components
-import ProjectsListContainer from "../ProjectsListComponent"
+import ProjectsListContainer from "../../ProjectsListComponent"
 
 class ProjectsContainer extends Component {
     render() {
