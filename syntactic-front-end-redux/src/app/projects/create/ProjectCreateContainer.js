@@ -27,7 +27,7 @@ class ProjectCreateContainer extends Component {
         if (path !== "/projects/create" && !props.projects.justCreated && !props.projects.singleProject.title && !props.projects.requestProcessing && !props.projects.error.message) {
             let id = props.match.params.id
             props.getProject(id)
-        } else if(path !== "/projects/create") {
+        } else if(props.projects.justCreated) {
             console.log("Was just created")
         }
 
