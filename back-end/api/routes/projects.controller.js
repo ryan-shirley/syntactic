@@ -1,5 +1,6 @@
 // Express
 const router = require("express").Router()
+const fs = require("fs")
 
 // Middlewares
 import { checkifContentSeeker } from "../middlewares/auth-middleware"
@@ -103,6 +104,23 @@ router.route("/:id/upload/brief").post(upload.single("file"), async (req, res) =
 
     const source = req.file.path
     const targetName = req.file.filename
+
+    // File uploaded not supported
+    if(req.file.mimetype !== 'application/pdf' || req.file.mimetype !== 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+        // Remove file from local server
+        fs.unlink(source, fsErr => {
+            if (fsErr) return res.status(500).json({
+                code: 500,
+                message: fsErr
+            })
+        })
+
+        return res.status(500).json({
+            code: 500,
+            message: 'This file type is not supported. Must be a .pdf or .docx',
+        })
+    }
+    
 
     // Call to service layer - Get all users projects
     const text = await StorageService.getTextFromFile(source)
