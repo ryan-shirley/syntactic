@@ -43,6 +43,7 @@ class ProjectCreateContainer extends Component {
             console.log("Was just created")
         }
 
+        // Set current viewing stage
         if (props.projects.singleProject.status !== state.viewingStatus) {
             return { viewingStatus: props.projects.singleProject.status }
         }
