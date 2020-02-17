@@ -66,3 +66,20 @@ export const createProject = projectDTO => {
             })
     }
 }
+
+/**
+ * uploadBrief() create new project
+ */
+export const uploadBrief = (brief, projectId) => {
+    return dispatch => {
+        dispatch({ type: "PROJECTS_REQUEST_SENT" })
+
+        API.uploadFile('/projects/' + projectId + '/upload/brief', brief)
+            .then(data => {
+                // dispatch({ type: "PROJECT_CREATED_SUCCESSFULLY", payload: data })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}

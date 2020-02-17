@@ -3,7 +3,7 @@ import axios from "axios"
 const API_URI = process.env.REACT_APP_BACKEND_API
 
 export default {
-    post: (url, data = null, authRequired = true) => {
+    post: (url, data, authRequired = true) => {
         // Setup request config
         let config = {}
         if(authRequired) {
@@ -16,6 +16,32 @@ export default {
         // Return promise so that .then & .catch can be called from outside the class when this method is called
         return new Promise((resolve, reject) => {
             axios.post(API_URI + url, data, config)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    reject(error.response.data)
+                })
+        })
+    },
+    uploadFile: (url, file) => {
+        // Setup request config
+        let config = {}
+        const state = store.getState()
+        let token = state.firebase.auth.stsTokenManager.accessToken
+        config.headers = { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" }
+
+        // axios request
+        // Return promise so that .then & .catch can be called from outside the class when this method is called
+        return new Promise((resolve, reject) => {
+            let formData = new FormData()
+            formData.append("file", file)
+
+            axios.defaults.headers.common[
+                "Authorization"
+            ] = localStorage.getItem("jwtToken")
+            axios
+                .post(API_URI + url, formData, config)
                 .then(response => {
                     resolve(response.data)
                 })

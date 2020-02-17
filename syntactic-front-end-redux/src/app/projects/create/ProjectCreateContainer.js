@@ -11,7 +11,8 @@ import BriefComponent from "./BriefComponent"
 // Actions
 import {
     createProject,
-    getProject
+    getProject,
+    uploadBrief
 } from "../../../store/actions/projectsActions"
 
 class ProjectCreateContainer extends Component {
@@ -19,7 +20,7 @@ class ProjectCreateContainer extends Component {
         super(props)
 
         this.state = {
-            viewingStatus: ""
+            currentView: ""
         }
     }
 
@@ -44,8 +45,21 @@ class ProjectCreateContainer extends Component {
         }
 
         // Set current viewing stage
-        if (props.projects.singleProject.status !== state.viewingStatus) {
-            return { viewingStatus: props.projects.singleProject.status }
+        let project = props.projects.singleProject
+        if (project.status !== state.currentView) {
+            // Check For Brief
+            if(!project.brief) {
+                return { currentView: "brief" }
+            }
+            else if (!project.resources) {
+                return { currentView: "resources" }
+            }            
+            else if (!project.writer_id) {
+                return { currentView: "writer" }
+            }            
+            else {
+                return { currentView: "review" }
+            }            
         }
 
         return null
@@ -63,7 +77,7 @@ class ProjectCreateContainer extends Component {
 
     render() {
         const path = this.props.location.pathname
-        let { viewingStatus } = this.state
+        let { currentView } = this.state
 
         if (this.props.projects.error.code === 401) {
             return this.props.projects.error.message
@@ -72,7 +86,7 @@ class ProjectCreateContainer extends Component {
         else if (path === "/projects/create") {
             return <OverviewComponent {...this.props} />
         } else {
-            if(viewingStatus === 'draft') {
+            if(currentView === 'brief') {
                 return <BriefComponent {...this.props} />
             }
             else {
@@ -93,7 +107,8 @@ const mapDispatchToProps = dispatch => {
     return {
         createProject: project => dispatch(createProject(project)),
         clearSingleProject: () => dispatch({ type: "CLEAR_SINGLE_PROJECT" }),
-        getProject: id => dispatch(getProject(id))
+        getProject: id => dispatch(getProject(id)),
+        uploadBrief: (brief, projectId) => dispatch(uploadBrief(brief, projectId))
     }
 }
 

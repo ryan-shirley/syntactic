@@ -3,10 +3,12 @@ const router = require("express").Router()
 
 // Middlewares
 import { checkifContentSeeker } from "../middlewares/auth-middleware"
+import { upload } from "../middlewares/storage.middleware"
 
 // Services
 const ProjectService = require("../../services/project.service")
 const UserService = require("../../services/user.service")
+const StorageService = require("../../services/storage.service")
 
 /**
  * route('/').get() Return all projects for user
@@ -68,12 +70,18 @@ router.route("/:id").get(async (req, res) => {
 
     // Check authorised to make request
     let authorised = true
-    if (user.role[0].name === "content seeker" && project.content_seeker_id.toString() !== user._id.toString()) {
+    if (
+        user.role[0].name === "content seeker" &&
+        project.content_seeker_id.toString() !== user._id.toString()
+    ) {
         authorised = false
-    } else if (user.role[0].name === "writer" && project.writer_id.toString() !== user._id.toString()) {
+    } else if (
+        user.role[0].name === "writer" &&
+        project.writer_id.toString() !== user._id.toString()
+    ) {
         authorised = false
     }
-    
+
     if (!authorised) {
         return res.status(401).json({
             code: 401,
@@ -83,6 +91,22 @@ router.route("/:id").get(async (req, res) => {
 
     // Return new user
     return res.status(200).json(project)
+})
+
+/**
+ * route('/:id/upload/brief').post() Upload brief and analyse
+ */
+router.route("/:id/upload/brief").post(upload.single("file"), async (req, res) => {
+    const { authToken } = req
+    const { id } = req.params
+    let user = req.user
+
+    const source = req.file.path
+    const targetName = req.file.filename
+
+    // Call to service layer - Get all users projects
+    const text = await StorageService.getTextFromFile(source)
+    return res.json(text)
 })
 
 /**
