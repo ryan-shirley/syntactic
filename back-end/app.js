@@ -41,12 +41,25 @@ import { checkIfAuthenticated } from "./api/middlewares/auth-middleware"
 
 // Routes Defined
 app.use("/", require("./api/routes/root.controller"))
-app.use("/users", [checkIfAuthenticated], require("./api/routes/users.controller"))
-app.use("/analyse", [checkIfAuthenticated], require("./api/routes/analyse.controller"))
-app.use("/projects", [checkIfAuthenticated], require("./api/routes/projects.controller"))
+app.use(
+    "/users",
+    [checkIfAuthenticated],
+    require("./api/routes/users.controller")
+)
+app.use(
+    "/analyse",
+    [checkIfAuthenticated],
+    require("./api/routes/analyse.controller")
+)
+app.use(
+    "/projects",
+    [checkIfAuthenticated],
+    require("./api/routes/projects.controller")
+)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+    res.status(404).json({ code: 404, message: "This route does not exist!" })
     next(createError(404))
 })
 
