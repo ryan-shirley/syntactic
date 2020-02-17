@@ -20,8 +20,8 @@ class SignUpContentSeeker extends Component {
         this.props.signUp(this.state)
     }
     render() {
-        const { auth, authError, signupSucess } = this.props
-        if (auth.uid && signupSucess) return <Redirect to="/onboarding/content-seeker" />
+        const { error, user } = this.props
+        if (Object.entries(user).length !== 0 && user === Object) return <Redirect to="/onboarding/writer" />
 
         return (
             <div className="card">
@@ -77,10 +77,10 @@ class SignUpContentSeeker extends Component {
                                 required
                             />
                         </div>
-                        {authError && (
+                        {error && (
                             <p>
                                 <span className="badge badge-pill badge-danger">
-                                    {authError}
+                                    {error.message}
                                 </span>
                             </p>
                         )}
@@ -97,9 +97,9 @@ const mapStateToProps = state => {
     console.log(state);
     
     return {
-        auth: state.firebase.auth,
-        authError: state.auth.authError,
-        signupSucess: state.auth.signupSucess
+        user: state.auth.user,
+        error: state.auth.error,
+        auth: state.firebase.auth
     }
 }
 

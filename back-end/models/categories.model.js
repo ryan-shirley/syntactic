@@ -28,7 +28,8 @@ let CategoriesSchema = new mongoose.Schema({
     },
     users: {
         type: [UserSchema],
-        required: false
+        required: false,
+        default: undefined
     }
 })
 

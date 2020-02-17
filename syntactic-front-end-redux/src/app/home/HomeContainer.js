@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
-class Home extends Component {
+class HomeContainer extends Component {
     render() {
         return (
             <div>
@@ -23,4 +23,4 @@ class Home extends Component {
     }
 }
 
-export default Home
+export default HomeContainer

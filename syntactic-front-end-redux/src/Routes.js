@@ -1,25 +1,30 @@
 import React from 'react'
 import { Switch } from 'react-router-dom'
-import LayoutManager from './LayoutManager'
+import LayoutManager from './app/layout/LayoutManager'
 
 // Pages - No Auth
-import Home from "./components/pages/Home"
-import SignIn from "./components/auth/SignIn"
-import SignUpWriter from "./components/auth/SignUpWriter"
-import SignUpContentSeeker from "./components/auth/SignUpContentSeeker"
-import NotFound404 from "./components/pages/NotFound404"
+import Home from "./app/home/HomeContainer"
+import SignIn from "./app/auth/SignIn"
+import SignUpWriter from "./app/auth/SignUpWriter"
+import SignUpContentSeeker from "./app/auth/SignUpContentSeeker"
+import NotFound404 from "./app/404"
+
+// Pages - Auth - Onboarding
+import OnboardingContentSeeker from "./app/onboarding/OnboardingContentSeekerContainer"
+import OnboardingWriter from "./app/onboarding/OnboardingWriterContainer"
 
 // Pages - Auth Required
-import Dashboard from "./components/dashboard/Dashboard"
-import Projects from "./components/pages/Projects"
+import Dashboard from "./app/dashboard/DashboardContainer"
+import Projects from "./app/projects/ProjectsAuthManager"
+import ProjectShow from "./app/projects/show/ProjectShowContainer"
 
 // Pages - Auth - Writer Only
-import Levels from "./components/pages/writer/Levels"
-import OnboardingWriter from "./components/pages/writer/Onboarding"
-import AddContent from "./components/pages/writer/AddContent"
+// import Levels from "./components/pages/writer/Levels"
+
+// import AddContent from "./components/pages/writer/AddContent"
 
 // Page - Auth - Content Seeker Only
-import OnboardingContentSeeker from "./components/pages/content-seeker/Onboarding"
+import ProjectCreate from "./app/projects/create/ProjectCreateContainer"
 
 // All Routes to use the app layout
 const appLayoutRoutes = [
@@ -31,28 +36,55 @@ const appLayoutRoutes = [
         }
     },
     {
-        path: '/projects',
-        page: Projects,
+        path: '/projects/create',
+        page: ProjectCreate,
+        exact: true,
+        middleware: {
+            type: 'private',
+            role: 'content seeker'
+        }
+    },
+    {
+        path: '/projects/:id',
+        page: ProjectShow,
+        exact: true,
         middleware: {
             type: 'private'
         }
     },
     {
-        path: '/levels',
-        page: Levels,
+        path: '/projects/:id/create',
+        page: ProjectCreate,
+        exact: true,
         middleware: {
             type: 'private',
-            role: 'writer'
+            role: 'content seeker'
         }
     },
     {
-        path: '/add-content',
-        page: AddContent,
+        path: '/projects',
+        page: Projects,
+        exact: true,
         middleware: {
-            type: 'private',
-            role: 'writer'
+            type: 'private'
         }
-    }
+    },
+    // {
+    //     path: '/levels',
+    //     page: Levels,
+    //     middleware: {
+    //         type: 'private',
+    //         role: 'writer'
+    //     }
+    // },
+    // {
+    //     path: '/add-content',
+    //     page: AddContent,
+    //     middleware: {
+    //         type: 'private',
+    //         role: 'writer'
+    //     }
+    // }
 ]
 
 // Full-With Routes
@@ -119,9 +151,6 @@ const Routes = () => (
         <Switch>
             { appLayoutRoutes.map((route) => ( <LayoutManager route={route} path={route.path} exact={route.exact ? true : false} layout="app" key={route.path} /> )) }
             { fullWithRoutes.map((route) => ( <LayoutManager route={route} path={route.path} exact={route.exact ? true : false} layout="full" key={route.path} /> )) }
-
-            {/* { appLayoutRoutes.map((route) => ( <LayoutManager route={route} exact={route.exact ? true : false} layout="app" key={route.path} /> )) }
-            { fullWithRoutes.map((route) => ( <LayoutManager route={route} exact={route.exact ? true : false} layout="full" key={route.path} /> )) } */}
         </Switch>
     </main>
 )

@@ -4,7 +4,6 @@ require("dotenv").config()
 var createError = require("http-errors")
 var express = require("express")
 var path = require("path")
-var cookieParser = require("cookie-parser")
 var logger = require("morgan")
 var cors = require("cors")
 
@@ -32,7 +31,6 @@ var app = express()
 app.use(logger("dev"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
 app.use(express.static(path.join(__dirname, "public")))
 
 // Allow react app
@@ -45,9 +43,7 @@ import { checkIfAuthenticated } from "./api/middlewares/auth-middleware"
 app.use("/", require("./api/routes/root.controller"))
 app.use("/users", [checkIfAuthenticated], require("./api/routes/users.controller"))
 app.use("/analyse", [checkIfAuthenticated], require("./api/routes/analyse.controller"))
-// app.use("/user", usersRouter)
-// app.use("/nlp", nlpRouter)
-// app.use("/onboarding", onboardingrouter)
+app.use("/projects", [checkIfAuthenticated], require("./api/routes/projects.controller"))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

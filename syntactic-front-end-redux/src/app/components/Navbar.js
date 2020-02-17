@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import SignedInLinks from "./SignedInLinks"
-import SignedOutLinks from "./SignedOutLinks"
+import SignedInLinks from "./navbar/SignedInLinks"
+import SignedOutLinks from "./navbar/SignedOutLinks"
 import { connect } from "react-redux"
 
 const Navbar = props => {

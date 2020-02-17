@@ -1,109 +1,92 @@
 const initState = {
+    completed: false,
+    contentCount: 0,
     stage: 1,
-    content: [],
-    bio: '',
-    business: '',
+    requestProcessing: false,
+    bio: "",
+    business: "",
     inputType: null,
-    waitingForResponse: false,
-    error: '',
-    completed: false
+    error: ""
 }
 
 const onboardingReducer = (state = initState, action) => {
-    let stage, error
-
     switch (action.type) {
-        case "PREVIOUS_STAGE":
-            stage = state.stage - 1
+        // Success
+        case "MOVE_STAGE":
+            let stage = state.stage + action.value
 
             return {
                 ...state,
-                stage
+                stage,
+                error: "",
+                inputType: null
             }
-        case "NEXT_STAGE":
-            stage = state.stage + 1
 
-            return {
-                ...state,
-                stage
-            }
         case "SET_STAGE":
             return {
                 ...state,
-                stage: action.stage,
-                inputType: action.inputType
+                stage: action.value,
+                error: "",
+                inputType: null
             }
-        case "PROCESSING_TRUE":
+
+        case "ONBOARDING_REQUEST_PROCESSING_STARTED":
             return {
                 ...state,
-                waitingForResponse: true,
-                error: ''
+                requestProcessing: true
             }
-        case "UPDATE_BIO_SUCCESS":
+
+        case "BIO_ADDED_SUCCESSFULLY":
             return {
                 ...state,
-                bio: action.newBio,
-                waitingForResponse: false,
-                successfulResponse: true,
-                error: ''
+                bio: action.value,
+                requestProcessing: false
             }
-        case "UPDATE_BIO_ERROR":
-            error = action.error.details || action.error
+
+        case "BUSINESS_ADDED_SUCCESSFULLY":
+            return {
+                ...state,
+                business: action.value,
+                requestProcessing: false
+            }
+
+        case "ONBOARDING_SET_INPUT_TYPE":
+            return {
+                ...state,
+                inputType: action.value
+            }
+
+        case "PROJECT_ANALYSED_SUCCESS":
+            let contentCount = state.contentCount + 1
 
             return {
                 ...state,
-                waitingForResponse: false,
-                error
+                contentCount,
+                requestProcessing: false
             }
-            case "UPDATE_BUSINESS_DESCRIPTION_SUCCESS":
-                return {
-                    ...state,
-                    business: action.newDesc,
-                    waitingForResponse: false,
-                    successfulResponse: true,
-                    error: ''
-                }
-            case "UPDATE_BUSINESS_DESCRIPTION_ERROR":
-                error = action.error.details || action.error
-    
-                return {
-                    ...state,
-                    waitingForResponse: false,
-                    error
-                }
-        case "ADD_CONTENT_SUCCESS":
-            const newContent = [...state['content'], action.text]
-
-            return {
-                ...state,
-                content: newContent,
-                waitingForResponse: false,
-                error: ''
-            }
-        case "ADD_CONTENT_ERROR":
-            error = action.error.details || action.error
-
-            return {
-                ...state,
-                waitingForResponse: false,
-                error
-            }
-        case "FINISHED_ONBOARDING_SUCCESS":
+        
+        case "ONBOARDING_COMPLETED":
             return {
                 ...state,
                 completed: true,
-                waitingForResponse: false,
+                requestProcessing: false,
                 error: ''
             }
-        case "FINISHED_ONBOARDING_ERROR": 
 
+        // Errors
+        case "ERROR_ONBOARDING_NO_VALUE_INPUT":
             return {
                 ...state,
-                waitingForResponse: false,
                 error: action.error
             }
-        case "FIREBASE_AUTH_GET_TOKEN_ERROR":
-            return state
+
+        case "ONBOARDING_REQUEST_ERROR":
+            return {
+                ...state,
+                requestProcessing: false,
+                error: action.error
+            }
+            
         default:
             return state
     }

@@ -1,6 +1,9 @@
 import admin from "../../config/firebase-service"
 import User from "../../models/user.model"
 
+// Services
+const UserService = require("../../services/user.service")
+
 const getAuthToken = (req, res, next) => {
     if (
         req.headers.authorization &&
@@ -21,6 +24,10 @@ export const checkIfAuthenticated = (req, res, next) => {
             
             req.authId = userInfo.uid
             // console.log('- - User is authenticated');
+
+            // Call to service layer - Get current user thats logged in
+            const user = await UserService.getCurrentUser(authToken)
+            req.user = user
             
             return next()
         } catch (e) {

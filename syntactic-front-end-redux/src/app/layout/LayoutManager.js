@@ -3,10 +3,10 @@ import { connect } from "react-redux"
 import { Redirect } from "react-router-dom"
 
 // Layout
-import AppLayout from "./layouts/AppLayout"
-import FullLayout from "./layouts/FullLayout"
+import AppLayout from "./AppLayout"
+import FullLayout from "./FullLayout"
 
-import { getUser } from "./store/actions/authActions"
+import { getUser } from "../../store/actions/authActions"
 
 class LayoutManager extends Component {
     render() {
@@ -29,7 +29,7 @@ class LayoutManager extends Component {
         // Public Route
         if(type === "public") {
             if(loggedIn && restricted) {
-                console.log("Restriced route. Redirecting..")
+                // console.log("Restriced route. Redirecting..")
                 return <Redirect to="/dashboard" />
             }
         }
@@ -38,7 +38,7 @@ class LayoutManager extends Component {
             let { user, loadingUser } = auth // User object from Monogo
 
             if(!loggedIn) {
-                console.log("Not authorised. Redirecting..")
+                // console.log("Not authorised. Redirecting..")
                 return <Redirect to="/signin" />
             }
             else if(user === null || (Object.keys(user).length === 0 && user.constructor === Object)) { // No user profile
@@ -54,7 +54,7 @@ class LayoutManager extends Component {
                 return <Redirect to="/dashboard" />
             }
             else if(!user.completed_onboarding) {
-                console.log("User has not completed onboarding")
+                // console.log("User has not completed onboarding")
                 const { name: role } = user.role[0]
 
                 // Ensure user is not trying to complete onboarding
@@ -72,7 +72,7 @@ class LayoutManager extends Component {
                 }
             }
             else if (path.includes("/onboarding/")) {
-                console.log("User has completed onboarding")
+                // console.log("User has completed onboarding")
                 return <Redirect to="/dashboard" />
             }
         }

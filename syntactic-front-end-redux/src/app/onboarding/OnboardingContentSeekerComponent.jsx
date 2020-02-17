@@ -1,13 +1,12 @@
 import React, { Component } from "react"
-import Button from "../../Button"
-import { TextArea } from '../../Form'
-import { connect } from "react-redux"
-import { updateBio, updateBusiness, prevStage, nextStage, finishOnboarding } from "../../../store/actions/onboardingActions"
-import { updateOnboardingStatus } from "../../../store/actions/authActions"
 
-class Onboarding extends Component {
-    constructor() {
-        super()
+// Components
+import Button from "../components/Button"
+import { TextArea } from '../components/Form'
+
+class OnboardingContentSeekerComponent extends Component {
+    constructor(props) {
+        super(props)
 
         this.state = {
             inputText: ''
@@ -15,18 +14,6 @@ class Onboarding extends Component {
 
         // Binding this to work in the callback
         this.handleChange = this.handleChange.bind(this)
-    }
-
-    /**
-     * componentDidUpdate() Monitor for stage change and
-     * reset input text value
-     */
-    componentDidUpdate(nextProps) {
-        if (nextProps.onboarding.stage !== this.props.onboarding.stage) {
-            this.setState({
-                inputText: ''
-            })
-        }
     }
 
     /**
@@ -41,10 +28,22 @@ class Onboarding extends Component {
         })
     }
 
+    /**
+     * componentDidUpdate() Monitor for stage change and
+     * reset input text value
+     */
+    componentDidUpdate(nextProps) {
+        if (nextProps.onboarding.stage !== this.props.onboarding.stage) {
+            this.setState({
+                inputText: ''
+            })
+        }
+    }
+
     render() {
         // Once completed update status in store
         if (this.props.onboarding.completed) {
-            this.props.updateOnboardingStatus()
+            this.props.history.push('/dashboard')
         }
 
         let stage = this.props.onboarding.stage
@@ -82,7 +81,7 @@ class Onboarding extends Component {
             case 4: // Finish
                 title = 'You are ready to search for writers for your next big project.'
                 text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
-                submitFormButton = <p><Button displayStyle='primary mt-3' onClick={() => this.props.finishOnboarding(this.props.user_id)} disabled={this.props.onboarding.waitingForResponse}>Finish Onboarding</Button> {this.props.onboarding.error}</p>
+                submitFormButton = <p><Button displayStyle='primary mt-3' onClick={() => this.props.completeOnboarding(this.props.user_id)} disabled={this.props.onboarding.waitingForResponse}>Finish Onboarding</Button> {this.props.onboarding.error}</p>
 
                 break
             default:
@@ -96,10 +95,6 @@ class Onboarding extends Component {
                         <h5 className="card-header text-center">
                             <button type="button" className="btn btn-primary mr-3">
                                 Stage <span className="badge badge-light ml-2">{stage}</span>
-                            </button>
-
-                            <button type="button" className="btn btn-primary">
-                                Content amount <span className="badge badge-light ml-2">{this.props.onboarding.content.length}</span>
                             </button>
                         </h5>
                         <div className="card-body text-center">
@@ -118,24 +113,7 @@ class Onboarding extends Component {
             </div>
         )
     }
+    
 }
 
-const mapStateToProps = state => {
-    return {
-        onboarding: state.onboarding,
-        user_id: state.auth.user._id
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        updateBio: (user_id, newBio) => dispatch(updateBio(user_id, newBio)),
-        updateBusiness: (user_id, newBusinessDesc) => dispatch(updateBusiness(user_id, newBusinessDesc)),
-        prevStage: () => dispatch(prevStage()),
-        nextStage: () => dispatch(nextStage()),
-        finishOnboarding: user_id => dispatch(finishOnboarding(user_id)),
-        updateOnboardingStatus: () => dispatch(updateOnboardingStatus())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Onboarding)
+export default OnboardingContentSeekerComponent

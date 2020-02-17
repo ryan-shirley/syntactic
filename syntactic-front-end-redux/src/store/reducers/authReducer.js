@@ -1,82 +1,123 @@
 const initState = {
+    requestProcessing: false,
     user: {},
     loadingUser: false,
-    authError: null,
-    signupSucess: false
+    error: null
 }
 
 const authReducer = (state = initState, action) => {
     switch (action.type) {
-        case "LOGIN_ERROR":
-            // console.log("login error")
-            
+        // Success
+        case "AUTH_REQUEST_PROCESSING_STARTED":
             return {
                 ...state,
-                authError: action.err.message
+                requestProcessing: true,
+                error: null,
             }
 
-        case "LOGIN_SUCCESS":
-            console.log("login success")
-            
+        case "FIREBASE_LOGIN_SUCCESS":
             return {
                 ...state,
-                authError: null
+                requestProcessing: false,
+                error: null
             }
-
-        case "SIGNOUT_SUCCESS":
-            console.log("signout success")
-            return state
 
         case "SIGNUP_SUCCESS":
-            console.log("signup success")
             return {
                 ...state,
-                authError: null,
-                signupSucess: true
+                error: null,
+                signupSucess: true,
+                requestProcessing: false,
+                user: action.payload
             }
 
-        case "SIGNUP_ERROR":
-            console.log("signup error")
-            console.log(action.err);
+        case "AUTH_ONBOARDING_COMPLETED":
+            let user = state.user
+            user.completed_onboarding = true
             
             return {
                 ...state,
-                authError: action.err.response.data.message
+                user
             }
+
         case "LOADING_USER":
             return {
                 ...state,
                 loadingUser: true
-            }
-        case "FETCH_USER_SUCCESS":
+            } 
 
+            case "FETCH_USER_SUCCESS":
             return {
                 ...state,
-                user: action.user,
+                user: action.payload,
                 loadingUser: false,
-                authError: null
+                error: null,
+                requestProcessing: false
             }
-            case "FETCH_USER_ERROR":
 
-                return {
-                    ...state,
-                    authError: action.error,
-                    loadingUser: false
-                }
-            case "FIREBASE_AUTH_GET_TOKEN_ERROR":
+        // Errors
+        case "ERROR_AUTH_NO_VALUE_INPUT":
+            return {
+                ...state,
+                error: action.payload
+            }
 
-                return {
-                    ...state,
-                    authError: action.error
-                }
-            case "COMPLETE_ONBOARDING":
-                let user = state.user
-                user.completed_onboarding = true
-                
-                return {
-                    ...state,
-                    user
-                }
+        case "FIREBASE_LOGIN_ERROR":
+            return {
+                ...state,
+                requestProcessing: false,
+                error: action.payload
+            }
+
+        case "SIGNUP_ERROR":
+            return {
+                ...state,
+                requestProcessing: false,
+                error: action.payload
+            }
+
+
+
+
+
+
+
+
+
+        // case "LOGIN_ERROR":
+        //     // console.log("login error")
+            
+        //     return {
+        //         ...state,
+        //         authError: action.err.message
+        //     }
+
+        // case "SIGNOUT_SUCCESS":
+        //     console.log("signout success")
+        //     return state
+
+        // case "SIGNUP_ERROR":
+        //     console.log("signup error")
+        //     console.log(action.err);
+            
+        //     return {
+        //         ...state,
+        //         authError: action.err.response.data.message
+        //     }
+        
+        //     case "FETCH_USER_ERROR":
+
+        //         return {
+        //             ...state,
+        //             authError: action.error,
+        //             loadingUser: false
+        //         }
+        //     case "FIREBASE_AUTH_GET_TOKEN_ERROR":
+
+        //         return {
+        //             ...state,
+        //             authError: action.error
+        //         }
         default:
             return state
     }
