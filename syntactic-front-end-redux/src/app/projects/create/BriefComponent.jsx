@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Form, Row, Col, Button, Spinner } from "react-bootstrap"
+import { Form, Row, Col, Button, Spinner, Alert } from "react-bootstrap"
 
 class BriefComponent extends Component {
     constructor(props) {
@@ -19,16 +19,17 @@ class BriefComponent extends Component {
     }
 
     render() {
-        let { requestProcessing } = this.props.projects
+        let { requestProcessing, error } = this.props.projects
 
         return (
             <Row className="justify-content-md-center mt-5">
                 <Col sm={4}>
                     <h3>Upload Brief</h3>
                     <Form onSubmit={this.onSubmit} className="mt-3">
-                        {/* {error && (
+                        {error && (
                             <Alert variant="danger">{error.message}</Alert>
-                        )} */}
+                        )}
+                        
                         <Form.Group controlId="hgvFailureNote">
                             <input
                                 type="file"

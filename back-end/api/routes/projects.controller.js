@@ -10,6 +10,7 @@ import { upload } from "../middlewares/storage.middleware"
 const ProjectService = require("../../services/project.service")
 const UserService = require("../../services/user.service")
 const StorageService = require("../../services/storage.service")
+const GoogleNLPService = require("../../services/google-nlp.service")
 
 /**
  * route('/').get() Return all projects for user
@@ -97,35 +98,65 @@ router.route("/:id").get(async (req, res) => {
 /**
  * route('/:id/upload/brief').post() Upload brief and analyse
  */
-router.route("/:id/upload/brief").post(upload.single("file"), async (req, res) => {
-    const { authToken } = req
-    const { id } = req.params
-    let user = req.user
+router
+    .route("/:id/upload/brief")
+    .post(upload.single("file"), async (req, res) => {
+        const { authToken } = req
+        const { id } = req.params
+        let user = req.user
 
-    const source = req.file.path
-    const targetName = req.file.filename
+        const source = req.file.path
+        const targetName = req.file.filename
 
-    // File uploaded not supported
-    if(req.file.mimetype !== 'application/pdf' || req.file.mimetype !== 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-        // Remove file from local server
-        fs.unlink(source, fsErr => {
-            if (fsErr) return res.status(500).json({
-                code: 500,
-                message: fsErr
+        console.log(req.file)
+
+        // File uploaded not supported
+        if (
+            req.file.mimetype !== "application/pdf" &&
+            req.file.mimetype !==
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        ) {
+            // Remove file from local server
+            fs.unlink(source, fsErr => {
+                if (fsErr)
+                    return res.status(500).json({
+                        code: 500,
+                        message: fsErr
+                    })
             })
-        })
 
-        return res.status(500).json({
-            code: 500,
-            message: 'This file type is not supported. Must be a .pdf or .docx',
-        })
-    }
-    
+            return res.status(500).json({
+                code: 500,
+                message:
+                    "This file type is not supported. Must be a .pdf or .docx"
+            })
+        }
 
-    // Call to service layer - Get all users projects
-    const text = await StorageService.getTextFromFile(source)
-    return res.json(text)
-})
+        // Call to service layer - Get all users projects
+        try {
+            const text = await StorageService.getTextFromFile(source)
+
+            // Analyse Text
+            const results = await GoogleNLPService.classifyText(text)
+            const writers = await GoogleNLPService.getWriters(results)
+
+            return res.json(writers)
+        } catch (error) {
+            // Remove file from local server
+            fs.unlink(source, fsErr => {
+                if (fsErr)
+                    return res.status(500).json({
+                        code: 500,
+                        message: fsErr
+                    })
+            })
+
+            res.status(400).json({
+                code: 400,
+                message: error.details
+            })
+        }
+    })
 
 /**
  * route('/').post() Create project
