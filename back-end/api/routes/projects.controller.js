@@ -140,6 +140,18 @@ router
             const results = await GoogleNLPService.classifyText(text)
             const writers = await GoogleNLPService.getWriters(results)
 
+            // TODO: Upload file to cloud storage
+            // TODO: Update Project
+
+            // Remove file from express
+            fs.unlink(source, fsErr => {
+                if (fsErr)
+                    return res.status(500).json({
+                        code: 500,
+                        message: fsErr
+                    })
+            })
+
             return res.json(writers)
         } catch (error) {
             // Remove file from local server
