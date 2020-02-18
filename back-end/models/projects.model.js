@@ -43,7 +43,6 @@ let ProjectsSchema = new mongoose.Schema({
         required: true,
         enum: [
             "draft",
-            "brief not sufficient",
             "invitation pending",
             "invitation rejected",
             "writing",
