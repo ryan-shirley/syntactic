@@ -154,7 +154,7 @@ router
 
             // })
 
-            // TODO: Update Project
+            // Update Project
             oldProject.brief = {
                 path: destination,
                 analysis: results
