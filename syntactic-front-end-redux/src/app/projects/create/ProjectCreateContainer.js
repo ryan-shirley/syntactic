@@ -68,8 +68,6 @@ class ProjectCreateContainer extends Component {
             // Check For Brief
             if (!project.brief) {
                 return { currentView: "brief" }
-            } else if (!project.resources) {
-                return { currentView: "resources" }
             } else if (!project.writer_id) {
                 return { currentView: "writer" }
             } else {
@@ -127,6 +125,8 @@ class ProjectCreateContainer extends Component {
                         setCurrentView={this.setCurrentView}
                     />
                 )
+            } else if (currentView === "review") {
+                return 'Reviewing...'
             } else {
                 return "Unknown status"
             }
