@@ -16,7 +16,7 @@ const Sidebar = props => {
     return (
         <div id="sidebar-wrapper" className="bg-primary">
             <div className="sidebar-heading">
-                <Link to="/">Syntactic</Link>
+                <Link to="/dashboard">Syntactic</Link>
             </div>
             {links}
         </div>
