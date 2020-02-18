@@ -1,5 +1,7 @@
 import React, { Component } from "react"
-import { Alert, Table, Form, Row, Col, Button, Spinner } from "react-bootstrap"
+import { Alert, Table } from "react-bootstrap"
+
+import UserInvite from "../../components/UserInvite"
 
 class WriterComponent extends Component {
     constructor(props) {
@@ -7,17 +9,28 @@ class WriterComponent extends Component {
     }
 
     /**
-     * onSubmit() Submit form to login
+     * onInviteClick() Invite writer to the project
      */
-    // onSubmit = e => {
-    //     e.preventDefault()
-    //     this.props.createProject(this.state)
-    // }
+    onInviteClick = writerId => {
+        let project = this.props.projects.singleProject
+        this.props.inviteWriterToProject(writerId, project)
+    }
 
     render() {
         let { requestProcessing, error, writersList } = this.props.projects
-
         let { recommended, relevant, others } = writersList
+
+        // Recommended
+        let recommendedWriters
+        recommended && (recommendedWriters = recommended.writers.map(writer => <UserInvite writer={writer} categories={recommended.categories} onInviteClick={this.onInviteClick} />))
+        // Relevant
+        let relevantWriters
+        relevant && (relevantWriters = relevant.writers.map(writer => <UserInvite writer={writer} categories={relevant.categories} onInviteClick={this.onInviteClick} />))
+        // Others
+        let othersWriters
+        others && (othersWriters = others.writers.map(writer => <UserInvite writer={writer} categories={others.categories} onInviteClick={this.onInviteClick} />))
+
+        let writerList = [recommendedWriters, relevantWriters, othersWriters]
 
         return (
             <>
@@ -31,22 +44,11 @@ class WriterComponent extends Component {
                             <tr>
                                 <th>Name</th>
                                 <th>Articles Written</th>
-                                <th>Categories</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {recommended &&
-                                recommended.writers.map(writer => (
-                                    <tr
-                                        key={writer._id}
-                                    >
-                                        <td>{writer.user.first_name + ' ' + writer.user.last_name}</td>
-                                        <td>
-                                            {writer.articles_written}
-                                        </td>
-                                        <td>{recommended.categories.join(", ")}</td>
-                                    </tr>
-                                ))}
+                            {writerList}
                         </tbody>
                     </Table>
                 )}

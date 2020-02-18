@@ -36,7 +36,6 @@ export const getWriters = id => {
     }
 }
 
-
 /**
  * getAllProjects() return all projects
  */
@@ -95,6 +94,27 @@ export const uploadBrief = (brief, projectId) => {
             .then(data => {
                 dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data.project })
                 dispatch({ type: "PROJECT_WRITER_LIST_RECEIVED", payload: data.writers })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}
+
+/**
+ * inviteWriterToProject() Invite writer to project
+ */
+export const inviteWriterToProject = (writer_id, project) => {
+
+    let updatedProject = project
+    updatedProject.writer_id = writer_id
+
+    return dispatch => {
+        dispatch({ type: "PROJECTS_REQUEST_SENT" })
+
+        API.put('/projects/' + updatedProject._id, updatedProject)
+            .then(data => {
+                dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data })
             }) 
             .catch(error => {
                 dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })

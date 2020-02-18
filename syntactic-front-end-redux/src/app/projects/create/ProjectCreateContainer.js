@@ -15,7 +15,8 @@ import {
     createProject,
     getProject,
     uploadBrief,
-    getWriters
+    getWriters,
+    inviteWriterToProject
 } from "../../../store/actions/projectsActions"
 
 class ProjectCreateContainer extends Component {
@@ -143,6 +144,9 @@ const mapDispatchToProps = dispatch => {
         uploadBrief: (brief, projectId) =>
             dispatch(uploadBrief(brief, projectId)),
         getWriters: id => dispatch(getWriters(id)),
+        inviteWriterToProject: (writerId, project) => {
+            dispatch(inviteWriterToProject(writerId, project))
+        }
     }
 }
 

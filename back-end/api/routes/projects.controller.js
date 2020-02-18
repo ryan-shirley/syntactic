@@ -96,6 +96,59 @@ router.route("/:id").get(async (req, res) => {
 })
 
 /**
+ * route('/:id').put() Return updated project
+ */
+router.route("/:id").put(async (req, res) => {
+    const { authToken } = req
+    const { id } = req.params
+    let user = req.user
+    const updatedProjectDTO = req.body
+
+    // Call to service layer - Get all users projects
+    const project = await ProjectService.getProject(id).catch(error => {
+        return res.status(400).json({
+            code: 400,
+            message: error.message
+        })
+    })
+
+    // See if any project was found
+    if (!project.title) {
+        return res.status(204).json({
+            code: 204,
+            message: "No project was found"
+        })
+    }
+
+    // Check authorised to make request
+    let authorised = true
+    if (
+        user.role[0].name === "content seeker" &&
+        project.content_seeker_id.toString() !== user._id.toString()
+    ) {
+        authorised = false
+    } else if (
+        user.role[0].name === "writer" &&
+        project.writer_id.toString() !== user._id.toString()
+    ) {
+        authorised = false
+    }
+
+    if (!authorised) {
+        return res.status(401).json({
+            code: 401,
+            message: "You are not authorized to make this request"
+        })
+    }
+
+    // Update Project
+    const updatedProject = await ProjectService.updateProject(updatedProjectDTO)
+
+    // Return new user
+    return res.status(200).json(updatedProject)
+})
+
+/**
  * route('/:id/upload/brief').post() Upload brief and analyse
  */
 router
