@@ -109,11 +109,7 @@ router
         const targetName = req.file.filename
 
         // File uploaded not supported
-        if (
-            req.file.mimetype !== "application/pdf" &&
-            req.file.mimetype !==
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        ) {
+        if (req.file.mimetype !== "application/pdf") {
             // Remove file from local server
             fs.unlink(source, fsErr => {
                 if (fsErr)
@@ -126,7 +122,7 @@ router
             return res.status(500).json({
                 code: 500,
                 message:
-                    "This file type is not supported. Must be a .pdf or .docx"
+                    "This file type is not supported. Must be a .pdf."
             })
         }
 
