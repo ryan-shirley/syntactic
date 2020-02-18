@@ -7,6 +7,8 @@ import { connect } from "react-redux"
 // Components
 import OverviewComponent from "./OverviewComponent"
 import BriefComponent from "./BriefComponent"
+import ResourcesComponent from "./ResourcesComponent"
+import WriterComponent from "./WriterComponent"
 
 // Actions
 import {
@@ -20,8 +22,12 @@ class ProjectCreateContainer extends Component {
         super(props)
 
         this.state = {
-            currentView: ""
+            currentView: "",
+            useProjectState: true
         }
+
+        // Binding this to work in the callback
+        this.setCurrentView = this.setCurrentView.bind(this)
     }
 
     /**
@@ -44,16 +50,25 @@ class ProjectCreateContainer extends Component {
             console.log("Was just created")
         }
 
+        // If no writer list retrieve
+        if (
+            state.currentView === "writer" &&
+            !props.projects.writers &&
+            !props.projects.requestProcessing &&
+            !props.projects.error.message
+        ) {
+            console.log("Need to get writers")
+        }
+
         // Set current viewing stage
         let project = props.projects.singleProject
-        if (project.status !== state.currentView) {
+        if (state.useProjectState && project.status !== state.currentView) {
             // Check For Brief
             if (!project.brief) {
                 return { currentView: "brief" }
             } else if (!project.resources) {
                 return { currentView: "resources" }
             } else if (!project.writer_id) {
-                // TODO: If no writer list fetch here
                 return { currentView: "writer" }
             } else {
                 return { currentView: "review" }
@@ -73,6 +88,16 @@ class ProjectCreateContainer extends Component {
         }
     }
 
+    /**
+     * setCurrentView() Set the current view
+     */
+    setCurrentView(newView) {
+        this.setState({
+            currentView: newView,
+            useProjectState: false
+        })
+    }
+
     render() {
         const path = this.props.location.pathname
         let { currentView } = this.state
@@ -86,6 +111,15 @@ class ProjectCreateContainer extends Component {
         } else {
             if (currentView === "brief") {
                 return <BriefComponent {...this.props} />
+            } else if (currentView === "resources") {
+                return (
+                    <ResourcesComponent
+                        {...this.props}
+                        setCurrentView={this.setCurrentView}
+                    />
+                )
+            } else if (currentView === "writer") {
+                return <WriterComponent {...this.props} />
             } else {
                 return "Unknown status"
             }
