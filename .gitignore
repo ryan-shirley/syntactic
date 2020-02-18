@@ -7,3 +7,4 @@ syntactic-front-end-redux/src/App.css
 back-end/google-credentials.json
 back-end/google-nlp-service.json
 syntactic-front-end-redux/newrelic_agent.log
+back-end/firebase-storage-service.json

@@ -18,8 +18,42 @@ exports.getTextFromFile = async file => {
 
         // Return text from file
         return cleanedText
-    }
-    catch (error) {
+    } catch (error) {
         throw error
     }
+}
+
+/**
+ * uploadFileToCloudStorage() Return file destination on cloud storage
+ */
+exports.uploadFileToCloudStorage = async (file, targetName, id) => {
+    const destination = `projects/${id}/${targetName}`
+
+    // Imports the Google Cloud client library
+    const { Storage } = require("@google-cloud/storage")
+
+    // Creates a client - Use firebase account (seperate to NLP account)
+    const projectId = "syntactic-iadt-year-4-fb"
+    const keyFilename = "./firebase-storage-service.json"
+    const storage = new Storage({ projectId, keyFilename })
+
+    // Uploads a local file to the bucket
+    let upload = await storage
+        .bucket(process.env.FIREBASE_STORAGE_BUCKET)
+        .upload(file, {
+            // Support for HTTP requests made with `Accept-Encoding: gzip`
+            gzip: true,
+            // By setting the option `destination`, you can change the name of the
+            // object you are uploading to a bucket.
+            metadata: {
+                // Enable long-lived HTTP caching headers
+                // Use only if the contents of the file will never change
+                // (If the contents will change, use cacheControl: 'no-cache')
+                cacheControl: "public, max-age=31536000"
+            },
+            public: true,
+            destination
+        })
+    
+    return destination
 }

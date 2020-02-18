@@ -27,7 +27,6 @@ exports.getProject = async _id => {
     return project
 }
 
-
 /**
  * create() Create new project
  */
@@ -45,4 +44,17 @@ exports.create = async (projectDTO, user_id) => {
         // console.log(err.errors)
         throw err
     }
+}
+
+/**
+ * updateProject() Upate project
+ */
+exports.updateProject = async newProjectDTO => {
+    let project = await Project.findOneAndUpdate({ _id: newProjectDTO._id }, newProjectDTO, (err, newRecord) => {
+        if (err) throw err
+
+        return newRecord
+    })
+
+    return project
 }

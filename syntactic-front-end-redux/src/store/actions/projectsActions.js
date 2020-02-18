@@ -76,7 +76,8 @@ export const uploadBrief = (brief, projectId) => {
 
         API.uploadFile('/projects/' + projectId + '/upload/brief', brief)
             .then(data => {
-                // dispatch({ type: "PROJECT_CREATED_SUCCESSFULLY", payload: data })
+                dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data.project })
+                dispatch({ type: "PROJECT_WRITER_LIST_RECEIVED", payload: data.writers })
             }) 
             .catch(error => {
                 dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })

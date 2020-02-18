@@ -1,9 +1,10 @@
 const initState = {
     projects: [],
     singleProject: {},
+    writersList: {},
     requestProcessing: false,
     justCreated: false,
-    error: ''
+    error: ""
 }
 
 const projectsReducer = (state = initState, action) => {
@@ -41,6 +42,22 @@ const projectsReducer = (state = initState, action) => {
                 error: ""
             }
 
+        case "PROJECT_UPDATED_SUCCESSFULLY":
+            return {
+                ...state,
+                requestProcessing: false,
+                singleProject: action.payload,
+                error: ""
+            }
+
+        case "PROJECT_WRITER_LIST_RECEIVED":
+            return {
+                ...state,
+                requestProcessing: false,
+                writersList: action.payload,
+                error: ""
+            }
+
         case "CLEAR_SINGLE_PROJECT":
             return {
                 ...state,
@@ -55,8 +72,7 @@ const projectsReducer = (state = initState, action) => {
                     requestProcessing: false,
                     error: action.payload.message
                 }
-            }
-            else {
+            } else {
                 return {
                     ...state,
                     projects: action.payload,
@@ -72,7 +88,7 @@ const projectsReducer = (state = initState, action) => {
                 error: action.payload,
                 requestProcessing: false
             }
-            
+
         default:
             return state
     }

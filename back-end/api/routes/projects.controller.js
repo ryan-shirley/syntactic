@@ -12,6 +12,8 @@ const UserService = require("../../services/user.service")
 const StorageService = require("../../services/storage.service")
 const GoogleNLPService = require("../../services/google-nlp.service")
 
+import admin from "../../config/firebase-service"
+
 /**
  * route('/').get() Return all projects for user
  */
@@ -108,8 +110,6 @@ router
         const source = req.file.path
         const targetName = req.file.filename
 
-        console.log(req.file)
-
         // File uploaded not supported
         if (
             req.file.mimetype !== "application/pdf" &&
@@ -134,15 +134,36 @@ router
 
         // Call to service layer - Get all users projects
         try {
+            const oldProject = await ProjectService.getProject(id)
+            // TODO: Check user is authenticated to do this..
+
             const text = await StorageService.getTextFromFile(source)
+            
 
             // Analyse Text
             const results = await GoogleNLPService.classifyText(text)
             const writers = await GoogleNLPService.getWriters(results)
 
             // TODO: Upload file to cloud storage
-            // TODO: Update Project
+            const destination = await StorageService.uploadFileToCloudStorage(source, targetName, id)
 
+            // // GETS PUBLIC URL
+            // const myFile = admin.storage().bucket(process.env.FIREBASE_STORAGE_BUCKET).file('Research Doc.pdf')
+            // await myFile.getSignedUrl({action: 'read', expires: '2020-03-03'}).then(urls => {
+            //     const signedUrl = urls[0]
+            //     console.log(signedUrl);
+                
+            // })
+
+            // TODO: Update Project
+            oldProject.brief = {
+                path: destination,
+                analysis: results
+            }
+            let updatedProjectDetails = oldProject
+            const newProject = await ProjectService.updateProject(updatedProjectDetails)
+
+            
             // Remove file from express
             fs.unlink(source, fsErr => {
                 if (fsErr)
@@ -152,7 +173,10 @@ router
                     })
             })
 
-            return res.json(writers)
+            return res.json({
+                project: newProject,
+                writers
+            })
         } catch (error) {
             // Remove file from local server
             fs.unlink(source, fsErr => {
@@ -163,9 +187,12 @@ router
                     })
             })
 
+            console.log(error);
+            
+
             res.status(400).json({
                 code: 400,
-                message: error.details
+                message: error.message
             })
         }
     })

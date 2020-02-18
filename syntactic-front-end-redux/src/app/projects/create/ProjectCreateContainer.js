@@ -48,18 +48,16 @@ class ProjectCreateContainer extends Component {
         let project = props.projects.singleProject
         if (project.status !== state.currentView) {
             // Check For Brief
-            if(!project.brief) {
+            if (!project.brief) {
                 return { currentView: "brief" }
-            }
-            else if (!project.resources) {
+            } else if (!project.resources) {
                 return { currentView: "resources" }
-            }            
-            else if (!project.writer_id) {
+            } else if (!project.writer_id) {
+                // TODO: If no writer list fetch here
                 return { currentView: "writer" }
-            }            
-            else {
+            } else {
                 return { currentView: "review" }
-            }            
+            }
         }
 
         return null
@@ -86,11 +84,10 @@ class ProjectCreateContainer extends Component {
         else if (path === "/projects/create") {
             return <OverviewComponent {...this.props} />
         } else {
-            if(currentView === 'brief') {
+            if (currentView === "brief") {
                 return <BriefComponent {...this.props} />
-            }
-            else {
-                return 'Unknown status'
+            } else {
+                return "Unknown status"
             }
         }
     }
@@ -108,7 +105,8 @@ const mapDispatchToProps = dispatch => {
         createProject: project => dispatch(createProject(project)),
         clearSingleProject: () => dispatch({ type: "CLEAR_SINGLE_PROJECT" }),
         getProject: id => dispatch(getProject(id)),
-        uploadBrief: (brief, projectId) => dispatch(uploadBrief(brief, projectId))
+        uploadBrief: (brief, projectId) =>
+            dispatch(uploadBrief(brief, projectId))
     }
 }
 
