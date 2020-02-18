@@ -27,7 +27,6 @@ class ProjectShowContainer extends Component {
         // Check if project in creation state
         let creatingStates = [
             "draft",
-            "brief not sufficient",
             "invitation pending",
             "invitation rejected"
         ]
