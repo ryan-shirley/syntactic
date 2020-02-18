@@ -57,8 +57,7 @@ const appLayoutRoutes = [
         page: ProjectCreate,
         exact: true,
         middleware: {
-            type: 'private',
-            role: 'content seeker'
+            type: 'private'
         }
     },
     {
