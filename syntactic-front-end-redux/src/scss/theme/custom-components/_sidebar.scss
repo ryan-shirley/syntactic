@@ -1,10 +1,51 @@
-.sidebar {
-    .nav-item {
-        .nav-link {
-            color: $primary-text-light;
+#sidebar-wrapper {
+    min-height: 100vh;
+    transition: margin 0.25s ease-out;
+    position: absolute;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    display: none;
+
+    @media (min-width: 768px) {
+        position: relative;
+        display: block;
+    }
+
+    &.openMobile {
+        display: block;
+    }
+
+    .sidebar-heading {
+        padding: 1.125rem 1.25rem;
+        font-size: 1.2rem;
+        background-color: $primary-dark;
+        margin-bottom: 20px;
+        
+        a {
+            color: $white;
 
             &:hover {
-                color: $white
+                text-decoration: none;
+            }
+        }
+    }
+
+    .nav {
+        .nav-link {
+            width: 15rem;
+            color: $primary-text-light;
+            padding: 0.75rem 1rem;
+
+            &:hover,
+            &.active {
+                color: $white;
+                background-color: $primary-dark;
+            }
+
+            svg {
+                width: 20px;
+                margin-right: 15px;
             }
         }
     }

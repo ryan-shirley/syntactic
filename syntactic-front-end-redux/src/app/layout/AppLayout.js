@@ -1,8 +1,8 @@
 import React from "react"
 import { Route } from "react-router-dom"
 
-import Navbar from "../components/Navbar"
-import Sidebar from "../components/Sidebar"
+import Navbar from "../components/navbar/Navbar"
+import Sidebar from "../components/sidebar/Sidebar"
 
 const AppLayout = ({ component, path, exact }) => {
     let page = exact ? (
@@ -12,16 +12,12 @@ const AppLayout = ({ component, path, exact }) => {
     )
 
     return (
-        <div>
-            <Navbar />
+        <div className="d-flex">
+            <Sidebar />
 
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-2 col-lg-1 bg-primary-dark pt-5">
-                        <Sidebar />
-                    </div>
-                    <div className="col-md-10 col-lg-11 pt-5">{page}</div>
-                </div>
+            <div id="page-content-wrapper">
+                <Navbar />
+                <main className="container-fluid">{page}</main>
             </div>
         </div>
     )

@@ -1,13 +1,17 @@
-.navbar-nav .nav-link {
-    &.media {
-        background: none;
-        border: none;
-        text-align: left;
-        color: $white;
+.navbar {
+    margin-bottom: 60px;
+    border-bottom: 3px solid $primary;
 
-        &:hover, &:focus {
-            color: $white;
-            outline: none;
+    .nav-link {
+        &.media {
+            background: none;
+            border: none;
+            text-align: left;
+
+            &:hover,
+            &:focus {
+                outline: none;
+            }
         }
     }
 }

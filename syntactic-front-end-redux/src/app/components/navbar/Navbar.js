@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import SignedInLinks from "./navbar/SignedInLinks"
-import SignedOutLinks from "./navbar/SignedOutLinks"
+import SignedInLinks from "./SignedInLinks"
+import SignedOutLinks from "./SignedOutLinks"
 import { connect } from "react-redux"
 
 const Navbar = props => {
@@ -14,10 +14,7 @@ const Navbar = props => {
     )
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-            <Link className="navbar-brand" to="/">
-                Syntactic
-            </Link>
+        <nav className="navbar navbar-expand-lg shadow-sm">
             <button
                 className="navbar-toggler"
                 type="button"
