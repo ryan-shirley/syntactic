@@ -35,16 +35,24 @@ exports.classifyText = async text => {
  */
 exports.getWriters = async categoriesMatched => {
     let cat_level1, cat_level2, cat_level3
-    let mainResults = []
+
+    // Create Main results object to be returned
+    let results = {
+        recommended: {
+            categories: [],
+            writers: []
+        },
+        relevant: {
+            categories: [],
+            writers: []
+        },
+        others: {
+            categories: [],
+            writers: []
+        }
+    }
 
     for (let j = 0; j < categoriesMatched.length; j++) {
-        let results = {
-            bestMatch: {},
-            writersAdditionalRelevantCats: [],
-            writersLowerCat: [],
-            writersSameL2Cat: []
-        }
-
         let category = categoriesMatched[j]
 
         switch (category.categories.length) {
@@ -60,15 +68,12 @@ exports.getWriters = async categoriesMatched => {
                 })
 
                 if (level1_categories === null) {
-                    results.bestMatch = {
-                        category: cat_level1,
-                        writers: []
-                    }
+                    results.recommended.categories.push(cat_level1)
                 } else {
-                    results.bestMatch = {
-                        category: cat_level1,
-                        writers: level1_categories.users
-                    }
+                    results.recommended.categories.push(cat_level1)
+                    results.recommended.writers = results.recommended.writers.concat(
+                        level1_categories.users
+                    )
 
                     // Writers in sub categories to this (second level)
                     subCategories = await Category.find()
@@ -81,10 +86,10 @@ exports.getWriters = async categoriesMatched => {
                     for (let i = 0; i < subCategories.length; i++) {
                         let category = subCategories[i]
 
-                        results.writersLowerCat.push({
-                            category: category.name,
-                            writers: category.users
-                        })
+                        results.recommended.categories.push(category.name)
+                        results.recommended.writers = results.recommended.writers.concat(
+                            category.users
+                        )
 
                         // Writers in sub categories to this (third level)
                         let subLevel2Categories = await Category.find()
@@ -95,10 +100,10 @@ exports.getWriters = async categoriesMatched => {
                             })
 
                         subLevel2Categories.forEach(cat => {
-                            results.writersLowerCat.push({
-                                category: cat.name,
-                                writers: cat.users
-                            })
+                            results.recommended.categories.push(cat.name)
+                            results.recommended.writers = results.recommended.writers.concat(
+                                cat.users
+                            )
                         })
                     }
                 }
@@ -117,15 +122,12 @@ exports.getWriters = async categoriesMatched => {
                 })
 
                 if (level2_categories === null) {
-                    results.bestMatch = {
-                        category: cat_level2,
-                        writers: []
-                    }
+                    results.recommended.categories.push(cat_level2)
                 } else {
-                    results.bestMatch = {
-                        category: cat_level2,
-                        writers: level2_categories.users
-                    }
+                    results.recommended.categories.push(cat_level2)
+                    results.recommended.writers = results.recommended.writers.concat(
+                        level2_categories.users
+                    )
 
                     // Writers in sub categories to this (third level)
                     subCategories = await Category.find()
@@ -138,10 +140,10 @@ exports.getWriters = async categoriesMatched => {
                     for (let i = 0; i < subCategories.length; i++) {
                         let category = subCategories[i]
 
-                        results.writersLowerCat.push({
-                            category: category.name,
-                            writers: category.users
-                        })
+                        results.recommended.categories.push(category.name)
+                        results.recommended.writers = results.recommended.writers.concat(
+                            category.users
+                        )
                     }
 
                     // Writers in parent categories to this (first level)
@@ -152,10 +154,10 @@ exports.getWriters = async categoriesMatched => {
                             path: "users.user"
                         })
 
-                    results.writersAdditionalRelevantCats.push({
-                        category: parentCategory.name,
-                        writers: parentCategory.users
-                    })
+                    results.others.categories.push(parentCategory.name)
+                    results.others.writers = results.others.writers.concat(
+                        parentCategory.users
+                    )
 
                     // Writers in sub categories to the parent (second level) excluding the one already got
                     subCategories = await Category.find({
@@ -172,10 +174,10 @@ exports.getWriters = async categoriesMatched => {
                     for (let i = 0; i < subCategories.length; i++) {
                         let category = subCategories[i]
 
-                        results.writersAdditionalRelevantCats.push({
-                            category: category.name,
-                            writers: category.users
-                        })
+                        results.others.categories.push(category.name)
+                        results.others.writers = results.others.writers.concat(
+                            category.users
+                        )
 
                         // Writers in sub categories to this (third level)
                         let subLevel2Categories = await Category.find()
@@ -186,10 +188,10 @@ exports.getWriters = async categoriesMatched => {
                             })
 
                         subLevel2Categories.forEach(cat => {
-                            results.writersAdditionalRelevantCats.push({
-                                category: cat.name,
-                                writers: cat.users
-                            })
+                            results.others.categories.push(cat.name)
+                            results.others.writers = results.others.writers.concat(
+                                cat.users
+                            )
                         })
                     }
                 }
@@ -209,15 +211,12 @@ exports.getWriters = async categoriesMatched => {
                 })
 
                 if (level3_categories === null) {
-                    results.bestMatch = {
-                        category: cat_level3,
-                        writers: []
-                    }
+                    results.recommended.categories.push(cat_level3)
                 } else {
-                    results.bestMatch = {
-                        category: cat_level3,
-                        writers: level3_categories.users
-                    }
+                    results.recommended.categories.push(cat_level3)
+                    results.recommended.writers = results.recommended.writers.concat(
+                        level3_categories.users
+                    )
 
                     // Writers in parent category to this (second level)
                     parentCategory = await Category.findOne()
@@ -228,10 +227,10 @@ exports.getWriters = async categoriesMatched => {
                         })
                     let secondLevelCatId = parentCategory._id
 
-                    results.writersSameL2Cat.push({
-                        category: parentCategory.name,
-                        writers: parentCategory.users
-                    })
+                    results.relevant.categories.push(parentCategory.name)
+                    results.relevant.writers = results.relevant.writers.concat(
+                        parentCategory.users
+                    )
 
                     // Writers in sub categories to the parent (third level) excluding the one already got
                     subCategories = await Category.find({
@@ -248,10 +247,10 @@ exports.getWriters = async categoriesMatched => {
                     for (let i = 0; i < subCategories.length; i++) {
                         let category = subCategories[i]
 
-                        results.writersSameL2Cat.push({
-                            category: category.name,
-                            writers: category.users
-                        })
+                        results.relevant.categories.push(category.name)
+                        results.relevant.writers = results.relevant.writers.concat(
+                            category.users
+                        )
                     }
 
                     // Writers in parent category (first level) to the second level category
@@ -262,10 +261,8 @@ exports.getWriters = async categoriesMatched => {
                             path: "users.user"
                         })
 
-                    results.writersAdditionalRelevantCats.push({
-                        category: parentCategory.name,
-                        writers: parentCategory.users
-                    })
+                    results.others.categories.push(parentCategory.name)
+                    results.others.writers.push(parentCategory.users)
 
                     // Writers in sub categories to the parent (second level) excluding the one already got
                     subCategories = await Category.find({
@@ -282,10 +279,10 @@ exports.getWriters = async categoriesMatched => {
                     for (let i = 0; i < subCategories.length; i++) {
                         let category = subCategories[i]
 
-                        results.writersAdditionalRelevantCats.push({
-                            category: category.name,
-                            writers: category.users
-                        })
+                        results.others.categories.push(category.name)
+                        results.others.writers = results.others.writers.concat(
+                            category.users
+                        )
 
                         // Writers in sub categories to this (third level)
                         let subLevel2Categories = await Category.find()
@@ -296,10 +293,10 @@ exports.getWriters = async categoriesMatched => {
                             })
 
                         subLevel2Categories.forEach(cat => {
-                            results.writersAdditionalRelevantCats.push({
-                                category: cat.name,
-                                writers: cat.users
-                            })
+                            results.others.categories.push(cat.name)
+                            results.others.writers = results.others.writers.concat(
+                                cat.users
+                            )
                         })
                     }
                 }
@@ -307,14 +304,9 @@ exports.getWriters = async categoriesMatched => {
                 break
             default:
         }
-
-        mainResults.push(results)
     }
 
-    return {
-        analysis: categoriesMatched,
-        results: mainResults
-    }
+    return results
 }
 
 /**
@@ -322,15 +314,17 @@ exports.getWriters = async categoriesMatched => {
  */
 exports.addCategoriesToWriter = async (cats, userID) => {
     // Loop through category array
-    for(let i = 0; i < cats.length; i++) {
+    for (let i = 0; i < cats.length; i++) {
         let categoryObj = cats[i]
-        
-        let {
-            categories,
-            confidence
-        } = categoryObj
 
-        let cat_level1, cat_level2, cat_level3, level1_exists, level2_exists, level3_exists
+        let { categories, confidence } = categoryObj
+
+        let cat_level1,
+            cat_level2,
+            cat_level3,
+            level1_exists,
+            level2_exists,
+            level3_exists
         switch (categories.length) {
             case 1:
                 cat_level1 = categories[0]
@@ -338,17 +332,18 @@ exports.addCategoriesToWriter = async (cats, userID) => {
                 level1_exists = await CategoryService.checkExists(cat_level1)
                 if (level1_exists.exists) {
                     // Add user to present category
-                    await CategoryService.addUser(cat_level1, userID, confidence)
+                    await CategoryService.addUser(
+                        cat_level1,
+                        userID,
+                        confidence
+                    )
                 } else {
                     // Create Category with user
-                    await CategoryService.createCategory(
-                        cat_level1,
-                        null, {
-                            user: userID,
-                            articles_written: 1,
-                            confidence
-                        }
-                    )
+                    await CategoryService.createCategory(cat_level1, null, {
+                        user: userID,
+                        articles_written: 1,
+                        confidence
+                    })
                 }
                 break
             case 2:
@@ -357,18 +352,24 @@ exports.addCategoriesToWriter = async (cats, userID) => {
 
                 // Level 1
                 level1_exists = await CategoryService.checkExists(cat_level1)
-                if (!level1_exists.exists) await CategoryService.createCategory(cat_level1)
+                if (!level1_exists.exists)
+                    await CategoryService.createCategory(cat_level1)
 
                 // Level 2
                 level2_exists = await CategoryService.checkExists(cat_level2)
                 if (level2_exists.exists) {
                     // Add user to present category
-                    await CategoryService.addUser(cat_level2, userID, confidence)
+                    await CategoryService.addUser(
+                        cat_level2,
+                        userID,
+                        confidence
+                    )
                 } else {
                     // Create Category with user
                     await CategoryService.createCategory(
                         cat_level2,
-                        cat_level1, {
+                        cat_level1,
+                        {
                             user: userID,
                             articles_written: 1,
                             confidence
@@ -383,24 +384,31 @@ exports.addCategoriesToWriter = async (cats, userID) => {
 
                 // Level 1
                 level1_exists = await CategoryService.checkExists(cat_level1)
-                
-                if (!level1_exists.exists) await CategoryService.createCategory(cat_level1)
+
+                if (!level1_exists.exists)
+                    await CategoryService.createCategory(cat_level1)
 
                 // Level 2
                 level2_exists = await CategoryService.checkExists(cat_level2)
-                if (!level2_exists.exists) await CategoryService.createCategory(cat_level2, cat_level1)
+                if (!level2_exists.exists)
+                    await CategoryService.createCategory(cat_level2, cat_level1)
 
                 // Level 3
                 level3_exists = await CategoryService.checkExists(cat_level3)
-                
+
                 if (level3_exists.exists) {
                     // Add user to present category
-                    await CategoryService.addUser(cat_level3, userID, confidence)
+                    await CategoryService.addUser(
+                        cat_level3,
+                        userID,
+                        confidence
+                    )
                 } else {
                     // Create Category with user
                     await CategoryService.createCategory(
                         cat_level3,
-                        cat_level2, {
+                        cat_level2,
+                        {
                             user: userID,
                             articles_written: 1,
                             confidence

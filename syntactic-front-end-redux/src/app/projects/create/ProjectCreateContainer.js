@@ -54,7 +54,7 @@ class ProjectCreateContainer extends Component {
         // If no writer list retrieve
         if (
             state.currentView === "writer" &&
-            !props.projects.writersList.results &&
+            !props.projects.writersList.recommended &&
             !props.projects.requestProcessing &&
             !props.projects.error.message
         ) {
