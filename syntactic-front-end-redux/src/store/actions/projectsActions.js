@@ -105,9 +105,10 @@ export const uploadBrief = (brief, projectId) => {
  * inviteWriterToProject() Invite writer to project
  */
 export const inviteWriterToProject = (writer_id, project) => {
-
+    // Update project with new information
     let updatedProject = project
     updatedProject.writer_id = writer_id
+    updatedProject.status = 'invitation pending'
 
     return dispatch => {
         dispatch({ type: "PROJECTS_REQUEST_SENT" })
