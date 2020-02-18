@@ -138,21 +138,24 @@ router
             // TODO: Check user is authenticated to do this..
 
             const text = await StorageService.getTextFromFile(source)
-            
 
             // Analyse Text
             const results = await GoogleNLPService.classifyText(text)
             const writers = await GoogleNLPService.getWriters(results)
 
             // TODO: Upload file to cloud storage
-            const destination = await StorageService.uploadFileToCloudStorage(source, targetName, id)
+            const destination = await StorageService.uploadFileToCloudStorage(
+                source,
+                targetName,
+                id
+            )
 
             // // GETS PUBLIC URL
             // const myFile = admin.storage().bucket(process.env.FIREBASE_STORAGE_BUCKET).file('Research Doc.pdf')
             // await myFile.getSignedUrl({action: 'read', expires: '2020-03-03'}).then(urls => {
             //     const signedUrl = urls[0]
             //     console.log(signedUrl);
-                
+
             // })
 
             // TODO: Update Project
@@ -161,9 +164,10 @@ router
                 analysis: results
             }
             let updatedProjectDetails = oldProject
-            const newProject = await ProjectService.updateProject(updatedProjectDetails)
+            const newProject = await ProjectService.updateProject(
+                updatedProjectDetails
+            )
 
-            
             // Remove file from express
             fs.unlink(source, fsErr => {
                 if (fsErr)
@@ -186,9 +190,6 @@ router
                         message: fsErr
                     })
             })
-
-            console.log(error);
-            
 
             res.status(400).json({
                 code: 400,
