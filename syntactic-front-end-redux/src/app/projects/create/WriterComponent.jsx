@@ -4,10 +4,6 @@ import { Alert, Table } from "react-bootstrap"
 import UserInvite from "../../components/UserInvite"
 
 class WriterComponent extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     /**
      * onInviteClick() Invite writer to the project
      */
