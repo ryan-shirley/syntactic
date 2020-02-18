@@ -1,14 +1,33 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { Alert } from "react-bootstrap"
+
+// Components
+import ProjectsListContainer from "../../ProjectsListComponent"
 
 class ProjectsContainer extends Component {
     render() {
         let { projects, requestProcessing, error } = this.props.projects
 
-        let message = requestProcessing ? 'Loading projects...' : error ? error : null
-        
+        let projectList = requestProcessing ? (
+            "Loading projects..."
+        ) : (
+            <ProjectsListContainer
+                projects={projects}
+                loading={requestProcessing}
+                history={this.props.history}
+            />
+        )
 
-        return message && <h3>{message}</h3>
+        return (
+            <>
+                <h2>Project List</h2>
+
+                {error && <Alert variant="danger">{error.message}</Alert>}
+
+                {projectList}
+            </>
+        )
     }
 }
 
