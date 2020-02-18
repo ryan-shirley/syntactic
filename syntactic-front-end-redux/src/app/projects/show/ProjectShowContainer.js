@@ -8,6 +8,9 @@ import { connect } from "react-redux"
 // Actions
 import { getProject } from "../../../store/actions/projectsActions"
 
+// Components
+import ReviewComponent from "./ReviewComponent"
+
 class ProjectShowContainer extends Component {
     /**
      * componentWillMount() Load individual project
@@ -30,8 +33,10 @@ class ProjectShowContainer extends Component {
             "invitation pending",
             "invitation rejected"
         ]
-        if(creatingStates.includes(this.props.project.status)) {
+        if(creatingStates.includes(this.props.project.status) && this.props.user.role[0].name === 'content seeker') {
             return <Redirect to={`/projects/${this.props.project._id}/create`} />
+        } else if (this.props.project.status === "invitation pending") {
+            return <ReviewComponent {...this.props} />
         }
 
         return (
@@ -45,6 +50,7 @@ class ProjectShowContainer extends Component {
 // Mapping
 const mapStateToProps = state => {
     return {
+        user: state.auth.user,
         project: state.projects.singleProject,
         requestProcessing: state.projects.requestProcessing,
         error: state.projects.error

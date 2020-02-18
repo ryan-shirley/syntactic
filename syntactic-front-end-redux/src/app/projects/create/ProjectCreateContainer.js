@@ -9,6 +9,7 @@ import OverviewComponent from "./OverviewComponent"
 import BriefComponent from "./BriefComponent"
 import ResourcesComponent from "./ResourcesComponent"
 import WriterComponent from "./WriterComponent"
+import ReviewComponent from "./ReviewComponent"
 
 // Actions
 import {
@@ -127,7 +128,7 @@ class ProjectCreateContainer extends Component {
                     />
                 )
             } else if (currentView === "review") {
-                return "Reviewing..."
+                return <ReviewComponent {...this.props} />
             } else {
                 return "Unknown status"
             }
