@@ -64,14 +64,15 @@ class ProjectCreateContainer extends Component {
 
         // Set current viewing stage
         let project = props.projects.singleProject
-        if (state.useProjectState && project.status !== state.currentView) {
-            // Check For Brief
-            if (!project.brief) {
+        if (state.useProjectState && project.status) {
+            if (project.status === "invitation pending") {
+                return { currentView: "review" }
+            } else if (!project.brief) {
                 return { currentView: "brief" }
+            } else if (!project.resources) {
+                return { currentView: "resources" }
             } else if (!project.writer_id) {
                 return { currentView: "writer" }
-            } else {
-                return { currentView: "review" }
             }
         }
 
@@ -126,7 +127,7 @@ class ProjectCreateContainer extends Component {
                     />
                 )
             } else if (currentView === "review") {
-                return 'Reviewing...'
+                return "Reviewing..."
             } else {
                 return "Unknown status"
             }
