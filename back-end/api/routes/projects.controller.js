@@ -17,14 +17,7 @@ const GoogleNLPService = require("../../services/google-nlp.service")
  */
 router.route("/").get(async (req, res) => {
     const { authToken } = req
-
-    // Call to service layer - Get current user thats logged in
-    const user = await UserService.getCurrentUser(authToken).catch(error => {
-        return res.status(400).json({
-            code: 400,
-            message: error.message
-        })
-    })
+    const user = req.user
 
     // Call to service layer - Get all users projects
     const projects = await ProjectService.getAllProjects(user).catch(error => {
