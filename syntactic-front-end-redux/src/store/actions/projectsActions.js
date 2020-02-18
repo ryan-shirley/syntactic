@@ -122,3 +122,35 @@ export const inviteWriterToProject = (writer_id, project) => {
             })
     }
 }
+
+/**
+ * updateWriterDecision() Update writers decision on project acceptance
+ */
+export const updateWriterDecision = (decision, project) => {
+    // Update project with new information
+    let updatedProject = project
+
+    // Decision = true – Writer accepts project
+    if(decision) {
+        updatedProject.status = 'writing'
+    }
+    else {
+        updatedProject.writer_id = null
+        updatedProject.status = 'invitation rejected'
+    }
+
+    console.log(updatedProject);
+    
+
+    return dispatch => {
+        dispatch({ type: "PROJECTS_REQUEST_SENT" })
+
+        API.put('/projects/' + updatedProject._id, updatedProject)
+            .then(data => {
+                dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}

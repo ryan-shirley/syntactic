@@ -6,8 +6,13 @@ class ReviewComponent extends Component {
     /**
      * onDecision() Accept or deline project
      */
-    onDecision = accept => {
-        // this.props.createProject(this.state)
+    onDecision = (decision, project) => {
+        this.props.updateWriterDecision(decision, project)
+
+        // If Declined send to projects list
+        if(!decision) {
+            this.props.history.replace('/projects')
+        }
     }
 
     render() {
@@ -22,8 +27,8 @@ class ReviewComponent extends Component {
                     <h4 className="text-uppercase">Brief</h4>
                     <p>{project.brief.path}</p>
                     
-                    <Button variant="success" onClick={() => this.onDecision(true)}>Accept</Button>
-                    <Button variant="danger" className="ml-3" onClick={() => this.onDecision(false)}>Decline</Button>
+                    <Button variant="success" onClick={() => this.onDecision(true, project)}>Accept</Button>
+                    <Button variant="danger" className="ml-3" onClick={() => this.onDecision(false, project)}>Decline</Button>
                 </Col>
             </Row>
         )

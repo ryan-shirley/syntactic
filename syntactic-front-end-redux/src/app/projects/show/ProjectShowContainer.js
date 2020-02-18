@@ -6,7 +6,7 @@ import { Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 
 // Actions
-import { getProject } from "../../../store/actions/projectsActions"
+import { getProject, updateWriterDecision } from "../../../store/actions/projectsActions"
 
 // Components
 import ReviewComponent from "./ReviewComponent"
@@ -59,7 +59,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getProject: id => dispatch(getProject(id))
+        getProject: id => dispatch(getProject(id)),
+        updateWriterDecision: (decision, project) => dispatch(updateWriterDecision(decision, project))
     }
 }
 
