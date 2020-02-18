@@ -121,7 +121,12 @@ class ProjectCreateContainer extends Component {
                     />
                 )
             } else if (currentView === "writer") {
-                return <WriterComponent {...this.props} />
+                return (
+                    <WriterComponent
+                        {...this.props}
+                        setCurrentView={this.setCurrentView}
+                    />
+                )
             } else {
                 return "Unknown status"
             }

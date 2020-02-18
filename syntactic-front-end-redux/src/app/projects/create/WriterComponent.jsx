@@ -14,6 +14,7 @@ class WriterComponent extends Component {
     onInviteClick = writerId => {
         let project = this.props.projects.singleProject
         this.props.inviteWriterToProject(writerId, project)
+        this.props.setCurrentView('review')
     }
 
     render() {
