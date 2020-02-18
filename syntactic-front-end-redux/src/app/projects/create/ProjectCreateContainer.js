@@ -14,7 +14,8 @@ import WriterComponent from "./WriterComponent"
 import {
     createProject,
     getProject,
-    uploadBrief
+    uploadBrief,
+    getWriters
 } from "../../../store/actions/projectsActions"
 
 class ProjectCreateContainer extends Component {
@@ -35,6 +36,7 @@ class ProjectCreateContainer extends Component {
      */
     static getDerivedStateFromProps(props, state) {
         const path = props.location.pathname
+        let id = props.match.params.id
 
         // Project wasn't just created and don't have or currently fetching
         if (
@@ -44,7 +46,6 @@ class ProjectCreateContainer extends Component {
             !props.projects.requestProcessing &&
             !props.projects.error.message
         ) {
-            let id = props.match.params.id
             props.getProject(id)
         } else if (props.projects.justCreated) {
             console.log("Was just created")
@@ -53,11 +54,11 @@ class ProjectCreateContainer extends Component {
         // If no writer list retrieve
         if (
             state.currentView === "writer" &&
-            !props.projects.writers &&
+            !props.projects.writersList.results &&
             !props.projects.requestProcessing &&
             !props.projects.error.message
         ) {
-            console.log("Need to get writers")
+            props.getWriters(id)
         }
 
         // Set current viewing stage
@@ -140,7 +141,8 @@ const mapDispatchToProps = dispatch => {
         clearSingleProject: () => dispatch({ type: "CLEAR_SINGLE_PROJECT" }),
         getProject: id => dispatch(getProject(id)),
         uploadBrief: (brief, projectId) =>
-            dispatch(uploadBrief(brief, projectId))
+            dispatch(uploadBrief(brief, projectId)),
+        getWriters: id => dispatch(getWriters(id)),
     }
 }
 

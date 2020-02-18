@@ -19,6 +19,23 @@ export const getProject = id => {
     }
 }
 
+/**
+ * getWriters() return writers for a project
+ */
+export const getWriters = id => {
+    return dispatch => {
+        dispatch({ type: "PROJECTS_REQUEST_SENT" })
+
+        API.get('/projects/' + id + '/writers')
+            .then(data => {
+                dispatch({ type: "PROJECT_WRITER_LIST_RECEIVED", payload: data })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}
+
 
 /**
  * getAllProjects() return all projects

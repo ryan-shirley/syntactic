@@ -12,8 +12,6 @@ const UserService = require("../../services/user.service")
 const StorageService = require("../../services/storage.service")
 const GoogleNLPService = require("../../services/google-nlp.service")
 
-import admin from "../../config/firebase-service"
-
 /**
  * route('/').get() Return all projects for user
  */
@@ -44,7 +42,7 @@ router.route("/").get(async (req, res) => {
         })
     }
 
-    // Return new user
+    // Return new project
     return res.status(200).json(projects)
 })
 
@@ -141,6 +139,8 @@ router
 
             // Analyse Text
             const results = await GoogleNLPService.classifyText(text)
+
+            // Get writers for these categories
             const writers = await GoogleNLPService.getWriters(results)
 
             // TODO: Upload file to cloud storage
@@ -197,6 +197,50 @@ router
             })
         }
     })
+
+/**
+ * route('/:id').get() Return single project
+ */
+router.route("/:id/writers").get(async (req, res) => {
+    const { authToken } = req
+    const { id } = req.params
+    let user = req.user
+
+    // Call to service layer - Get all users projects
+    const project = await ProjectService.getProject(id).catch(error => {
+        return res.status(400).json({
+            code: 400,
+            message: error.message
+        })
+    })
+
+    // Check authorised to make request
+    let authorised = true
+    if (
+        user.role[0].name === "content seeker" &&
+        project.content_seeker_id.toString() !== user._id.toString()
+    ) {
+        authorised = false
+    } else if (
+        user.role[0].name === "writer" &&
+        project.writer_id.toString() !== user._id.toString()
+    ) {
+        authorised = false
+    }
+
+    if (!authorised) {
+        return res.status(401).json({
+            code: 401,
+            message: "You are not authorized to make this request"
+        })
+    }
+
+    // Get writers for the project categories
+    const writers = await GoogleNLPService.getWriters(project.brief.analysis)
+
+    // Return writers
+    return res.status(200).json(writers)
+})
 
 /**
  * route('/').post() Create project
