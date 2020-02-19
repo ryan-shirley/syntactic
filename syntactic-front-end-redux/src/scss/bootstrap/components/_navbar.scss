@@ -1,17 +1,16 @@
-.navbar {
+.main-nav {
     margin-bottom: 60px;
     border-bottom: 3px solid $primary;
+    height: 64px;
+    padding: 10px 2rem;
 
-    .nav-link {
-        &.media {
-            background: none;
-            border: none;
-            text-align: left;
+    button {
+        background: none;
+        border: none;
+        outline: none;
+    }
 
-            &:hover,
-            &:focus {
-                outline: none;
-            }
-        }
+    time {
+        font-size: small;
     }
 }
