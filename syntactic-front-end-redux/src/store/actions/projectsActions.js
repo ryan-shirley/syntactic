@@ -139,9 +139,6 @@ export const updateWriterDecision = (decision, project) => {
         updatedProject.status = 'invitation rejected'
     }
 
-    console.log(updatedProject);
-    
-
     return dispatch => {
         dispatch({ type: "PROJECTS_REQUEST_SENT" })
 

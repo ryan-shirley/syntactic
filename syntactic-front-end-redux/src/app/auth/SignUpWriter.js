@@ -94,8 +94,6 @@ class SignUpWriter extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
-    
     return {
         user: state.auth.user,
         error: state.auth.error,
