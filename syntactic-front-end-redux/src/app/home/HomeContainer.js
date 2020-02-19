@@ -10,8 +10,8 @@ const HomeContainer = () => {
                     <Row className="justify-content-md-center mt-5">
                         <Col md={7}>
                             <h1>
-                                <span className="mr-3">👩🏼‍💻</span> Welcome to
-                                Syntactic <span className="ml-3">👨🏾‍💻</span>
+                                <span className="mr-3" role="img" aria-label="jsx-a11y/accessible-emoji">👩🏼‍💻</span> Welcome to
+                                Syntactic <span className="ml-3" role="img" aria-label="jsx-a11y/accessible-emoji">👨🏾‍💻</span>
                             </h1>
                             <p>
                                 Syntactic is a natural language processing
