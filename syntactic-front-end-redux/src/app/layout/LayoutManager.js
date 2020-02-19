@@ -39,7 +39,7 @@ class LayoutManager extends Component {
 
             if(!loggedIn) {
                 // console.log("Not authorised. Redirecting..")
-                return <Redirect to="/signin" />
+                return <Redirect to="/login" />
             }
             else if(user === null || (Object.keys(user).length === 0 && user.constructor === Object)) { // No user profile
                 // Load User details
