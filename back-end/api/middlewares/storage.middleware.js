@@ -1,6 +1,5 @@
 // AWS File Uplaod
 const multer = require("multer")
-const fs = require("fs")
 
 // Configure Disk Storage
 const storage = multer.diskStorage({
