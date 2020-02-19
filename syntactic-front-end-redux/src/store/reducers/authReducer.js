@@ -12,7 +12,7 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 requestProcessing: true,
-                error: null,
+                error: null
             }
 
         case "FIREBASE_LOGIN_SUCCESS":
@@ -34,7 +34,7 @@ const authReducer = (state = initState, action) => {
         case "AUTH_ONBOARDING_COMPLETED":
             let user = state.user
             user.completed_onboarding = true
-            
+
             return {
                 ...state,
                 user
@@ -44,15 +44,21 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 loadingUser: true
-            } 
+            }
 
-            case "FETCH_USER_SUCCESS":
+        case "FETCH_USER_SUCCESS":
             return {
                 ...state,
                 user: action.payload,
                 loadingUser: false,
                 error: null,
                 requestProcessing: false
+            }
+
+        case "SIGNOUT_SUCCESS":
+            return {
+                ...state,
+                user: {}
             }
 
         // Errors
@@ -75,49 +81,6 @@ const authReducer = (state = initState, action) => {
                 requestProcessing: false,
                 error: action.payload
             }
-
-
-
-
-
-
-
-
-
-        // case "LOGIN_ERROR":
-        //     // console.log("login error")
-            
-        //     return {
-        //         ...state,
-        //         authError: action.err.message
-        //     }
-
-        // case "SIGNOUT_SUCCESS":
-        //     console.log("signout success")
-        //     return state
-
-        // case "SIGNUP_ERROR":
-        //     console.log("signup error")
-        //     console.log(action.err);
-            
-        //     return {
-        //         ...state,
-        //         authError: action.err.response.data.message
-        //     }
-        
-        //     case "FETCH_USER_ERROR":
-
-        //         return {
-        //             ...state,
-        //             authError: action.error,
-        //             loadingUser: false
-        //         }
-        //     case "FIREBASE_AUTH_GET_TOKEN_ERROR":
-
-        //         return {
-        //             ...state,
-        //             authError: action.error
-        //         }
         default:
             return state
     }

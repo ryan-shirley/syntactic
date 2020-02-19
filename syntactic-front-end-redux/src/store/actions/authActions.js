@@ -97,16 +97,12 @@ export const signUp = (newUser, role) => {
 /**
  * signOut() Signs out using Firebase Auth
  */
-export const signOut = () => {
-    return (dispatch, getState, { getFirebase }) => {
+export const signOut =  () => {
+    return async (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
 
-        firebase
-            .auth()
-            .signOut()
-            .then(() => {
-                dispatch({ type: "SIGNOUT_SUCCESS" })
-            })
+        await firebase.auth().signOut();
+        dispatch({ type: "SIGNOUT_SUCCESS" })
     }
 }
 
