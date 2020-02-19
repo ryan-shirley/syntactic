@@ -1,26 +1,61 @@
-import React, { Component } from "react"
-import { Link } from "react-router-dom"
+// React
+import React from "react"
+import { Jumbotron, Container, Row, Col } from "react-bootstrap"
 
-class HomeContainer extends Component {
-    render() {
-        return (
-            <div>
-                <h1>This is the home page</h1>
+const HomeContainer = () => {
+    return (
+        <div className="text-center">
+            <Jumbotron>
+                <Container>
+                    <Row className="justify-content-md-center mt-5">
+                        <Col md={7}>
+                            <h1>
+                                <span className="mr-3">👩🏼‍💻</span> Welcome to
+                                Syntactic <span className="ml-3">👨🏾‍💻</span>
+                            </h1>
+                            <p>
+                                Syntactic is a natural language processing
+                                application. I use this to learn about our
+                                writers and what they write. I also use this
+                                to analyse a projects brief to best get
+                                writers who are suited.
+                            </p>
 
-                <Link className="btn btn-primary mr-2" to="/signin">
-                    Sign In
-                </Link>
+                            <hr style={{ width: 80 }} className="mb-4" />
+                        </Col>
+                    </Row>
 
-                <Link className="btn btn-orange mr-2" to="/writer-signup">
-                    Writer Sign Up
-                </Link>
+                    <h2 className="mb-4">Some of the tools that I used</h2>
+                    <Row className="justify-content-md-center">
+                        <Col md={7}>
+                            <h3>Front End</h3>
+                            <hr style={{ width: 40 }} className="mb-4" />
+                            <div className="icon-list">
+                                <img src="/svg/react.svg" alt="react" />
+                                <img src="/svg/bootstrap.svg" alt="bootstrap" />
+                                <img src="/svg/sass.svg" alt="sass" />
+                                <img src="/svg/redux.svg" alt="redux" />
+                            </div>
 
-                <Link className="btn btn-orange" to="/content-seeker-signup">
-                    Content Seeker Sign Up
-                </Link>
-            </div>
-        )
-    }
+                            <h3>Back End</h3>
+                            <hr style={{ width: 40 }} className="mb-4" />
+                            <div className="icon-list">
+                                <img src="/svg/express.svg" alt="express" />
+                                <img src="/svg/mongo-db.svg" alt="mongo" />
+                                <img src="/svg/firebase.svg" alt="firebase" />
+                            </div>
+
+                            <h3>Deployment</h3>
+                            <hr style={{ width: 40 }} className="mb-4" />
+                            <div className="icon-list">
+                                <img src="/svg/heroku.svg" alt="Heroku" />
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </Jumbotron>
+        </div>
+    )
 }
 
 export default HomeContainer
