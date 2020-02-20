@@ -17,6 +17,7 @@ import OnboardingWriter from "./app/onboarding/OnboardingWriterContainer"
 import Dashboard from "./app/dashboard/DashboardContainer"
 import Projects from "./app/projects/ProjectsAuthManager"
 import ProjectShow from "./app/projects/show/ProjectShowContainer"
+import ProjectChat from "./app/projects/show/ProjectChatComponent"
 
 // Pages - Auth - Writer Only
 // import Levels from "./components/pages/writer/Levels"
@@ -79,10 +80,15 @@ const appLayoutRoutes = [
     {
         path: '/projects/:id',
         page: ProjectShow,
-        exact: true,
         middleware: {
             type: 'private'
-        }
+        },
+        children: [
+            {
+                path: '/chat',
+                page: ProjectChat
+            }
+        ]
     },
     {
         path: '/projects/:id/create',

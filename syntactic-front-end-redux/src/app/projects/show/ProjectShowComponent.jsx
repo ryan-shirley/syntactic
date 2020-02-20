@@ -37,7 +37,7 @@ class ProjectShowComponent extends Component {
                         </Badge>
                     </Col>
                 </Row>
-                <Row>
+                <Row className="mb-5">
                     <Col>
                         <ProjectTabsComponent role={role} />
                     </Col>
