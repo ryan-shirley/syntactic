@@ -17,7 +17,7 @@ class SignIn extends Component {
         this.props.signIn(this.state)
     }
     render() {
-        const { error } = this.props
+        const { error, requestProcessing } = this.props
 
         return (
             <div className="card">
@@ -55,7 +55,7 @@ class SignIn extends Component {
                             </p>
                         )}
 
-                        <button className="btn btn-primary">Login</button>
+                        <button className="btn btn-primary" type="submit" disabled={requestProcessing}>{requestProcessing ? 'Logging In..' : 'Login'}</button>
                     </form>
                 </div>
             </div>
@@ -65,6 +65,7 @@ class SignIn extends Component {
 
 const mapStateToProps = state => {
     return {
+        requestProcessing: state.auth.requestProcessing,
         error: state.auth.error,
         auth: state.firebase.auth
     }
