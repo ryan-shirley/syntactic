@@ -1,7 +1,11 @@
+// React
 import React, { Component } from "react"
-import { Alert, Table } from "react-bootstrap"
 
+// Components
+import { Table } from "react-bootstrap"
 import UserInvite from "../../components/UserInvite"
+import DataLoading from "../../components/DataLoading"
+import Error from "../../components/Error"
 
 class WriterComponent extends Component {
     /**
@@ -31,10 +35,10 @@ class WriterComponent extends Component {
 
         return (
             <>
-                {error && <Alert variant="danger">{error.message}</Alert>}
+                {error && <Error error={error} />}
 
                 {requestProcessing ? (
-                    "Loading writers..."
+                    <DataLoading />
                 ) : (
                     <Table striped bordered hover className="mt-3">
                         <thead>
