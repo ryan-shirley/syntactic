@@ -150,7 +150,6 @@ router.route("/:id").put(async (req, res) => {
 router
     .route("/:id/upload/brief")
     .post(upload.single("file"), async (req, res) => {
-        const { authToken } = req
         const { id } = req.params
         let user = req.user
 
@@ -170,15 +169,26 @@ router
 
             return res.status(500).json({
                 code: 500,
-                message:
-                    "This file type is not supported. Must be a .pdf."
+                message: "This file type is not supported. Must be a .pdf."
             })
         }
 
         // Call to service layer - Get all users projects
         try {
             const oldProject = await ProjectService.getProject(id)
-            // TODO: Check user is authenticated to do this..
+
+            // Check authorised to make request
+            let authorised = true
+            if (oldProject.content_seeker_id.toString() !== user._id.toString()) {
+                authorised = false
+            }
+
+            if (!authorised) {
+                return res.status(401).json({
+                    code: 401,
+                    message: "You are not authorized to make this request"
+                })
+            }
 
             const text = await StorageService.getTextFromFile(source)
 
@@ -310,12 +320,12 @@ router.route("/:id/download").get(async (req, res) => {
     let user = req.user
 
     // Access Query Parameter
-    let filePath = req.query.filePath;
+    let filePath = req.query.filePath
 
-    if(!filePath) {
+    if (!filePath) {
         return res.status(400).json({
             code: 400,
-            message: 'A file path query param is required.'
+            message: "A file path query param is required."
         })
     }
 
@@ -350,10 +360,10 @@ router.route("/:id/download").get(async (req, res) => {
     }
 
     // Ensure that folder being accessed is the same as the project
-    if(!filePath.includes(`/${id}/`)) {
+    if (!filePath.includes(`/${id}/`)) {
         authorised = false
     }
-    
+
     if (!authorised) {
         return res.status(401).json({
             code: 401,
@@ -361,26 +371,30 @@ router.route("/:id/download").get(async (req, res) => {
         })
     }
 
-
     // Set public link duration
-    var moment = require('moment')
-    let expires = moment().add(20, 'seconds')
+    var moment = require("moment")
+    let expires = moment().add(20, "seconds")
 
     // Generate Public Url
-    const myFile = admin.storage().bucket(process.env.FIREBASE_STORAGE_BUCKET).file(filePath)
+    const myFile = admin
+        .storage()
+        .bucket(process.env.FIREBASE_STORAGE_BUCKET)
+        .file(filePath)
 
-    await myFile.getSignedUrl({action: 'read', expires}).then(urls => {
-        const signedUrl = urls[0]
-        
-        // Return url
-        return res.status(200).json(signedUrl)
-    })
-    .catch(error => {
-        return res.status(500).json({
-            code: 500,
-            message: error.message
+    await myFile
+        .getSignedUrl({ action: "read", expires })
+        .then(urls => {
+            const signedUrl = urls[0]
+
+            // Return url
+            return res.status(200).json(signedUrl)
         })
-    })
+        .catch(error => {
+            return res.status(500).json({
+                code: 500,
+                message: error.message
+            })
+        })
 })
 
 module.exports = router
