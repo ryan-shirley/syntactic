@@ -74,6 +74,8 @@ class ProgressIndicatorComponent extends Component {
                             }
                             block
                             disabled
+                            disabled={!project.writer_id}
+                            onClick={() => this.onClick('review')}
                         >
                             Review
                         </Button>
