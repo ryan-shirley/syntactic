@@ -50,8 +50,6 @@ class ProjectCreateContainer extends Component {
             !props.projects.error.message
         ) {
             props.getProject(id)
-        } else if (props.projects.justCreated) {
-            console.log("Was just created")
         }
 
         // If no writer list retrieve
