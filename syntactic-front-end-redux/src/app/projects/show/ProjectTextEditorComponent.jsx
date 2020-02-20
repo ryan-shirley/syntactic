@@ -73,6 +73,7 @@ class ProjectTextEditorComponent extends Component {
             <>
                 <ReactMde
                     minEditorHeight={500}
+                    minPreviewHeight={500}
                     value={this.state.text}
                     onChange={this.setValue}
                     selectedTab={this.state.selectedTab}
