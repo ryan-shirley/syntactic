@@ -7,7 +7,19 @@ import { connect } from "react-redux"
 // Components
 import { Card } from "react-bootstrap"
 
+// API Util
+import API from "../../../utils/API"
+
 class ProjectOverviewComponent extends Component {
+    /**
+     * downloadFile() Open project file in new tab
+     */
+    downloadFile(path) {
+        API.get(
+            `/projects/${this.props.project._id}/download?filePath=${path}`
+        ).then(url => window.open(url, "_blank"))
+    }
+
     render() {
         let { project, requestProcessing } = this.props
         let { brief } = project
@@ -18,7 +30,14 @@ class ProjectOverviewComponent extends Component {
             return (
                 <>
                     <h6 className="text-uppercase">Brief (1)</h6>
-                    <Card body>{brief.path}</Card>
+                    <Card body>
+                        <span
+                            className="text-primary"
+                            onClick={() => this.downloadFile(brief.path)}
+                        >
+                            {brief.path}
+                        </span>
+                    </Card>
                 </>
             )
         }
