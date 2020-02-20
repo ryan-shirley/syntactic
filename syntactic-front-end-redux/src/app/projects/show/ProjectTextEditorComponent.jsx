@@ -7,7 +7,7 @@ import { connect } from "react-redux"
 
 class ProjectTextEditorComponent extends Component {
     render() {
-        if (this.props.role == "content seeker" && this.props.project._id) {
+        if (this.props.role === "content seeker" && this.props.project._id) {
             return <Redirect push to={`/projects/${this.props.project._id}`} />
         }
 
