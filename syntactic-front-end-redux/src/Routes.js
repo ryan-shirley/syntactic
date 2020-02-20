@@ -17,6 +17,7 @@ import OnboardingWriter from "./app/onboarding/OnboardingWriterContainer"
 import Dashboard from "./app/dashboard/DashboardContainer"
 import Projects from "./app/projects/ProjectsAuthManager"
 import ProjectShow from "./app/projects/show/ProjectShowContainer"
+import ProjectOverview from "./app/projects/show/ProjectOverviewComponent"
 import ProjectChat from "./app/projects/show/ProjectChatComponent"
 
 // Pages - Auth - Writer Only
@@ -85,9 +86,13 @@ const appLayoutRoutes = [
         },
         children: [
             {
-                path: '/chat',
-                page: ProjectChat,
+                path: '/overview',
+                page: ProjectOverview,
                 showOnRoot: true
+            },
+            {
+                path: '/chat',
+                page: ProjectChat
             }
         ]
     },
