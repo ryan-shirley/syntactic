@@ -140,7 +140,7 @@ class ProjectCreateContainer extends Component {
         return (
             <>
                 <h1 className="text-center">Create Project</h1>
-                <ProgressIndicatorComponent active={currentView} project={this.props.projects.singleProject} />
+                <ProgressIndicatorComponent active={currentView} project={this.props.projects.singleProject} onClick={this.setCurrentView} />
                 {createComponent}
             </>
         )

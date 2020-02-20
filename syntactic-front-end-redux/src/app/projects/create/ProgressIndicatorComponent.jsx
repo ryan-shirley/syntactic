@@ -5,6 +5,14 @@ import React, { Component } from "react"
 import { Row, Col, Button } from "react-bootstrap"
 
 class ProgressIndicatorComponent extends Component {
+
+    /**
+     * onClick() Move to clicked stage
+     */
+    onClick(stage) {
+        this.props.onClick(stage)
+    }
+
     render() {
         let { active, project } = this.props
 
@@ -30,6 +38,7 @@ class ProgressIndicatorComponent extends Component {
                             }
                             disabled={!project.title}
                             block
+                            onClick={() => this.onClick('brief')}
                         >
                             Brief
                         </Button>
@@ -41,6 +50,7 @@ class ProgressIndicatorComponent extends Component {
                             }
                             disabled={!project.brief}
                             block
+                            onClick={() => this.onClick('resources')}
                         >
                             Resources
                         </Button>
@@ -52,6 +62,7 @@ class ProgressIndicatorComponent extends Component {
                             }
                             block
                             disabled={!project.brief}
+                            onClick={() => this.onClick('writer')}
                         >
                             Writers
                         </Button>
