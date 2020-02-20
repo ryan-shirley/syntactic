@@ -1,9 +1,9 @@
 import React, { Component } from "react"
-import { Row, Col, Badge } from "react-bootstrap"
-import Moment from "react-moment"
+import { Row, Col } from "react-bootstrap"
 
 // Components
 import ProjectTabsComponent from "./ProjectTabsComponent"
+import ProjectHeadingComponent from "./ProjectHeadingComponent"
 
 class ProjectShowComponent extends Component {
     render() {
@@ -12,32 +12,7 @@ class ProjectShowComponent extends Component {
         let url = match.url
         return (
             <>
-                <Row>
-                    <Col>
-                        <h1>
-                            {project.title}{" "}
-                            <Badge
-                                variant="secondary"
-                                className="h6 text-uppercase"
-                            >
-                                Due:{" "}
-                                <Moment format="DD MMM YYYY">
-                                    {project.end_date}
-                                </Moment>
-                            </Badge>
-                        </h1>
-                        <p>
-                            {role !== "writer"
-                                ? "writer name*"
-                                : "content seeker name*"}
-                        </p>
-                    </Col>
-                    <Col className="text-right">
-                        <Badge variant="warning" className="h3 text-uppercase">
-                            {project.status}
-                        </Badge>
-                    </Col>
-                </Row>
+                <ProjectHeadingComponent project={project} role={role} />
                 <Row className="mb-5">
                     <Col>
                         <ProjectTabsComponent role={role} path={url} />
