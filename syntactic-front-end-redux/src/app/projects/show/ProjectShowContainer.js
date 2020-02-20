@@ -6,10 +6,15 @@ import { Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 
 // Actions
-import { getProject, updateWriterDecision } from "../../../store/actions/projectsActions"
+import {
+    getProject,
+    updateWriterDecision
+} from "../../../store/actions/projectsActions"
 
 // Components
 import ReviewComponent from "./ReviewComponent"
+import ProjectShowComponent from "./ProjectShowComponent"
+
 
 class ProjectShowContainer extends Component {
     /**
@@ -33,17 +38,18 @@ class ProjectShowContainer extends Component {
             "invitation pending",
             "invitation rejected"
         ]
-        if(creatingStates.includes(this.props.project.status) && this.props.user.role[0].name === 'content seeker') {
-            return <Redirect to={`/projects/${this.props.project._id}/create`} />
+        if (
+            creatingStates.includes(this.props.project.status) &&
+            this.props.user.role[0].name === "content seeker"
+        ) {
+            return (
+                <Redirect to={`/projects/${this.props.project._id}/create`} />
+            )
         } else if (this.props.project.status === "invitation pending") {
             return <ReviewComponent {...this.props} />
         }
 
-        return (
-            <div>
-                <h1>This is the project show page</h1>
-            </div>
-        )
+        return <ProjectShowComponent {...this.props} />
     }
 }
 
@@ -60,7 +66,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getProject: id => dispatch(getProject(id)),
-        updateWriterDecision: (decision, project) => dispatch(updateWriterDecision(decision, project))
+        updateWriterDecision: (decision, project) =>
+            dispatch(updateWriterDecision(decision, project))
     }
 }
 
