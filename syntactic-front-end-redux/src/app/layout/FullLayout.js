@@ -1,8 +1,9 @@
 import React from "react"
 import { Route } from "react-router-dom"
 
-const FullLayout = ({ component, path, children }) => {
+const FullLayout = ({ component, path, children, isExact }) => {
     let childRoutes =
+        children &&
         children.length &&
         children.map(childRoute => (
             <Route
@@ -13,14 +14,13 @@ const FullLayout = ({ component, path, children }) => {
         ))
 
     let rootChild =
+        children &&
         children.length &&
         children.find(childRoute => {
             return childRoute.showOnRoot === true && childRoute.page
         })
 
-    rootChild = rootChild ? (
-        <Route path="/" exact component={rootChild.page} />
-    ) : null
+        rootChild = rootChild && isExact && <Route path="/" component={rootChild.page} />
 
     return (
         <div className="container">

@@ -7,7 +7,7 @@ import Navbar from "../components/navbar/Navbar"
 import Sidebar from "../components/sidebar/Sidebar"
 import { Row, Col } from "react-bootstrap"
 
-const AppLayout = ({ component, path, exact, children }) => {
+const AppLayout = ({ component, path, exact, children, isExact }) => {
     let page = exact ? (
         <Route exact path={path} component={component} />
     ) : (
@@ -15,6 +15,7 @@ const AppLayout = ({ component, path, exact, children }) => {
     )
 
     let childRoutes =
+        children &&
         children.length &&
         children.map(childRoute => (
             <Route
@@ -25,13 +26,13 @@ const AppLayout = ({ component, path, exact, children }) => {
         ))
 
     let rootChild =
+        children &&
         children.length &&
         children.find(childRoute => {
             return childRoute.showOnRoot === true && childRoute.page
         })
 
-    rootChild = rootChild ? <Route path="/" exact component={rootChild.page} /> : null 
-    
+    rootChild = rootChild && isExact && <Route path="/" component={rootChild.page} />
 
     return (
         <div className="d-flex">

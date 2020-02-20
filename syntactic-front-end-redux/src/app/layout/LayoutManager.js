@@ -16,7 +16,8 @@ class LayoutManager extends Component {
             exact,
             layout,
             fbAuth,
-            auth
+            auth,
+            computedMatch
         } = this.props
 
         // Route details
@@ -83,9 +84,9 @@ class LayoutManager extends Component {
         // Continue to get layouts
         switch (layout) {
             case "app":
-                return <AppLayout path={path} component={page} exact={exact} children={children} />
+                return <AppLayout path={path} component={page} exact={exact} children={children} isExact={computedMatch.isExact} />
             case "full":
-                return <FullLayout path={path} component={page} exact={exact} children={children} />
+                return <FullLayout path={path} component={page} exact={exact} children={children} isExact={computedMatch.isExact} />
             default:
                 return "Oops this layout does not exist 😅"
         }
