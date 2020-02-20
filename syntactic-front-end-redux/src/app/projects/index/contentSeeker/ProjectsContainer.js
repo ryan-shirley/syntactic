@@ -6,21 +6,39 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 
 // Components
-import ProjectsListContainer from "../../ProjectsListComponent"
+import ProjectsListContainer from "../ProjectsListComponent"
+import DataLoading from "../../../components/DataLoading"
+import Error from "../../../components/Error"
+import { Row, Col } from "react-bootstrap"
 
 class ProjectsContainer extends Component {
     render() {
-        let projects = this.props.projects.projects
+        let { projects, requestProcessing, error } = this.props.projects
+
+        if(!projects.length && requestProcessing && !error) {
+            return <DataLoading />
+        } else if (!requestProcessing && error) {
+            return <Error error={error} />
+        }
 
         return (
             <>
-                <h1>Projects list</h1>
+                <Row>
+                    <Col>
+                        <h1>Projects list</h1>
+                    </Col>
+                    <Col className="text-right">
+                        <Link to="/projects/create" className="btn btn-primary">
+                            New Project
+                        </Link>
+                    </Col>
+                </Row>
 
-                <Link to="/projects/create" className="btn btn-primary">
-                    New Project
-                </Link>
-
-                <ProjectsListContainer projects={projects} loading={this.props.projects.requestProcessing} history={this.props.history} />
+                <ProjectsListContainer
+                    projects={projects}
+                    loading={this.props.projects.requestProcessing}
+                    history={this.props.history}
+                />
             </>
         )
     }

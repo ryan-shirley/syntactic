@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { Table } from "react-bootstrap"
 import Moment from "react-moment"
+import DataLoading from "../../components/DataLoading"
 
 class ProjectsListComponent extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class ProjectsListComponent extends Component {
         let { projects, loading } = this.props
 
         if (!projects.length || loading) {
-            return <p>Loading...</p>
+            return <DataLoading />
         } else {
             return (
                 <Table striped bordered hover className="mt-3">

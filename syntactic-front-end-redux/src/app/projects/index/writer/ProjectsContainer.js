@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Alert } from "react-bootstrap"
 
 // Components
-import ProjectsListContainer from "../../ProjectsListComponent"
+import ProjectsListContainer from "../ProjectsListComponent"
 
 class ProjectsContainer extends Component {
     render() {

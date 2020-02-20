@@ -1,3 +1,4 @@
+// React
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Redirect } from "react-router-dom"
@@ -6,7 +7,11 @@ import { Redirect } from "react-router-dom"
 import AppLayout from "./AppLayout"
 import FullLayout from "./FullLayout"
 
+// Actions
 import { getUser } from "../../store/actions/authActions"
+
+// Components
+import DataLoading from "../components/DataLoading"
 
 class LayoutManager extends Component {
     render() {
@@ -49,7 +54,7 @@ class LayoutManager extends Component {
                 }
                 
                 // Wait for user to be loaded
-                return 'Waiting for user profile to be loaded'
+                return <DataLoading />
             }
             else if(restrictedRole && user.role[0].name !== restrictedRole) {
                 return <Redirect to="/dashboard" />
