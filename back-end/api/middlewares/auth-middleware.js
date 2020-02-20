@@ -34,7 +34,10 @@ export const checkIfAuthenticated = (req, res, next) => {
             // console.log('– - User is not authenticated');
             return res
                 .status(401)
-                .send({ error: "You are not authorized to make this request" })
+                .send({
+                    code: 401,
+                    message: "You are not authorized to make this request"
+                })
         }
     })
 }
