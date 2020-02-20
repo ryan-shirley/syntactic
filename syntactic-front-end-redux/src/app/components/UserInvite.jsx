@@ -3,7 +3,8 @@ import { Button } from "react-bootstrap"
 
 export default class UserInvite extends Component {
     render() {
-        let { writer, categories } = this.props
+        // let { writer, categories } = this.props
+        let { writer } = this.props
 
         return (
             <tr key={writer.user._id}>

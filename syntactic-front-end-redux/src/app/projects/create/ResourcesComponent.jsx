@@ -19,7 +19,7 @@ class ResourcesComponent extends Component {
     }
 
     render() {
-        let { requestProcessing, error } = this.props.projects
+        let { error } = this.props.projects
 
         return (
             <Row className="justify-content-md-center mt-5">
@@ -39,23 +39,6 @@ class ResourcesComponent extends Component {
                                 }
                             />
                         </Form.Group>
-
-                        {/* <Button type="submit" disabled={requestProcessing}>
-                            {requestProcessing
-                                ? 
-                                    <>
-                                    <Spinner
-                                        as="span"
-                                        animation="grow"
-                                        size="sm"
-                                        role="status"
-                                        aria-hidden="true"
-                                        className="mr-3"
-                                    />
-                                    Processing...
-                                    </>
-                                : "Submit"}
-                        </Button> */}
 
                         <Button variant="secondary" className="ml-3" onClick={() => this.props.setCurrentView('writer')}>Skip</Button>
                     </Form>

@@ -1,6 +1,8 @@
+// React
 import React, { Component } from "react"
-import { Alert, Form, Row, Col, Button, Spinner } from "react-bootstrap"
 
+// Components
+import { Row, Col, Button } from "react-bootstrap"
 import ProjectHeadingComponent from "./ProjectHeadingComponent"
 
 class ReviewComponent extends Component {
@@ -17,7 +19,7 @@ class ReviewComponent extends Component {
     }
 
     render() {
-        const { error, project, user, requestProcessing } = this.props
+        const { project, user } = this.props
         let role = user.role[0].name
 
         return (

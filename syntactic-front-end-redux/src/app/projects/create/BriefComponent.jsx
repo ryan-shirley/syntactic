@@ -11,7 +11,7 @@ class BriefComponent extends Component {
     }
 
     /**
-     * onSubmit() Submit form to login
+     * onSubmit() Upload brief
      */
     onSubmit = e => {
         e.preventDefault()

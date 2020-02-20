@@ -73,7 +73,6 @@ class ProgressIndicatorComponent extends Component {
                                 active === "review" ? "primary" : "secondary"
                             }
                             block
-                            disabled
                             disabled={!project.writer_id}
                             onClick={() => this.onClick('review')}
                         >
