@@ -262,7 +262,9 @@ exports.getWriters = async categoriesMatched => {
                         })
 
                     results.others.categories.push(parentCategory.name)
-                    results.others.writers.push(parentCategory.users)
+                    results.others.writers = results.others.writers.concat(
+                        parentCategory.users
+                    )
 
                     // Writers in sub categories to the parent (second level) excluding the one already got
                     subCategories = await Category.find({
