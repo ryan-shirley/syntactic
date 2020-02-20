@@ -10,6 +10,7 @@ import BriefComponent from "./BriefComponent"
 import ResourcesComponent from "./ResourcesComponent"
 import WriterComponent from "./WriterComponent"
 import ReviewComponent from "./ReviewComponent"
+import ProgressIndicatorComponent from "./ProgressIndicatorComponent"
 
 // Actions
 import {
@@ -104,35 +105,45 @@ class ProjectCreateContainer extends Component {
         const path = this.props.location.pathname
         let { currentView } = this.state
 
+        let createComponent
+
         if (this.props.projects.error.code === 401) {
             return this.props.projects.error.message
         }
         // Dynamic depending on route
         else if (path === "/projects/create") {
-            return <OverviewComponent {...this.props} />
+            createComponent = <OverviewComponent {...this.props} />
         } else {
             if (currentView === "brief") {
-                return <BriefComponent {...this.props} />
+                createComponent = <BriefComponent {...this.props} />
             } else if (currentView === "resources") {
-                return (
+                createComponent = (
                     <ResourcesComponent
                         {...this.props}
                         setCurrentView={this.setCurrentView}
                     />
                 )
             } else if (currentView === "writer") {
-                return (
+                createComponent = (
                     <WriterComponent
                         {...this.props}
                         setCurrentView={this.setCurrentView}
                     />
                 )
             } else if (currentView === "review") {
-                return <ReviewComponent {...this.props} />
+                createComponent = <ReviewComponent {...this.props} />
             } else {
-                return "Unknown status"
+                return "Error... Unknown project status/view."
             }
         }
+
+        return (
+            <>
+                <h1 className="text-center">Create Project</h1>
+                <ProgressIndicatorComponent active={currentView} project={this.props.projects.singleProject} />
+                {createComponent}
+            </>
+        )
     }
 }
 
