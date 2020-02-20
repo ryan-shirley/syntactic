@@ -7,8 +7,9 @@ import ProjectTabsComponent from "./ProjectTabsComponent"
 
 class ProjectShowComponent extends Component {
     render() {
-        const { project, user } = this.props
+        const { project, user, match } = this.props
         let role = user.role[0].name
+        let url = match.url
         return (
             <>
                 <Row>
@@ -39,7 +40,7 @@ class ProjectShowComponent extends Component {
                 </Row>
                 <Row className="mb-5">
                     <Col>
-                        <ProjectTabsComponent role={role} />
+                        <ProjectTabsComponent role={role} path={url} />
                     </Col>
                 </Row>
             </>
