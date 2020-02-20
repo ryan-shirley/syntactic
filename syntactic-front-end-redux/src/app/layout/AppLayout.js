@@ -1,6 +1,6 @@
 // React
 import React from "react"
-import { Route, Switch } from "react-router-dom"
+import { Route } from "react-router-dom"
 
 // Components
 import Navbar from "../components/navbar/Navbar"
@@ -14,6 +14,25 @@ const AppLayout = ({ component, path, exact, children }) => {
         <Route path={path} component={component} />
     )
 
+    let childRoutes =
+        children.length &&
+        children.map(childRoute => (
+            <Route
+                key={`${path}${childRoute.path}`}
+                path={`${path}${childRoute.path}`}
+                component={childRoute.page}
+            />
+        ))
+
+    let rootChild =
+        children.length &&
+        children.find(childRoute => {
+            return childRoute.showOnRoot === true && childRoute.page
+        })
+
+    rootChild = rootChild ? <Route path="/" exact component={rootChild.page} /> : null 
+    
+
     return (
         <div className="d-flex">
             <Sidebar />
@@ -24,15 +43,8 @@ const AppLayout = ({ component, path, exact, children }) => {
                     <Row className="justify-content-md-center mt-5">
                         <Col md={8} lg={10}>
                             {page}
-
-                            {children.length &&
-                                children.map(childRoute => (
-                                    <Route
-                                        key={`${path}${childRoute.path}`}
-                                        path={`${path}${childRoute.path}`}
-                                        component={childRoute.page}
-                                    />
-                                ))}
+                            {rootChild}
+                            {childRoutes}
                         </Col>
                     </Row>
                 </main>

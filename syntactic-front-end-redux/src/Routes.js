@@ -86,7 +86,8 @@ const appLayoutRoutes = [
         children: [
             {
                 path: '/chat',
-                page: ProjectChat
+                page: ProjectChat,
+                showOnRoot: true
             }
         ]
     },
