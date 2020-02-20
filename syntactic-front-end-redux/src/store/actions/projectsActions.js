@@ -151,3 +151,24 @@ export const updateWriterDecision = (decision, project) => {
             })
     }
 }
+
+/**
+ * saveText() Update text in project
+ */
+export const saveText = (newText, project) => {
+    return dispatch => {
+        // Update project with new information
+        let updatedProject = project
+        updatedProject.content = newText
+
+        dispatch({ type: "PROJECTS_REQUEST_SENT" })
+
+        API.put('/projects/' + updatedProject._id, updatedProject)
+            .then(data => {
+                dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}
