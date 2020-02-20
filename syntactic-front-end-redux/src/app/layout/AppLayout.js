@@ -42,7 +42,7 @@ const AppLayout = ({ component, path, exact, children, isExact }) => {
                 <Navbar />
                 <main className="container-fluid">
                     <Row className="justify-content-md-center mt-5">
-                        <Col md={8} lg={10}>
+                        <Col md={10} lg={8}>
                             {page}
                             {rootChild}
                             {childRoutes}
