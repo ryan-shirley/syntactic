@@ -43,6 +43,7 @@ const HomeContainer = () => {
                                 <img src="/svg/express.svg" alt="express" />
                                 <img src="/svg/mongo-db.svg" alt="mongo" />
                                 <img src="/svg/firebase.svg" alt="firebase" />
+                                <img src="/svg/google-cloud.svg" alt="Google Cloud" />
                             </div>
 
                             <h3>Deployment</h3>
