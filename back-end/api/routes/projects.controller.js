@@ -12,6 +12,9 @@ const UserService = require("../../services/user.service")
 const StorageService = require("../../services/storage.service")
 const GoogleNLPService = require("../../services/google-nlp.service")
 
+// Config
+import admin from "../../config/firebase-service"
+
 /**
  * route('/').get() Return all projects for user
  */
@@ -192,14 +195,6 @@ router
                 id
             )
 
-            // // GETS PUBLIC URL
-            // const myFile = admin.storage().bucket(process.env.FIREBASE_STORAGE_BUCKET).file('Research Doc.pdf')
-            // await myFile.getSignedUrl({action: 'read', expires: '2020-03-03'}).then(urls => {
-            //     const signedUrl = urls[0]
-            //     console.log(signedUrl);
-
-            // })
-
             // Update Project
             oldProject.brief = {
                 path: destination,
@@ -304,6 +299,88 @@ router.route("/").post(checkifContentSeeker, async (req, res) => {
 
     // Return new user
     return res.status(201).json(project)
+})
+
+/**
+ * route('/:id/download').get() Return url to be able to download file
+ */
+router.route("/:id/download").get(async (req, res) => {
+    const { authToken } = req
+    const { id } = req.params
+    let user = req.user
+
+    // Access Query Parameter
+    let filePath = req.query.filePath;
+
+    if(!filePath) {
+        return res.status(400).json({
+            code: 400,
+            message: 'A file path query param is required.'
+        })
+    }
+
+    // Call to service layer - Get all users projects
+    const project = await ProjectService.getProject(id).catch(error => {
+        return res.status(400).json({
+            code: 400,
+            message: error.message
+        })
+    })
+
+    // See if any project was found
+    if (!project.title) {
+        return res.status(204).json({
+            code: 204,
+            message: "No project was found"
+        })
+    }
+
+    // Check authorised to make request
+    let authorised = true
+    if (
+        user.role[0].name === "content seeker" &&
+        project.content_seeker_id.toString() !== user._id.toString()
+    ) {
+        authorised = false
+    } else if (
+        user.role[0].name === "writer" &&
+        project.writer_id.toString() !== user._id.toString()
+    ) {
+        authorised = false
+    }
+
+    // Ensure that folder being accessed is the same as the project
+    if(!filePath.includes(`/${id}/`)) {
+        authorised = false
+    }
+    
+    if (!authorised) {
+        return res.status(401).json({
+            code: 401,
+            message: "You are not authorized to make this request"
+        })
+    }
+
+
+    // Set public link duration
+    var moment = require('moment')
+    let expires = moment().add(20, 'seconds')
+
+    // Generate Public Url
+    const myFile = admin.storage().bucket(process.env.FIREBASE_STORAGE_BUCKET).file(filePath)
+
+    await myFile.getSignedUrl({action: 'read', expires}).then(urls => {
+        const signedUrl = urls[0]
+        
+        // Return url
+        return res.status(200).json(signedUrl)
+    })
+    .catch(error => {
+        return res.status(500).json({
+            code: 500,
+            message: error.message
+        })
+    })
 })
 
 module.exports = router
