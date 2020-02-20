@@ -79,6 +79,15 @@ const appLayoutRoutes = [
         }
     },
     {
+        path: '/projects/:id/create',
+        page: ProjectCreate,
+        exact: true,
+        middleware: {
+            type: 'private',
+            role: 'content seeker'
+        }
+    },
+    {
         path: '/projects/:id',
         page: ProjectShow,
         middleware: {
@@ -95,15 +104,6 @@ const appLayoutRoutes = [
                 page: ProjectChat
             }
         ]
-    },
-    {
-        path: '/projects/:id/create',
-        page: ProjectCreate,
-        exact: true,
-        middleware: {
-            type: 'private',
-            role: 'content seeker'
-        }
     },
     {
         path: '/projects',
