@@ -20,6 +20,7 @@ import ProjectShow from "./app/projects/show/ProjectShowContainer"
 import ProjectOverview from "./app/projects/show/ProjectOverviewComponent"
 import ProjectChat from "./app/projects/show/ProjectChatComponent"
 import ProjectTextEditor from "./app/projects/show/ProjectTextEditorComponent"
+import LevelsContainer from "./app/levels/LevelsContainer"
 
 // Pages - Auth - Writer Only
 // import Levels from "./components/pages/writer/Levels"
@@ -118,14 +119,14 @@ const appLayoutRoutes = [
             type: 'private'
         }
     },
-    // {
-    //     path: '/levels',
-    //     page: Levels,
-    //     middleware: {
-    //         type: 'private',
-    //         role: 'writer'
-    //     }
-    // },
+    {
+        path: '/levels',
+        page: LevelsContainer,
+        middleware: {
+            type: 'private',
+            role: 'writer'
+        }
+    },
     // {
     //     path: '/add-content',
     //     page: AddContent,

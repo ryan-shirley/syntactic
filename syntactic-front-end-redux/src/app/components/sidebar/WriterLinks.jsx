@@ -29,7 +29,7 @@ const WriterLinks = () => {
             </Nav.Link>
             <Nav.Link as={NavLink} to="/levels">
                 <FontAwesomeIcon icon={faBolt} className="text-info" />
-                Levels*
+                Levels
             </Nav.Link>
             <Nav.Link as={NavLink} to="/billing">
                 <FontAwesomeIcon icon={faWallet} className="text-danger" />
