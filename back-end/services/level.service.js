@@ -1,3 +1,5 @@
+const CategoryService = require("./category.service")
+
 const confidenceExponent = 1.075
 const baseConfidence = 50
 const maxConfidence = 0.8
@@ -32,21 +34,64 @@ requiredForLevel = level => {
 /**
  * calcLevel() Return level a user is
  */
-export function calcLevel(confidence, numArticles) {
+calcLevel = (confidence, numArticles) => {
     confidence = confidence / numArticles
+
+    var lev = 0
 
     for (let level = 1; level < 10; level++) {
         let details = requiredForLevel(level)
 
         if (
-            details.confidence < confidence &&
-            details.numArticles < numArticles
+            details.confidence <= confidence &&
+            details.numArticles <= numArticles
         ) {
-            continue
-        } else {
-            return level
+            lev = level
         }
     }
 
-    return level
+    return lev
+}
+
+exports.generateLevel = async (categoryName, userId) => {
+    console.log("Generating level for category: " + categoryName)
+
+    let category = await CategoryService.findOneByName(categoryName)
+    let users = category.users
+
+    // User results from main category
+    let userResults = users.find(
+        user => user.user.toString() === userId.toString()
+    )
+
+    if (!userResults) {
+        userResults = {
+            confidence: 0,
+            articles_written: 0
+        }
+    }
+
+    // Get all categories where this is parent and add to results
+    let subCategories = await CategoryService.getSubCategories(category._id)
+
+    // Check Sub Categories for the sub categories
+    for (var i = 0; i < subCategories.length; i++) {
+        let cat = subCategories[i]
+        let results = cat.users.find(
+            user => user.user.toString() === userId.toString()
+        )
+
+        if (results) {
+            userResults.confidence += results.confidence
+            userResults.articles_written += results.articles_written
+        }
+    }
+
+    // Calculate Level
+    let newLevel = calcLevel(
+        userResults.confidence,
+        userResults.articles_written
+    )
+
+    return newLevel
 }

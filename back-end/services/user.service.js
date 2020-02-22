@@ -34,7 +34,7 @@ exports.signUp = async userDTO => {
 /**
  * getCurrentUser() Get currently logged in user
  */
-exports.getCurrentUser = async (authToken) => {
+exports.getCurrentUser = async authToken => {
     try {
         // Get uid for user from firebase
         const userInfo = await admin.auth().verifyIdToken(authToken)
@@ -51,13 +51,51 @@ exports.getCurrentUser = async (authToken) => {
 /**
  * getUser() Get user
  */
-exports.getUser = async (id) => {
+exports.getUser = async id => {
     // Get user data from mongo
-    let user = await User.findOne({_id: id}).then(function(user) {
+    let user = await User.findOne({ _id: id }).then(function(user) {
         return user
     })
 
     return user
+}
+
+/**
+ * updateLevels() Update users levels
+ */
+exports.updateLevels = async (newLevels, userId) => {
+    const user = await User.findOne({ _id: userId })
+
+    // Add levels to user
+    if (user.levels) {
+        // Has Levels
+        for (var i = 0; i < newLevels.length; i++) {
+            let newCat = newLevels[i]
+
+            let updated = false
+
+            for (var j = 0; j < user.levels.length; j++) {
+                let cat = user.levels[j]
+
+                // Existing level found so update
+                if (cat.category === newCat.category) {
+                    user.levels[j].level = newCat.level
+                    updated = true
+                    break
+                }
+            }
+
+            // Wasn't found | Add New
+            if (!updated) {
+                user.levels.push(newCat)
+            }
+        }
+    } else {
+        // No previous levels
+        user.levels = newLevels
+    }
+
+    return await user.save()
 }
 
 /**
@@ -71,7 +109,8 @@ exports.patchUpdate = async (oldUser, userDTO) => {
         {
             "profile.bio": newBio || oldUser.profile.bio,
             "profile.business": newBusiness || oldUser.profile.business,
-            "completed_onboarding": newOnboardingStatus || oldUser.completed_onboarding
+            completed_onboarding:
+                newOnboardingStatus || oldUser.completed_onboarding
         },
         (err, doc) => {
             if (err) return err

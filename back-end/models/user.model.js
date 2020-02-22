@@ -7,6 +7,17 @@ let RoleSchema = new mongoose.Schema({
     }
 })
 
+let LevelSchema = new mongoose.Schema({
+    category: {
+        type: String,
+        required: true
+    },
+    level: {
+        type: Number,
+        required: true
+    }
+})
+
 let UserSchema = new mongoose.Schema({
     first_name: {
         type: String,
@@ -53,8 +64,13 @@ let UserSchema = new mongoose.Schema({
         required: true,
         max: 100,
         unique: true
-    }
+    },
+    levels: {
+        type: [LevelSchema],
+        required: false
+    },
 })
+
 
 // Export the model
 module.exports = mongoose.model("User", UserSchema)

@@ -106,3 +106,45 @@ exports.checkExists = name => {
         }
     })
 }
+
+/**
+ * findOneByName() Check if category exists by name
+ */
+exports.findOneByName = async (name, userId) => {
+    let category = await Category.findOne({ name }, function (err, category) {
+        if (err) throw err
+
+        return category
+    })
+    
+
+    return category
+}
+
+/**
+ * getSubCategories() Return sub categories from one category
+ */
+exports.getSubCategories = async parentId => {
+    let categoryList = await Category.find({ _parent_category_id: parentId }, function (err, categories) {
+        if (err) throw err
+
+        return categories
+    })
+
+    // Check Sub Categories for the sub categories
+    for (var i = 0; i < categoryList.length; i++) {
+        let subCategories = categoryList[i]
+
+        let categories = await Category.find({ _parent_category_id: subCategories._id }, function (err, categories) {
+            if (err) throw err
+    
+            return categories
+        })
+
+        if(categories) {
+            categoryList = categoryList.concat(categories)
+        }
+    }
+
+    return categoryList
+}
