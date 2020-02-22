@@ -50,6 +50,11 @@ calcLevel = (confidence, numArticles) => {
         }
     }
 
+    // Ensure at least level 1
+    if(lev === 0 && numArticles >= 1) {
+        lev = 1
+    }
+
     return lev
 }
 
