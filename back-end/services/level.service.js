@@ -83,13 +83,16 @@ exports.generateLevel = async (categoryName, userId) => {
     // Check Sub Categories for the sub categories
     for (var i = 0; i < subCategories.length; i++) {
         let cat = subCategories[i]
-        let results = cat.users.find(
-            user => user.user.toString() === userId.toString()
-        )
 
-        if (results) {
-            userResults.confidence += results.confidence
-            userResults.articles_written += results.articles_written
+        if(cat.users) {
+            let results = cat.users.find(
+                user => user.user.toString() === userId.toString()
+            )
+
+            if (results) {
+                userResults.confidence += results.confidence
+                userResults.articles_written += results.articles_written
+            }
         }
     }
 
