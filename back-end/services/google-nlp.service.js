@@ -71,9 +71,12 @@ exports.getWriters = async categoriesMatched => {
                     results.recommended.categories.push(cat_level1)
                 } else {
                     results.recommended.categories.push(cat_level1)
-                    results.recommended.writers = results.recommended.writers.concat(
-                        level1_categories.users
-                    )
+
+                    if (level1_categories.users) {
+                        results.recommended.writers = results.recommended.writers.concat(
+                            level1_categories.users
+                        )
+                    }
 
                     // Writers in sub categories to this (second level)
                     subCategories = await Category.find()
@@ -87,9 +90,12 @@ exports.getWriters = async categoriesMatched => {
                         let category = subCategories[i]
 
                         results.recommended.categories.push(category.name)
-                        results.recommended.writers = results.recommended.writers.concat(
-                            category.users
-                        )
+
+                        if (category.users) {
+                            results.recommended.writers = results.recommended.writers.concat(
+                                category.users
+                            )
+                        }
 
                         // Writers in sub categories to this (third level)
                         let subLevel2Categories = await Category.find()
@@ -101,9 +107,10 @@ exports.getWriters = async categoriesMatched => {
 
                         subLevel2Categories.forEach(cat => {
                             results.recommended.categories.push(cat.name)
-                            results.recommended.writers = results.recommended.writers.concat(
-                                cat.users
-                            )
+
+                            if (cat.users) {
+                                results.recommended.writers = results.recommended.writers.concat()
+                            }
                         })
                     }
                 }
@@ -125,9 +132,12 @@ exports.getWriters = async categoriesMatched => {
                     results.recommended.categories.push(cat_level2)
                 } else {
                     results.recommended.categories.push(cat_level2)
-                    results.recommended.writers = results.recommended.writers.concat(
-                        level2_categories.users
-                    )
+
+                    if (level2_categories.users) {
+                        results.recommended.writers = results.recommended.writers.concat(
+                            level2_categories.users
+                        )
+                    }
 
                     // Writers in sub categories to this (third level)
                     subCategories = await Category.find()
@@ -141,9 +151,12 @@ exports.getWriters = async categoriesMatched => {
                         let category = subCategories[i]
 
                         results.recommended.categories.push(category.name)
-                        results.recommended.writers = results.recommended.writers.concat(
-                            category.users
-                        )
+
+                        if (category.users) {
+                            results.recommended.writers = results.recommended.writers.concat(
+                                category.users
+                            )
+                        }
                     }
 
                     // Writers in parent categories to this (first level)
@@ -155,9 +168,12 @@ exports.getWriters = async categoriesMatched => {
                         })
 
                     results.others.categories.push(parentCategory.name)
-                    results.others.writers = results.others.writers.concat(
-                        parentCategory.users
-                    )
+
+                    if (parentCategory.users) {
+                        results.others.writers = results.others.writers.concat(
+                            parentCategory.users
+                        )
+                    }
 
                     // Writers in sub categories to the parent (second level) excluding the one already got
                     subCategories = await Category.find({
@@ -175,9 +191,12 @@ exports.getWriters = async categoriesMatched => {
                         let category = subCategories[i]
 
                         results.others.categories.push(category.name)
-                        results.others.writers = results.others.writers.concat(
-                            category.users
-                        )
+
+                        if (category.users) {
+                            results.others.writers = results.others.writers.concat(
+                                category.users
+                            )
+                        }
 
                         // Writers in sub categories to this (third level)
                         let subLevel2Categories = await Category.find()
@@ -189,9 +208,12 @@ exports.getWriters = async categoriesMatched => {
 
                         subLevel2Categories.forEach(cat => {
                             results.others.categories.push(cat.name)
-                            results.others.writers = results.others.writers.concat(
-                                cat.users
-                            )
+
+                            if (cat.users) {
+                                results.others.writers = results.others.writers.concat(
+                                    cat.users
+                                )
+                            }
                         })
                     }
                 }
@@ -214,9 +236,12 @@ exports.getWriters = async categoriesMatched => {
                     results.recommended.categories.push(cat_level3)
                 } else {
                     results.recommended.categories.push(cat_level3)
-                    results.recommended.writers = results.recommended.writers.concat(
-                        level3_categories.users
-                    )
+
+                    if (level3_categories.users) {
+                        results.recommended.writers = results.recommended.writers.concat(
+                            level3_categories.users
+                        )
+                    }
 
                     // Writers in parent category to this (second level)
                     parentCategory = await Category.findOne()
@@ -228,9 +253,12 @@ exports.getWriters = async categoriesMatched => {
                     let secondLevelCatId = parentCategory._id
 
                     results.relevant.categories.push(parentCategory.name)
-                    results.relevant.writers = results.relevant.writers.concat(
-                        parentCategory.users
-                    )
+
+                    if (parentCategory.users) {
+                        results.relevant.writers = results.relevant.writers.concat(
+                            parentCategory.users
+                        )
+                    }
 
                     // Writers in sub categories to the parent (third level) excluding the one already got
                     subCategories = await Category.find({
@@ -248,9 +276,12 @@ exports.getWriters = async categoriesMatched => {
                         let category = subCategories[i]
 
                         results.relevant.categories.push(category.name)
-                        results.relevant.writers = results.relevant.writers.concat(
-                            category.users
-                        )
+
+                        if (category.users) {
+                            results.relevant.writers = results.relevant.writers.concat(
+                                category.users
+                            )
+                        }
                     }
 
                     // Writers in parent category (first level) to the second level category
@@ -262,9 +293,12 @@ exports.getWriters = async categoriesMatched => {
                         })
 
                     results.others.categories.push(parentCategory.name)
-                    results.others.writers = results.others.writers.concat(
-                        parentCategory.users
-                    )
+
+                    if (parentCategory.users) {
+                        results.others.writers = results.others.writers.concat(
+                            parentCategory.users
+                        )
+                    }
 
                     // Writers in sub categories to the parent (second level) excluding the one already got
                     subCategories = await Category.find({
@@ -282,9 +316,12 @@ exports.getWriters = async categoriesMatched => {
                         let category = subCategories[i]
 
                         results.others.categories.push(category.name)
-                        results.others.writers = results.others.writers.concat(
-                            category.users
-                        )
+
+                        if (category.users) {
+                            results.others.writers = results.others.writers.concat(
+                                category.users
+                            )
+                        }
 
                         // Writers in sub categories to this (third level)
                         let subLevel2Categories = await Category.find()
@@ -296,9 +333,12 @@ exports.getWriters = async categoriesMatched => {
 
                         subLevel2Categories.forEach(cat => {
                             results.others.categories.push(cat.name)
-                            results.others.writers = results.others.writers.concat(
-                                cat.users
-                            )
+
+                            if (cat.users) {
+                                results.others.writers = results.others.writers.concat(
+                                    cat.users
+                                )
+                            }
                         })
                     }
                 }
