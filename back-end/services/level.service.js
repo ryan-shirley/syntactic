@@ -54,20 +54,26 @@ calcLevel = (confidence, numArticles) => {
 }
 
 exports.generateLevel = async (categoryName, userId) => {
-    console.log("Generating level for category: " + categoryName)
-
     let category = await CategoryService.findOneByName(categoryName)
     let users = category.users
 
-    // User results from main category
-    let userResults = users.find(
-        user => user.user.toString() === userId.toString()
-    )
-
-    if (!userResults) {
+    let userResults
+    if (!users) {
         userResults = {
             confidence: 0,
             articles_written: 0
+        }
+    } else {
+        // User results from main category
+        userResults = users.find(
+            user => user.user.toString() === userId.toString()
+        )
+
+        if (!userResults) {
+            userResults = {
+                confidence: 0,
+                articles_written: 0
+            }
         }
     }
 
