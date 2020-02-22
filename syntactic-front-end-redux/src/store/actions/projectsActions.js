@@ -53,10 +53,15 @@ export const getAllProjects = () => {
                         headers: { authorization: `Bearer ${token}` }
                     })
                     .then(res => {
-                        dispatch({ type: "PROJECTS_RECEIVED_SUCCESSFULLY", payload: res.data })
+                        if(res.data.code === 204) {
+                            dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: { message: res.data.message } })
+                        }
+                        else {
+                            dispatch({ type: "PROJECTS_RECEIVED_SUCCESSFULLY", payload: res.data })
+                        }
                     })
                     .catch(error => {
-                        dispatch({ type: "ONBOARDING_REQUEST_ERROR", payload: { message: error.response.data } })
+                        dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: { message: error.response.data } })
                     })
             })
             .catch(error => {
