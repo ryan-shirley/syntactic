@@ -32,7 +32,7 @@ requiredForLevel = level => {
 /**
  * calcLevel() Return level a user is
  */
-calcLevel = (confidence, numArticles) => {
+export function calcLevel(confidence, numArticles) {
     confidence = confidence / numArticles
 
     for (let level = 1; level < 10; level++) {
@@ -49,18 +49,4 @@ calcLevel = (confidence, numArticles) => {
     }
 
     return level
-}
-
-// Output required details for a levels 1 - 10
-for (var level = 1; level < 10; level++) {
-    var details = requiredForLevel(level)
-    console.log(
-        "level " +
-            level +
-            ": " +
-            details.confidence +
-            " confidence and " +
-            details.numArticles +
-            " articles."
-    )
 }
