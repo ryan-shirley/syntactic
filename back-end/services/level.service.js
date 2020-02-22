@@ -25,6 +25,11 @@ requiredForLevel = level => {
         baseArticles * Math.pow(articlesExponent, level)
     )
 
+    // Set min confidence for level 1 as 0
+    if(level === 1) {
+        confidence = 0
+    }
+
     return {
         confidence,
         numArticles
