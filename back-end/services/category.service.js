@@ -54,9 +54,15 @@ exports.createCategory = (name, parent_name = null, user = null) => {
 exports.addUser = async (catName, userID, confidence) => {
     const cat = await Category.findOne({ name: catName })
 
-    let userInCat = cat.users.some(el => {
-        return escape(el.user) === escape(userID)
-    })
+    let userInCat = false
+    
+    if(cat.users) {
+        userInCat = cat.users.some(el => {
+            return escape(el.user) === escape(userID)
+        })
+    } else {
+        cat.users = []
+    }
 
     // Check if user is already in
     if (userInCat) {
