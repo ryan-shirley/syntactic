@@ -1,11 +1,14 @@
 // React
 import React, { Component } from "react"
-import openSocket from "socket.io-client"
 
 // Components
-import { Alert, Form, Row, Col, Button, Spinner } from "react-bootstrap"
+import { Form, Button } from "react-bootstrap"
+
+// Redux
+import { connect } from "react-redux"
 
 // Socket
+import openSocket from "socket.io-client"
 const socket = openSocket("http://localhost:8000")
 
 class ProjectChatComponent extends Component {
@@ -32,7 +35,9 @@ class ProjectChatComponent extends Component {
             [name]: value
         })
 
-        socket.emit("typing", "Noah Smyth")
+        let userFullName =
+            this.props.user.first_name + " " + this.props.user.last_name
+        socket.emit("typing", userFullName)
     }
 
     /**
@@ -56,10 +61,18 @@ class ProjectChatComponent extends Component {
      */
     sendSocketIO = e => {
         e.preventDefault()
+        let userFullName =
+            this.props.user.first_name + " " + this.props.user.last_name
 
+        // Send message
         socket.emit("chat", {
             message: this.state.input,
-            handle: "Noah Smyth"
+            sender: userFullName
+        })
+
+        // Reset input
+        this.setState({
+            input: ""
         })
     }
 
@@ -74,8 +87,9 @@ class ProjectChatComponent extends Component {
                             {message.sender} says {message.message}
                         </p>
                     ))}
-                {this.state.typing &&
-                    `${this.state.typing} is typing a message...`}
+                {this.state.typing && (
+                    <span className="text-muted">{`${this.state.typing} is typing a message...`}</span>
+                )}
                 <hr />
                 <Form onSubmit={this.sendSocketIO} className="mt-3">
                     <Form.Group controlId="formProjectTitle">
@@ -83,6 +97,7 @@ class ProjectChatComponent extends Component {
                         <Form.Control
                             type="text"
                             name="input"
+                            value={this.state.input}
                             onChange={this.handleInputChange}
                         />
                     </Form.Group>
@@ -94,4 +109,12 @@ class ProjectChatComponent extends Component {
     }
 }
 
-export default ProjectChatComponent
+// Mapping
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user
+    }
+}
+
+// Export
+export default connect(mapStateToProps)(ProjectChatComponent)
