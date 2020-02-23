@@ -19,7 +19,7 @@ class ProjectChatComponent extends Component {
             input: "",
             typing: "",
             socket: openSocket(
-                process.env.REACT_APP_SOCKETS_API + "/project-" + props.match.params.id
+                process.env.REACT_APP_BACKEND_API + "/project-" + props.match.params.id
             )
         }
 

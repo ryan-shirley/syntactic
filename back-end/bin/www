@@ -30,6 +30,27 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 /**
+ * Socket.io Setup
+ */
+let io = require('socket.io').listen(server)
+
+const nsp = io.of(/^\/project-[0-9a-fA-F]{24}$/)
+nsp.on("connection", function(socket) {
+    console.log("someone connected to " + socket.nsp.name)
+
+    // Hangle chat send event
+    socket.on("chat", function(data) {
+        socket.broadcast.emit("chat", data)
+    })
+
+    // Handle typing event
+    socket.on("typing", name => {
+        socket.broadcast.emit("typing", name)
+    })
+})
+
+
+/**
  * Normalize a port into a number, string, or false.
  */
 
