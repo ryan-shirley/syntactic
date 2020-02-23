@@ -36,6 +36,41 @@ app.use(express.static(path.join(__dirname, "public")))
 // Allow react app
 app.use(cors())
 
+// Socket.io Setup
+const http = require("http").Server(app)
+const io = require("socket.io")(http)
+
+io.on("connection", function(socket) {
+    console.log("Made socket connection", socket.id)
+
+    // Hangle chat send event
+    socket.on("chat", function(data) {
+        io.sockets.emit('chat', data)
+    })
+
+    // Handle typing event
+    socket.on("typing", (name) => {
+        socket.broadcast.emit('typing', name)
+    })
+})
+io.listen(8000)
+
+// const http = require("http").Server(app)
+// const io = require("socket.io")(http)
+// io.on("connection", function(socket) {
+//     socket.emit('message', { sender: 'Noah Smyth', message: 'Hells yeah' });
+
+//     console.log("a user connected")
+//     socket.on("disconnect", function() {
+//         console.log("User Disconnected")
+//     })
+//     socket.on("project_chat", function(msg) {
+//         // console.log("message: " + msg)
+//         socket.emit('message', { sender: 'Noah Smyth', message: msg });
+//     })
+// })
+// io.listen(8000)
+
 // Middlewares
 import { checkIfAuthenticated } from "./api/middlewares/auth-middleware"
 
