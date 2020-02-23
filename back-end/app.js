@@ -40,36 +40,38 @@ app.use(cors())
 const http = require("http").Server(app)
 const io = require("socket.io")(http)
 
-io.on("connection", function(socket) {
-    console.log("Made socket connection", socket.id)
+// const dynamicNsp = io.of(/^\/project-[0-9a-fA-F]{24}$/).on("connection", socket => {
+//     const newNamespace = socket.nsp // newNamespace.name === '/dynamic-101'
+//     console.log('Connected to ', newNamespace.name);
+
+//     io.sockets.emit("chat", 'test')
+
+//     // Hangle chat send event
+//     socket.on("chat", function(data) {
+//         io.sockets.emit("chat", data)
+//     })
+
+//     // Handle typing event
+//     socket.on("typing", name => {
+//         socket.broadcast.emit("typing", name)
+//     })
+// })
+
+const nsp = io.of(/^\/project-[0-9a-fA-F]{24}$/)
+nsp.on("connection", function(socket) {
+    console.log("someone connected to " + socket.nsp.name)
 
     // Hangle chat send event
     socket.on("chat", function(data) {
-        io.sockets.emit('chat', data)
+        socket.broadcast.emit("chat", data)
     })
 
     // Handle typing event
-    socket.on("typing", (name) => {
-        socket.broadcast.emit('typing', name)
+    socket.on("typing", name => {
+        socket.broadcast.emit("typing", name)
     })
 })
 io.listen(8000)
-
-// const http = require("http").Server(app)
-// const io = require("socket.io")(http)
-// io.on("connection", function(socket) {
-//     socket.emit('message', { sender: 'Noah Smyth', message: 'Hells yeah' });
-
-//     console.log("a user connected")
-//     socket.on("disconnect", function() {
-//         console.log("User Disconnected")
-//     })
-//     socket.on("project_chat", function(msg) {
-//         // console.log("message: " + msg)
-//         socket.emit('message', { sender: 'Noah Smyth', message: msg });
-//     })
-// })
-// io.listen(8000)
 
 // Middlewares
 import { checkIfAuthenticated } from "./api/middlewares/auth-middleware"

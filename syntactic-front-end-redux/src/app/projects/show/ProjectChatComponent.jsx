@@ -9,16 +9,18 @@ import { connect } from "react-redux"
 
 // Socket
 import openSocket from "socket.io-client"
-const socket = openSocket("http://localhost:8000")
 
 class ProjectChatComponent extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             messages: [],
             input: "",
-            typing: ""
+            typing: "",
+            socket: openSocket(
+                process.env.REACT_APP_SOCKETS_API + "/project-" + props.match.params.id
+            )
         }
 
         this.sendSocketIO = this.sendSocketIO.bind(this)
@@ -37,7 +39,7 @@ class ProjectChatComponent extends Component {
 
         let userFullName =
             this.props.user.first_name + " " + this.props.user.last_name
-        socket.emit("typing", userFullName)
+        this.state.socket.emit("typing", userFullName)
     }
 
     /**
@@ -45,13 +47,15 @@ class ProjectChatComponent extends Component {
      */
     componentDidMount() {
         // Listen for chat message to be sent
-        socket.on("chat", data => {
+        this.state.socket.on("chat", data => {
+            console.log("Got a chat message")
+
             let messages = this.state.messages.concat(data)
             this.setState({ messages, typing: "" })
         })
 
         // Listen for typing events
-        socket.on("typing", name => {
+        this.state.socket.on("typing", name => {
             this.setState({ typing: name })
         })
     }
@@ -64,16 +68,17 @@ class ProjectChatComponent extends Component {
         let userFullName =
             this.props.user.first_name + " " + this.props.user.last_name
 
-        // Send message
-        socket.emit("chat", {
+        let message = {
             message: this.state.input,
             sender: userFullName
-        })
+        }
 
-        // Reset input
-        this.setState({
-            input: ""
-        })
+        // Send message with socket
+        this.state.socket.emit("chat", message)
+
+        // Append message to local list and reset
+        let messages = this.state.messages.concat(message)
+        this.setState({ messages, typing: "", input: "" })
     }
 
     render() {
