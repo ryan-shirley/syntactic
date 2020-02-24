@@ -6,7 +6,7 @@ export default {
     post: (url, data, authRequired = true) => {
         // Setup request config
         let config = {}
-        if(authRequired) {
+        if (authRequired) {
             const state = store.getState()
             let token = state.firebase.auth.stsTokenManager.accessToken
             config.headers = { Authorization: `Bearer ${token}` }
@@ -15,7 +15,8 @@ export default {
         // axios request
         // Return promise so that .then & .catch can be called from outside the class when this method is called
         return new Promise((resolve, reject) => {
-            axios.post(API_URI + url, data, config)
+            axios
+                .post(API_URI + url, data, config)
                 .then(response => {
                     resolve(response.data)
                 })
@@ -34,7 +35,8 @@ export default {
         // axios request
         // Return promise so that .then & .catch can be called from outside the class when this method is called
         return new Promise((resolve, reject) => {
-            axios.put(API_URI + url, data, config)
+            axios
+                .put(API_URI + url, data, config)
                 .then(response => {
                     resolve(response.data)
                 })
@@ -48,7 +50,10 @@ export default {
         let config = {}
         const state = store.getState()
         let token = state.firebase.auth.stsTokenManager.accessToken
-        config.headers = { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" }
+        config.headers = {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data"
+        }
 
         // axios request
         // Return promise so that .then & .catch can be called from outside the class when this method is called
@@ -69,10 +74,43 @@ export default {
                 })
         })
     },
+    uploadFiles: (url, files) => {
+        // Setup request config
+        let config = {}
+        const state = store.getState()
+        let token = state.firebase.auth.stsTokenManager.accessToken
+        config.headers = {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data"
+        }
+
+        // axios request
+        // Return promise so that .then & .catch can be called from outside the class when this method is called
+        return new Promise((resolve, reject) => {
+            let formData = new FormData()
+
+            for (var i = 0; i < files.length; i++) {
+                let file = files[i]
+                formData.append("file", file)
+            }
+
+            axios.defaults.headers.common[
+                "Authorization"
+            ] = localStorage.getItem("jwtToken")
+            axios
+                .post(API_URI + url, formData, config)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    reject(error.response.data)
+                })
+        })
+    },
     get: (url, authRequired = true) => {
         // Setup request config
         let config = {}
-        if(authRequired) {
+        if (authRequired) {
             const state = store.getState()
             let token = state.firebase.auth.stsTokenManager.accessToken
             config.headers = { Authorization: `Bearer ${token}` }
@@ -81,7 +119,8 @@ export default {
         // axios request
         // Return promise so that .then & .catch can be called from outside the class when this method is called
         return new Promise((resolve, reject) => {
-            axios.get(API_URI + url, config)
+            axios
+                .get(API_URI + url, config)
                 .then(response => {
                     resolve(response.data)
                 })

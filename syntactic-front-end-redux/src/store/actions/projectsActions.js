@@ -89,7 +89,7 @@ export const createProject = projectDTO => {
 }
 
 /**
- * uploadBrief() create new project
+ * uploadBrief() Upload brief into project
  */
 export const uploadBrief = (brief, projectId) => {
     return dispatch => {
@@ -99,6 +99,23 @@ export const uploadBrief = (brief, projectId) => {
             .then(data => {
                 dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data.project })
                 dispatch({ type: "PROJECT_WRITER_LIST_RECEIVED", payload: data.writers })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}
+
+/**
+ * uploadResources() Upload resources into project
+ */
+export const uploadResources = (resources, projectId) => {
+    return dispatch => {
+        dispatch({ type: "PROJECTS_REQUEST_SENT" })
+
+        API.uploadFiles('/projects/' + projectId + '/upload/resources', resources)
+            .then(data => {
+                dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data.project })
             }) 
             .catch(error => {
                 dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })

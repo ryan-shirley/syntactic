@@ -28,6 +28,30 @@ let DeliverableSchema = new mongoose.Schema(
     }
 )
 
+let ResourcesSchema = new mongoose.Schema(
+    {
+        path: {
+            type: String,
+            required: true
+        },
+        fileName: {
+            type: String,
+            required: true
+        },
+        type: {
+            type: String,
+            required: true
+        },
+        size: {
+            type: Number,
+            required: true
+        }
+    },
+    {
+        timestamps: true
+    }
+)
+
 let ProjectsSchema = new mongoose.Schema({
     writer_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -76,9 +100,8 @@ let ProjectsSchema = new mongoose.Schema({
         }
     },
     resources: {
-        path: {
-            type: String
-        }
+        type: [ResourcesSchema],
+        default: undefined
     },
     deliverables: {
         type: [DeliverableSchema],

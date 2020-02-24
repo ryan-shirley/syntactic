@@ -1,13 +1,28 @@
+// React
 import React, { Component } from "react"
-import { Form, Row, Col, Button, Alert } from "react-bootstrap"
+
+// Components
+import { Form, Row, Col, Button, Alert, Spinner } from "react-bootstrap"
+import Dropzone from "react-dropzone"
 
 class ResourcesComponent extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            resource: null,
+            resources: []
         }
+    }
+
+    /**
+     * addResources() Add resources to local array ready for upload
+     */
+    addResources = resources => {
+        let newResources = this.state.resources.concat(resources)
+
+        this.setState({
+            resources: newResources
+        })
     }
 
     /**
@@ -15,11 +30,11 @@ class ResourcesComponent extends Component {
      */
     onSubmit = e => {
         e.preventDefault()
-        // this.props.uploadBrief(this.state.brief, this.props.projects.singleProject._id)
+        this.props.uploadResources(this.state.resources, this.props.projects.singleProject._id)
     }
 
     render() {
-        let { error } = this.props.projects
+        let { error, requestProcessing } = this.props.projects
 
         return (
             <Row className="justify-content-md-center mt-5">
@@ -29,18 +44,49 @@ class ResourcesComponent extends Component {
                         {error && (
                             <Alert variant="danger">{error.message}</Alert>
                         )}
-                        
-                        <Form.Group controlId="hgvFailureNote">
-                            <input
-                                type="file"
-                                className="form-control"
-                                onChange={e =>
-                                    this.setState({ resource: e.target.files[0] })
-                                }
-                            />
+
+                        <Form.Group controlId="projectResourcesUpload">
+                            <Dropzone
+                                onDrop={acceptedFiles => this.addResources(acceptedFiles)}
+                            >
+                                {({ getRootProps, getInputProps }) => (
+                                    <section className="multi-file-uploader">
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            <p>
+                                                Drag 'n' drop some files here,
+                                                or click to select files
+                                            </p>
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
                         </Form.Group>
 
-                        <Button variant="secondary" className="ml-3" onClick={() => this.props.setCurrentView('writer')}>Skip</Button>
+                        <Button
+                            variant="secondary"
+                            className="ml-3"
+                            onClick={() => this.props.setCurrentView("writer")}
+                        >
+                            Skip
+                        </Button>
+
+                        <Button type="submit" disabled={requestProcessing}>
+                            {requestProcessing
+                                ? 
+                                    <>
+                                    <Spinner
+                                        as="span"
+                                        animation="grow"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                        className="mr-3"
+                                    />
+                                    Processing...
+                                    </>
+                                : "Submit"}
+                        </Button>
                     </Form>
                 </Col>
             </Row>

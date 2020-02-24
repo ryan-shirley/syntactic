@@ -17,6 +17,7 @@ import {
     createProject,
     getProject,
     uploadBrief,
+    uploadResources,
     getWriters,
     inviteWriterToProject
 } from "../../../store/actions/projectsActions"
@@ -138,7 +139,11 @@ class ProjectCreateContainer extends Component {
         return (
             <>
                 <h1 className="text-center">Create Project</h1>
-                <ProgressIndicatorComponent active={currentView} project={this.props.projects.singleProject} onClick={this.setCurrentView} />
+                <ProgressIndicatorComponent
+                    active={currentView}
+                    project={this.props.projects.singleProject}
+                    onClick={this.setCurrentView}
+                />
                 {createComponent}
             </>
         )
@@ -159,6 +164,8 @@ const mapDispatchToProps = dispatch => {
         getProject: id => dispatch(getProject(id)),
         uploadBrief: (brief, projectId) =>
             dispatch(uploadBrief(brief, projectId)),
+        uploadResources: (resources, projectId) =>
+            dispatch(uploadResources(resources, projectId)),
         getWriters: id => dispatch(getWriters(id)),
         inviteWriterToProject: (writerId, project) => {
             dispatch(inviteWriterToProject(writerId, project))

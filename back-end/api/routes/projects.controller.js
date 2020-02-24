@@ -198,7 +198,7 @@ router
             // Get writers for these categories
             const writers = await GoogleNLPService.getWriters(results)
 
-            // TODO: Upload file to cloud storage
+            // Upload file to cloud storage
             const destination = await StorageService.uploadFileToCloudStorage(
                 source,
                 targetName,
@@ -237,6 +237,112 @@ router
                         message: fsErr
                     })
             })
+
+            res.status(400).json({
+                code: 400,
+                message: error.message
+            })
+        }
+    })
+
+/**
+ * route('/:id/upload/resources').post() Upload resources
+ */
+router
+    .route("/:id/upload/resources")
+    .post(upload.array("file"), async (req, res) => {
+        const { id } = req.params
+        let user = req.user
+        let files = req.files
+
+        // Call to service layer - Get all users projects
+        try {
+            const oldProject = await ProjectService.getProject(id)
+
+            // Check authorised to make request
+            let authorised = true
+            if (oldProject.content_seeker_id.toString() !== user._id.toString()) {
+                authorised = false
+            }
+
+            if (!authorised) {
+                return res.status(401).json({
+                    code: 401,
+                    message: "You are not authorized to make this request"
+                })
+            }
+
+            for (var i = 0; i < files.length; i++) {
+                let file = files[i]
+
+                const source = file.path
+                const targetName = file.filename
+                const size = file.size
+                const type = file.mimetype
+
+                // Upload files to cloud storage
+                const destination = await StorageService.uploadFileToCloudStorage(
+                    source,
+                    targetName,
+                    id
+                )
+
+                let newFile = {
+                    path: destination,
+                    fileName: targetName,
+                    type,
+                    size
+                }
+
+                // Add resources to project
+                if(oldProject.resources) {
+                    oldProject.resources.push(newFile)
+                } else {
+                    oldProject.resources = [newFile]
+                }
+            }
+
+            // Update Project
+            let updatedProjectDetails = oldProject
+            
+            const newProject = await ProjectService.updateProject(
+                updatedProjectDetails
+            )
+
+            console.log(newProject);
+            
+
+            // Remove files from express
+            for (var i = 0; i < files.length; i++) {
+                let file = files[i].path
+    
+                fs.unlink(file, fsErr => {
+                    if (fsErr)
+                        return res.status(500).json({
+                            code: 500,
+                            message: fsErr
+                        })
+                })
+            }
+
+            return res.json({
+                project: newProject
+            })
+        } catch (error) {
+            console.log(error);
+            
+            // Remove files from local server
+            for (var i = 0; i < files.length; i++) {
+                let file = files[i].path
+    
+                fs.unlink(file, fsErr => {
+                    if (fsErr)
+                        return res.status(500).json({
+                            code: 500,
+                            message: fsErr
+                        })
+                })
+            }
 
             res.status(400).json({
                 code: 400,
