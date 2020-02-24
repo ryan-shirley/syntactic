@@ -5,11 +5,14 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 
 // Components
-import { Card, Row, Col } from "react-bootstrap"
-import Moment from "react-moment"
+import { Card } from "react-bootstrap"
+import DeliverablesList from "./DeliverablesList"
 
 // API Util
 import API from "../../../utils/API"
+
+// Actions
+import { updateDeliverable } from "../../../store/actions/projectsActions"
 
 class ProjectOverviewComponent extends Component {
     /**
@@ -30,28 +33,7 @@ class ProjectOverviewComponent extends Component {
         } else {
             return (
                 <>
-                    <h6 className="text-uppercase">
-                        Deliverables ({deliverables ? deliverables.length : 0})
-                    </h6>
-                    {deliverables && deliverables.map(item => (
-                        <Card body key={item._id}>
-                            <Row>
-                                <Col>
-                                    <span
-                                        className="text-primary"
-                                        // onClick={() => this.downloadFile(brief.path)}
-                                    >
-                                        {item.title}
-                                    </span>
-                                </Col>
-                                <Col>
-                                <Moment format="DD MMM YYYY - h:mm a">
-                                    {item.createdAt}
-                                </Moment>
-                                </Col>
-                            </Row>
-                        </Card>
-                    ))}
+                    <DeliverablesList deliverables={deliverables} updateDeliverable={deliverable => this.props.updateDeliverable(deliverable, project)} />
 
                     <hr />
 
@@ -79,7 +61,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        // getProject: id => dispatch(getProject(id)),
+        updateDeliverable: (deliverable, project) => dispatch(updateDeliverable(deliverable, project)),
     }
 }
 

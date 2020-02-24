@@ -203,3 +203,29 @@ export const submitText = (data, project) => {
             })
     }
 }
+
+/**
+ * updateDeliverable() create new project
+ */
+export const updateDeliverable = (deliverable, project) => {
+    return dispatch => {
+        // dispatch({ type: "PROJECTS_REQUEST_SENT" })
+
+        // Update Deliverable
+        for(let i = 0; i < project.deliverables.length; i++) {
+            let deliv = project.deliverables[i]
+
+            if(deliv._id === deliverable._id) {
+                project.deliverables[i] = deliverable
+            }
+        }
+
+        API.put('/projects/' + project._id, project)
+            .then(data => {
+                dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}
