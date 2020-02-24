@@ -130,7 +130,7 @@ class ProjectTextEditorComponent extends Component {
             <Modal
                 show={this.state.showModal ? true : false}
                 onHide={() => this.toggleModal(false)}
-                animation={false}
+                animation={true}
                 centered
                 size="lg"
             >
