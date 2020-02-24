@@ -64,7 +64,8 @@ exports.getWriters = async categoriesMatched => {
                 let level1_categories = await Category.findOne({
                     name: cat_level1
                 }).populate({
-                    path: "users.user"
+                    path: "users.user",
+                    select: 'first_name last_name levels profile'
                 })
 
                 if (level1_categories === null) {
@@ -83,7 +84,8 @@ exports.getWriters = async categoriesMatched => {
                         .where("_parent_category_id")
                         .equals(level1_categories._id)
                         .populate({
-                            path: "users.user"
+                            path: "users.user",
+                            select: 'first_name last_name levels profile'
                         })
 
                     for (let i = 0; i < subCategories.length; i++) {
@@ -102,7 +104,8 @@ exports.getWriters = async categoriesMatched => {
                             .where("_parent_category_id")
                             .equals(category._id)
                             .populate({
-                                path: "users.user"
+                                path: "users.user",
+                                select: 'first_name last_name levels profile'
                             })
 
                         subLevel2Categories.forEach(cat => {
@@ -125,7 +128,8 @@ exports.getWriters = async categoriesMatched => {
                 let level2_categories = await Category.findOne({
                     name: cat_level2
                 }).populate({
-                    path: "users.user"
+                    path: "users.user",
+                    select: 'first_name last_name levels profile'
                 })
 
                 if (level2_categories === null) {
@@ -144,7 +148,8 @@ exports.getWriters = async categoriesMatched => {
                         .where("_parent_category_id")
                         .equals(level2_categories._id)
                         .populate({
-                            path: "users.user"
+                            path: "users.user",
+                            select: 'first_name last_name levels profile'
                         })
 
                     for (let i = 0; i < subCategories.length; i++) {
@@ -164,7 +169,8 @@ exports.getWriters = async categoriesMatched => {
                         .where("_id")
                         .equals(level2_categories._parent_category_id)
                         .populate({
-                            path: "users.user"
+                            path: "users.user",
+                            select: 'first_name last_name levels profile'
                         })
 
                     results.others.categories.push(parentCategory.name)
@@ -184,7 +190,8 @@ exports.getWriters = async categoriesMatched => {
                         .where("_parent_category_id")
                         .equals(parentCategory._id)
                         .populate({
-                            path: "users.user"
+                            path: "users.user",
+                            select: 'first_name last_name levels profile'
                         })
 
                     for (let i = 0; i < subCategories.length; i++) {
@@ -203,7 +210,8 @@ exports.getWriters = async categoriesMatched => {
                             .where("_parent_category_id")
                             .equals(category._id)
                             .populate({
-                                path: "users.user"
+                                path: "users.user",
+                                select: 'first_name last_name levels profile'
                             })
 
                         subLevel2Categories.forEach(cat => {
@@ -229,7 +237,8 @@ exports.getWriters = async categoriesMatched => {
                 let level3_categories = await Category.findOne({
                     name: cat_level3
                 }).populate({
-                    path: "users.user"
+                    path: "users.user",
+                    select: 'first_name last_name levels profile'
                 })
 
                 if (level3_categories === null) {
@@ -248,7 +257,8 @@ exports.getWriters = async categoriesMatched => {
                         .where("_id")
                         .equals(level3_categories._parent_category_id)
                         .populate({
-                            path: "users.user"
+                            path: "users.user",
+                            select: 'first_name last_name levels profile'
                         })
                     let secondLevelCatId = parentCategory._id
 
@@ -269,7 +279,8 @@ exports.getWriters = async categoriesMatched => {
                         .where("_parent_category_id")
                         .equals(parentCategory._id)
                         .populate({
-                            path: "users.user"
+                            path: "users.user",
+                            select: 'first_name last_name levels profile'
                         })
 
                     for (let i = 0; i < subCategories.length; i++) {
@@ -289,7 +300,8 @@ exports.getWriters = async categoriesMatched => {
                         .where("_id")
                         .equals(parentCategory._parent_category_id)
                         .populate({
-                            path: "users.user"
+                            path: "users.user",
+                            select: 'first_name last_name levels profile'
                         })
 
                     results.others.categories.push(parentCategory.name)
@@ -309,7 +321,8 @@ exports.getWriters = async categoriesMatched => {
                         .where("_parent_category_id")
                         .equals(parentCategory._id)
                         .populate({
-                            path: "users.user"
+                            path: "users.user",
+                            select: 'first_name last_name levels profile'
                         })
 
                     for (let i = 0; i < subCategories.length; i++) {
@@ -328,7 +341,8 @@ exports.getWriters = async categoriesMatched => {
                             .where("_parent_category_id")
                             .equals(category._id)
                             .populate({
-                                path: "users.user"
+                                path: "users.user",
+                                select: 'first_name last_name levels profile'
                             })
 
                         subLevel2Categories.forEach(cat => {
