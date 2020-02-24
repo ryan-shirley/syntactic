@@ -81,7 +81,14 @@ class ProjectChatComponent extends Component {
         e.preventDefault()
 
         let message = {
-            sender_id: this.props.user._id,
+            sender_id: { 
+                _id: this.props.user._id,
+                first_name: this.props.user.first_name,
+                last_name: this.props.user.last_name
+            },
+            receiver_id: {
+                _id: this.props.project.content_seeker_id === this.props.user._id ? this.props.project.writer_id : this.props.project.content_seeker_id
+            },
             message: this.state.input,
             project_id: this.props.match.params.id
         }
@@ -90,6 +97,7 @@ class ProjectChatComponent extends Component {
         this.state.socket.emit("chat", message)
 
         // Append message to local list and reset
+        message._id = Date.now()
         let messages = this.state.messages.concat(message)
         this.setState({ messages, typing: "", input: "" })
     }
@@ -135,7 +143,8 @@ class ProjectChatComponent extends Component {
 // Mapping
 const mapStateToProps = state => {
     return {
-        user: state.auth.user
+        user: state.auth.user,
+        project: state.projects.singleProject
     }
 }
 
