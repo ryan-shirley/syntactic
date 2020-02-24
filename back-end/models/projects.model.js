@@ -1,27 +1,32 @@
 const mongoose = require("mongoose")
 
-let DeliverableSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true
+let DeliverableSchema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            required: true
+        },
+        content: {
+            type: String,
+            required: true
+        },
+        writer_notes: {
+            type: String
+        },
+        content_seeker_notes: {
+            type: String
+        },
+        status: {
+            type: String,
+            required: true,
+            enum: ["accepted", "rejected", "pending approval"],
+            default: "pending approval"
+        }
     },
-    content: {
-        type: String,
-        required: true
-    },
-    writer_notes: {
-        type: String
-    },
-    content_seeker_notes: {
-        type: String
-    },
-    status: {
-        type: String,
-        required: true,
-        enum: ["accepted", "rejected", "pending approval"],
-        default: "pending approval"
+    {
+        timestamps: true
     }
-})
+)
 
 let ProjectsSchema = new mongoose.Schema({
     writer_id: {
@@ -68,7 +73,7 @@ let ProjectsSchema = new mongoose.Schema({
         analysis: {
             type: Array,
             default: undefined
-        },
+        }
     },
     resources: {
         path: {
