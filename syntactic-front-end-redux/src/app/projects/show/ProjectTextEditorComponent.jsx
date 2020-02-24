@@ -26,7 +26,7 @@ class ProjectTextEditorComponent extends Component {
         super(props)
 
         this.state = {
-            text: "",
+            content: "",
             writer_notes: "",
             title: "",
             selectedTab: "write",
@@ -50,7 +50,7 @@ class ProjectTextEditorComponent extends Component {
         if (
             props.project &&
             props.project.content &&
-            !state.text.length &&
+            !state.content.length &&
             !state.loaded
         ) {
             // Store deliverables length for closing modal on success
@@ -60,7 +60,7 @@ class ProjectTextEditorComponent extends Component {
             }
 
             return {
-                text: props.project.content,
+                content: props.project.content,
                 deliverableLength,
                 loaded: true
             }
@@ -112,7 +112,7 @@ class ProjectTextEditorComponent extends Component {
         } else {
             this.props.submitText(
                 {
-                    text: this.state.text,
+                    content: this.state.content,
                     title: this.state.title,
                     writer_notes: this.state.writer_notes
                 },
@@ -170,7 +170,7 @@ class ProjectTextEditorComponent extends Component {
                     <hr />
                     <Jumbotron
                         dangerouslySetInnerHTML={{
-                            __html: converter.makeHtml(this.state.text)
+                            __html: converter.makeHtml(this.state.content)
                         }}
                     ></Jumbotron>
                 </Modal.Body>
@@ -196,8 +196,8 @@ class ProjectTextEditorComponent extends Component {
                 <ReactMde
                     minEditorHeight={500}
                     minPreviewHeight={500}
-                    value={this.state.text}
-                    onChange={val => this.setValue(val, "text")}
+                    value={this.state.content}
+                    onChange={val => this.setValue(val, "content")}
                     selectedTab={this.state.selectedTab}
                     onTabChange={this.setSelectedTab}
                     generateMarkdownPreview={markdown =>
@@ -210,7 +210,7 @@ class ProjectTextEditorComponent extends Component {
                     variant="primary"
                     size="lg"
                     onClick={() =>
-                        this.props.saveText(this.state.text, this.props.project)
+                        this.props.saveText(this.state.content, this.props.project)
                     }
                     disabled={this.props.saving}
                 >
@@ -221,7 +221,7 @@ class ProjectTextEditorComponent extends Component {
                     variant="primary"
                     size="lg"
                     onClick={() => this.toggleModal(true)}
-                    disabled={!this.state.text.length}
+                    disabled={!this.state.content.length}
                 >
                     Submit
                 </Button>
