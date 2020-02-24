@@ -5,7 +5,8 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 
 // Components
-import { Card } from "react-bootstrap"
+import { Card, Row, Col } from "react-bootstrap"
+import Moment from "react-moment"
 
 // API Util
 import API from "../../../utils/API"
@@ -34,12 +35,21 @@ class ProjectOverviewComponent extends Component {
                     </h6>
                     {deliverables && deliverables.map(item => (
                         <Card body key={item._id}>
-                            <span
-                                className="text-primary"
-                                // onClick={() => this.downloadFile(brief.path)}
-                            >
-                                {item.title}
-                            </span>
+                            <Row>
+                                <Col>
+                                    <span
+                                        className="text-primary"
+                                        // onClick={() => this.downloadFile(brief.path)}
+                                    >
+                                        {item.title}
+                                    </span>
+                                </Col>
+                                <Col>
+                                <Moment format="DD MMM YYYY - h:mm a">
+                                    {item.createdAt}
+                                </Moment>
+                                </Col>
+                            </Row>
                         </Card>
                     ))}
 
