@@ -8,8 +8,8 @@
     display: none;
 
     @media (min-width: 768px) {
-        position: relative;
-        display: block;
+        position: sticky;
+        display: table;
     }
 
     &.openMobile {

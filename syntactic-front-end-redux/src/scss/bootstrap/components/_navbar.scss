@@ -3,6 +3,10 @@
     border-bottom: 3px solid $primary;
     height: 64px;
     padding: 10px 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 99999;
+    background: $white;
 
     button {
         background: none;
