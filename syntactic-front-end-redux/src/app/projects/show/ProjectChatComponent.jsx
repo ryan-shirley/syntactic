@@ -153,7 +153,7 @@ class ProjectChatComponent extends Component {
                     <span className="text-muted">{`${this.state.typing} is typing a message...`}</span>
                 )}
                 <hr />
-                <Form onSubmit={this.sendSocketIO} className="mt-3">
+                <Form onSubmit={this.sendSocketIO} className="mt-3 chat-input">
                     <Form.Group controlId="formProjectTitle">
                         <Form.Label>Message</Form.Label>
                         <Form.Control
