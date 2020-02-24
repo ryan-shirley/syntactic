@@ -397,4 +397,9 @@ router.route("/:id/download").get(async (req, res) => {
         })
 })
 
+/**
+ * route('/:id').use() Use messages router
+ */
+router.use("/:id/messages", require('./messages.controller'))
+
 module.exports = router

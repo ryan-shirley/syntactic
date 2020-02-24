@@ -10,6 +10,9 @@ import { connect } from "react-redux"
 // Socket
 import openSocket from "socket.io-client"
 
+// API
+import API from "../../../utils/API"
+
 class ProjectChatComponent extends Component {
     constructor(props) {
         super(props)
@@ -19,7 +22,9 @@ class ProjectChatComponent extends Component {
             input: "",
             typing: "",
             socket: openSocket(
-                process.env.REACT_APP_BACKEND_API + "/project-" + props.match.params.id
+                process.env.REACT_APP_BACKEND_API +
+                    "/project-" +
+                    props.match.params.id
             )
         }
 
@@ -40,6 +45,29 @@ class ProjectChatComponent extends Component {
         let userFullName =
             this.props.user.first_name + " " + this.props.user.last_name
         this.state.socket.emit("typing", userFullName)
+    }
+
+    async componentWillMount() {
+        // Get Messages
+        if (!this.state.messages.length) {
+            let messagesList = await API.get(`/projects/${this.props.match.params.id}/messages`).then(
+                messages => {
+                    console.log('Got messages', messages);
+                    
+                    return messages
+                }
+            )
+        
+            console.log('Returning messages', messagesList);
+
+            this.setState({
+                messages: messagesList
+            })
+        } else {
+            console.log('Has messages');
+            
+            return null
+        }
     }
 
     /**
@@ -65,12 +93,11 @@ class ProjectChatComponent extends Component {
      */
     sendSocketIO = e => {
         e.preventDefault()
-        let userFullName =
-            this.props.user.first_name + " " + this.props.user.last_name
 
         let message = {
+            sender_id: this.props.user._id,
             message: this.state.input,
-            sender: userFullName
+            project_id: this.props.match.params.id
         }
 
         // Send message with socket
@@ -88,8 +115,8 @@ class ProjectChatComponent extends Component {
                 <hr />
                 {this.state.messages &&
                     this.state.messages.map(message => (
-                        <p key={message}>
-                            {message.sender} says {message.message}
+                        <p key={message._id}>
+                            {message.sender_id._id === this.props.user._id ? 'You said -' : message.sender_id.first_name + ' ' + message.sender_id.last_name} {message.message}
                         </p>
                     ))}
                 {this.state.typing && (
