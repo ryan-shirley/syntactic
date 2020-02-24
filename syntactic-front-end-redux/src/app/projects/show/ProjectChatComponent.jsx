@@ -49,25 +49,13 @@ class ProjectChatComponent extends Component {
 
     async componentWillMount() {
         // Get Messages
-        if (!this.state.messages.length) {
-            let messagesList = await API.get(`/projects/${this.props.match.params.id}/messages`).then(
-                messages => {
-                    console.log('Got messages', messages);
-                    
-                    return messages
-                }
-            )
-        
-            console.log('Returning messages', messagesList);
+        let messagesList = await API.get(
+            `/projects/${this.props.match.params.id}/messages`
+        )
 
-            this.setState({
-                messages: messagesList
-            })
-        } else {
-            console.log('Has messages');
-            
-            return null
-        }
+        this.setState({
+            messages: messagesList
+        })
     }
 
     /**
@@ -76,8 +64,6 @@ class ProjectChatComponent extends Component {
     componentDidMount() {
         // Listen for chat message to be sent
         this.state.socket.on("chat", data => {
-            console.log("Got a chat message")
-
             let messages = this.state.messages.concat(data)
             this.setState({ messages, typing: "" })
         })
@@ -116,7 +102,12 @@ class ProjectChatComponent extends Component {
                 {this.state.messages &&
                     this.state.messages.map(message => (
                         <p key={message._id}>
-                            {message.sender_id._id === this.props.user._id ? 'You said -' : message.sender_id.first_name + ' ' + message.sender_id.last_name} {message.message}
+                            {message.sender_id._id === this.props.user._id
+                                ? "You said -"
+                                : message.sender_id.first_name +
+                                  " " +
+                                  message.sender_id.last_name}{" "}
+                            {message.message}
                         </p>
                     ))}
                 {this.state.typing && (
