@@ -72,7 +72,6 @@ class DeliverableShow extends Component {
                 <Modal.Header>
                     <Modal.Title>{deliverable.title}</Modal.Title>
                     <Badge
-                        className="float-right"
                         variant={
                             deliverable.status === "accepted"
                                 ? "success"

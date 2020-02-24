@@ -30,7 +30,7 @@ class BriefComponent extends Component {
                             <Alert variant="danger">{error.message}</Alert>
                         )}
                         
-                        <Form.Group controlId="hgvFailureNote">
+                        <Form.Group controlId="projectBriefUpload">
                             <input
                                 type="file"
                                 className="form-control"
