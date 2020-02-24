@@ -5,8 +5,9 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 
 // Components
-import { Card } from "react-bootstrap"
+import { Card, Row, Col } from "react-bootstrap"
 import DeliverablesList from "./DeliverablesList"
+import Moment from "react-moment"
 
 // API Util
 import API from "../../../utils/API"
@@ -26,14 +27,19 @@ class ProjectOverviewComponent extends Component {
 
     render() {
         let { project, requestProcessing } = this.props
-        let { brief, deliverables } = project
+        let { brief, deliverables, resources } = project
 
         if (!project.title || requestProcessing) {
             return <p>Loading...</p>
         } else {
             return (
                 <>
-                    <DeliverablesList deliverables={deliverables} updateDeliverable={deliverable => this.props.updateDeliverable(deliverable, project)} />
+                    <DeliverablesList
+                        deliverables={deliverables}
+                        updateDeliverable={deliverable =>
+                            this.props.updateDeliverable(deliverable, project)
+                        }
+                    />
 
                     <hr />
 
@@ -46,6 +52,35 @@ class ProjectOverviewComponent extends Component {
                             {brief.path}
                         </span>
                     </Card>
+
+                    <hr />
+
+                    <h6 className="text-uppercase">
+                        Resources ({resources ? resources.length : 0})
+                    </h6>
+                    {resources &&
+                        resources.map(res => (
+                            <Card body key={res._id}>
+                                <Row>
+                                    <Col>
+                                        <span
+                                            className="text-primary"
+                                            onClick={() =>
+                                                this.downloadFile(res.path)
+                                            }
+                                        >
+                                            {res.fileName}
+                                        </span>
+                                    </Col>
+                                    <Col>
+                                        <Moment format="DD MMM YYYY - h:mm a">
+                                            {res.createdAt}
+                                        </Moment>
+                                    </Col>
+                                    <Col>{res.size}</Col>
+                                </Row>
+                            </Card>
+                        ))}
                 </>
             )
         }
@@ -61,7 +96,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateDeliverable: (deliverable, project) => dispatch(updateDeliverable(deliverable, project)),
+        updateDeliverable: (deliverable, project) =>
+            dispatch(updateDeliverable(deliverable, project))
     }
 }
 
