@@ -177,3 +177,29 @@ export const saveText = (newText, project) => {
             })
     }
 }
+
+/**
+ * submitText() Submit text for approval
+ */
+export const submitText = (data, project) => {
+    return dispatch => {
+        // Update project with new information
+        let updatedProject = project
+
+        if (updatedProject.deliverables) {
+            updatedProject.deliverables.push(data)
+        } else {
+            updatedProject.deliverables = [data]
+        }
+
+        dispatch({ type: "PROJECTS_REQUEST_SENT" })
+
+        API.put('/projects/' + updatedProject._id, updatedProject)
+            .then(data => {
+                dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}
