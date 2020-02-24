@@ -27,7 +27,8 @@ class ProjectTextEditorComponent extends Component {
 
         this.state = {
             text: '',
-            selectedTab: "write"
+            selectedTab: "write",
+            loaded: false
         }
 
         // Binding this to work in the callback
@@ -39,8 +40,8 @@ class ProjectTextEditorComponent extends Component {
      * getDerivedStateFromProps() Load initial content from project into editor
      */
     static getDerivedStateFromProps(props, state) {
-        if(props.project && props.project.content && !state.text.length) {
-            return { text: props.project.content }
+        if(props.project && props.project.content && !state.text.length && !state.loaded) {
+            return { text: props.project.content, loaded: true }
         } else {
             return null
         }
@@ -85,6 +86,8 @@ class ProjectTextEditorComponent extends Component {
                 />
 
                 <Button variant="primary" size="lg" onClick={() => this.props.saveText(this.state.text, this.props.project)} disabled={this.props.saving}>{this.props.saving ? 'Saving...' : 'Save'}</Button>
+
+                <Button variant="primary" size="lg" onClick={() => this.props.openSubmit()} disabled={!this.state.text.length}>Submit</Button>
             </>
         )
     }
