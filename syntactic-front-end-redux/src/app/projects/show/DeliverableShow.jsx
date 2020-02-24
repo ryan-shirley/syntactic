@@ -71,7 +71,17 @@ class DeliverableShow extends Component {
             >
                 <Modal.Header>
                     <Modal.Title>{deliverable.title}</Modal.Title>
-                    <Badge variant="warning" className="float-right">
+                    <Badge
+                        className="float-right"
+                        variant={
+                            deliverable.status === "accepted"
+                                ? "success"
+                                : deliverable.status === "rejected"
+                                ? "danger"
+                                : "warning"
+                        }
+                        className="float-right"
+                    >
                         {deliverable.status}
                     </Badge>
                 </Modal.Header>
@@ -106,35 +116,38 @@ class DeliverableShow extends Component {
                         </>
                     )}
 
-                    {!deliverable.content_seeker_notes && this.props.role === "content seeker" && (
-                        <Form className="mt-3">
-                            <Form.Group controlId="formContentSeekerNotes">
-                                <h5 className="text-uppercase">Your Notes</h5>
-                                <hr />
+                    {!deliverable.content_seeker_notes &&
+                        this.props.role === "content seeker" && (
+                            <Form className="mt-3">
+                                <Form.Group controlId="formContentSeekerNotes">
+                                    <h5 className="text-uppercase">
+                                        Your Notes
+                                    </h5>
+                                    <hr />
 
-                                <Form.Control
-                                    type="text"
-                                    name="content_seeker_notes"
-                                    value={this.state.content_seeker_notes}
-                                    onChange={this.handleInputChange}
-                                />
-                            </Form.Group>
+                                    <Form.Control
+                                        type="text"
+                                        name="content_seeker_notes"
+                                        value={this.state.content_seeker_notes}
+                                        onChange={this.handleInputChange}
+                                    />
+                                </Form.Group>
 
-                            <Button
-                                type="submit"
-                                variant="danger"
-                                onClick={e => this.onSubmit(e, false)}
-                            >
-                                Reject
-                            </Button>
-                            <Button
-                                type="submit"
-                                onClick={e => this.onSubmit(e, true)}
-                            >
-                                Accept
-                            </Button>
-                        </Form>
-                    )}
+                                <Button
+                                    type="submit"
+                                    variant="danger"
+                                    onClick={e => this.onSubmit(e, false)}
+                                >
+                                    Reject
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    onClick={e => this.onSubmit(e, true)}
+                                >
+                                    Accept
+                                </Button>
+                            </Form>
+                        )}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.props.closeModal}>
