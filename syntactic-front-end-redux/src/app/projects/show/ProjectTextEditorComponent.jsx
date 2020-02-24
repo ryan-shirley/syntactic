@@ -32,12 +32,14 @@ class ProjectTextEditorComponent extends Component {
             selectedTab: "write",
             loaded: false,
             showModal: false,
-            deliverableLength: 0
+            deliverableLength: 0,
+            error: ''
         }
 
         // Binding this to work in the callback
         this.setValue = this.setValue.bind(this)
         this.setSelectedTab = this.setSelectedTab.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
     /**
@@ -99,6 +101,26 @@ class ProjectTextEditorComponent extends Component {
         })
     }
 
+    /**
+     * onSubmit() Submit 
+     */
+    onSubmit() {
+        if(!this.state.title.length) {
+            this.setState({
+                error: "You must enter a title."
+            })
+        } else {
+            this.props.submitText(
+                {
+                    text: this.state.text,
+                    title: this.state.title,
+                    writer_notes: this.state.writer_notes
+                },
+                this.props.project
+            )
+        }
+    }
+
     render() {
         if (this.props.role === "content seeker" && this.props.project._id) {
             return <Redirect push to={`/projects/${this.props.project._id}`} />
@@ -126,6 +148,11 @@ class ProjectTextEditorComponent extends Component {
                             }
                             required
                         />
+                        {this.state.error && (
+                            <span className="badge badge-pill badge-danger">
+                                {this.state.error}
+                            </span>
+                        )}
                     </Form.Group>
 
                     <Form.Group controlId="textNotes">
@@ -156,16 +183,7 @@ class ProjectTextEditorComponent extends Component {
                     </Button>
                     <Button
                         variant="primary"
-                        onClick={() =>
-                            this.props.submitText(
-                                {
-                                    text: this.state.text,
-                                    title: this.state.title,
-                                    writer_notes: this.state.writer_notes
-                                },
-                                this.props.project
-                            )
-                        }
+                        onClick={this.onSubmit}
                     >
                         Submit
                     </Button>
