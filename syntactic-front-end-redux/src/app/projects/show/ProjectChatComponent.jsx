@@ -2,7 +2,7 @@
 import React, { Component } from "react"
 
 // Components
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, Badge } from "react-bootstrap"
 
 // Redux
 import { connect } from "react-redux"
@@ -47,6 +47,9 @@ class ProjectChatComponent extends Component {
         this.state.socket.emit("typing", userFullName)
     }
 
+    /**
+     * componentWillMount() Load old messages
+     */
     async componentWillMount() {
         // Get Messages
         let messagesList = await API.get(
@@ -81,13 +84,16 @@ class ProjectChatComponent extends Component {
         e.preventDefault()
 
         let message = {
-            sender_id: { 
+            sender_id: {
                 _id: this.props.user._id,
                 first_name: this.props.user.first_name,
                 last_name: this.props.user.last_name
             },
             receiver_id: {
-                _id: this.props.project.content_seeker_id === this.props.user._id ? this.props.project.writer_id : this.props.project.content_seeker_id
+                _id:
+                    this.props.project.content_seeker_id === this.props.user._id
+                        ? this.props.project.writer_id
+                        : this.props.project.content_seeker_id
             },
             message: this.state.input,
             project_id: this.props.match.params.id
@@ -107,17 +113,42 @@ class ProjectChatComponent extends Component {
             <>
                 <h3>This is the project chat component</h3>
                 <hr />
-                {this.state.messages &&
-                    this.state.messages.map(message => (
-                        <p key={message._id}>
-                            {message.sender_id._id === this.props.user._id
-                                ? "You said -"
-                                : message.sender_id.first_name +
-                                  " " +
-                                  message.sender_id.last_name}{" "}
-                            {message.message}
-                        </p>
-                    ))}
+                <div className="chat-list">
+                    {this.state.messages &&
+                        this.state.messages.map(message => (
+                            <div
+                                className={
+                                    "message mb-3" +
+                                    (message.sender_id._id ===
+                                        this.props.user._id ? " text-right" : "")
+                                }
+                                key={message._id}
+                            >
+                                <span>
+                                    {message.sender_id._id ===
+                                    this.props.user._id
+                                        ? this.props.user.first_name +
+                                          " " +
+                                          this.props.user.last_name
+                                        : message.sender_id.first_name +
+                                          " " +
+                                          message.sender_id.last_name}
+                                </span>
+                                <br />
+                                <Badge
+                                    key={message._id}
+                                    variant={
+                                        message.sender_id._id ===
+                                        this.props.user._id
+                                            ? "primary"
+                                            : "secondary"
+                                    }
+                                >
+                                    {message.message}
+                                </Badge>
+                            </div>
+                        ))}
+                </div>
                 {this.state.typing && (
                     <span className="text-muted">{`${this.state.typing} is typing a message...`}</span>
                 )}
