@@ -115,7 +115,7 @@ class DeliverableShow extends Component {
                         </>
                     )}
 
-                    {!deliverable.content_seeker_notes &&
+                    {deliverable.status === 'pending approval' &&
                         this.props.role === "content seeker" && (
                             <Form className="mt-3">
                                 <Form.Group controlId="formContentSeekerNotes">
