@@ -455,12 +455,12 @@ router.route("/:id/download").get(async (req, res) => {
     let authorised = true
     if (
         user.role[0].name === "content seeker" &&
-        project.content_seeker_id.toString() !== user._id.toString()
+        project.content_seeker_id._id.toString() !== user._id.toString()
     ) {
         authorised = false
     } else if (
         user.role[0].name === "writer" &&
-        project.writer_id.toString() !== user._id.toString()
+        project.writer_id._id.toString() !== user._id.toString()
     ) {
         authorised = false
     }
