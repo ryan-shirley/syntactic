@@ -91,9 +91,17 @@ class ProjectChatComponent extends Component {
             },
             receiver_id: {
                 _id:
-                    this.props.project.content_seeker_id === this.props.user._id
-                        ? this.props.project.writer_id
-                        : this.props.project.content_seeker_id
+                    this.props.project.content_seeker_id !== this.props.user._id
+                        ? this.props.project.writer_id._id
+                        : this.props.project.content_seeker_id._id,
+                first_name:
+                    this.props.project.content_seeker_id !== this.props.user._id
+                        ? this.props.project.writer_id.first_name
+                        : this.props.project.content_seeker_id.first_name,
+                last_name:
+                    this.props.project.content_seeker_id !== this.props.user._id
+                        ? this.props.project.writer_id.last_name
+                        : this.props.project.content_seeker_id.last_name
             },
             message: this.state.input,
             project_id: this.props.match.params.id
@@ -111,8 +119,6 @@ class ProjectChatComponent extends Component {
     render() {
         return (
             <>
-                <h3>This is the project chat component</h3>
-                <hr />
                 <div className="chat-list">
                     {this.state.messages &&
                         this.state.messages.map(message => (
@@ -120,7 +126,9 @@ class ProjectChatComponent extends Component {
                                 className={
                                     "message mb-3" +
                                     (message.sender_id._id ===
-                                        this.props.user._id ? " text-right" : "")
+                                    this.props.user._id
+                                        ? " text-right"
+                                        : "")
                                 }
                                 key={message._id}
                             >
