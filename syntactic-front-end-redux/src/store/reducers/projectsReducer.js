@@ -50,6 +50,19 @@ const projectsReducer = (state = initState, action) => {
                 error: ""
             }
 
+        case "PROJECT_DELETED_SUCCESSFULLY":
+            let projects = state.projects
+            let idToRemove = action.payload
+            let filteredProjects = projects.filter(
+                project => project._id !== idToRemove
+            )
+
+            return {
+                ...state,
+                projects: filteredProjects,
+                error: ""
+            }
+
         case "PROJECT_WRITER_LIST_RECEIVED":
             return {
                 ...state,

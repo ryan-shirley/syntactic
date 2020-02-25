@@ -145,6 +145,53 @@ router.route("/:id").put(async (req, res) => {
 })
 
 /**
+ * route('/:id').delete() Delete single project
+ */
+router.route("/:id").delete(checkifContentSeeker , async (req, res) => {
+    const { authToken } = req
+    const { id } = req.params
+    let user = req.user
+
+    // Call to service layer - Get project
+    const project = await ProjectService.getProject(id).catch(error => {
+        return res.status(400).json({
+            code: 400,
+            message: error.message
+        })
+    })
+
+    // Check authorised to make request
+    let authorised = true
+    if (
+        user.role[0].name === "content seeker" &&
+        project.content_seeker_id._id.toString() !== user._id.toString()
+    ) {
+        authorised = false
+    }
+
+    if (!authorised) {
+        return res.status(401).json({
+            code: 401,
+            message: "You are not authorized to make this request"
+        })
+    }
+
+    // Delete Project
+    await ProjectService.deleteProject(project).catch(error => {
+        return res.status(400).json({
+            code: 400,
+            message: error.message
+        })
+    })
+
+    // Return successfully deleted
+    return res.json({
+        code: 200,
+        message: `Project with ID ${id} has been successfully deleted.`
+    })
+})
+
+/**
  * route('/:id/upload/brief').post() Upload brief and analyse
  */
 router

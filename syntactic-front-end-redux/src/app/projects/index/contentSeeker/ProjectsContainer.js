@@ -11,6 +11,9 @@ import DataLoading from "../../../components/DataLoading"
 import Error from "../../../components/Error"
 import { Row, Col } from "react-bootstrap"
 
+// Actions
+import { deleteProject } from "../../../../store/actions/projectsActions"
+
 class ProjectsContainer extends Component {
     render() {
         let { projects, requestProcessing, error } = this.props.projects
@@ -38,6 +41,7 @@ class ProjectsContainer extends Component {
                     projects={projects}
                     loading={this.props.projects.requestProcessing}
                     history={this.props.history}
+                    deleteProject={this.props.deleteProject}
                 />
             </>
         )
@@ -50,4 +54,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ProjectsContainer)
+const mapDispatchToProps = dispatch => {
+    return {
+        deleteProject: projectId => dispatch(deleteProject(projectId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer)

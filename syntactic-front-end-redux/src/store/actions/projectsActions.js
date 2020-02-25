@@ -222,7 +222,7 @@ export const submitText = (data, project) => {
 }
 
 /**
- * updateDeliverable() create new project
+ * updateDeliverable() update deliverable
  */
 export const updateDeliverable = (deliverable, project) => {
     return dispatch => {
@@ -240,6 +240,23 @@ export const updateDeliverable = (deliverable, project) => {
         API.put('/projects/' + project._id, project)
             .then(data => {
                 dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}
+
+/**
+ * deleteProject() Delete project
+ */
+export const deleteProject = (projectId) => {
+    return dispatch => {
+        // dispatch({ type: "PROJECTS_REQUEST_SENT" })
+
+        API.delete('/projects/' + projectId)
+            .then(data => {
+                dispatch({ type: "PROJECT_DELETED_SUCCESSFULLY", payload: projectId })
             }) 
             .catch(error => {
                 dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })

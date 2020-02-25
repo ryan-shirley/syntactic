@@ -1,23 +1,13 @@
+// React
 import React, { Component } from "react"
-import { Table } from "react-bootstrap"
+
+// Components
+import { Table, Button } from "react-bootstrap"
 import Moment from "react-moment"
 import DataLoading from "../../components/DataLoading"
+import { Link } from "react-router-dom"
 
 class ProjectsListComponent extends Component {
-    constructor(props) {
-        super(props)
-
-        // Binding this to work in the callback
-        this.onClick = this.onClick.bind(this)
-    }
-
-    /**
-     * onClick() Send to view project
-     */
-    onClick = id => {
-        this.props.history.push(`/projects/${id}`)
-    }
-
     render() {
         let { projects, loading } = this.props
 
@@ -31,19 +21,38 @@ class ProjectsListComponent extends Component {
                             <th>Title</th>
                             <th>Due Date</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {projects &&
                             projects.map(project => (
-                                <tr key={project._id} onClick={() => this.onClick(project._id)}>
-                                    <td>{project.title}</td>
+                                <tr key={project._id}>
+                                    <td>
+                                        <Link to={"/projects/" + project._id}>
+                                            {project.title}
+                                        </Link>
+                                    </td>
                                     <td>
                                         <Moment format="DD/MM/YYYY">
                                             {project.end_date}
                                         </Moment>
                                     </td>
                                     <td>{project.status}</td>
+                                    <td>
+                                        {project.status === "draft" && (
+                                            <Button
+                                                variant="danger"
+                                                onClick={() =>
+                                                    this.props.deleteProject(
+                                                        project._id
+                                                    )
+                                                }
+                                            >
+                                                Delete
+                                            </Button>
+                                        )}
+                                    </td>
                                 </tr>
                             ))}
                     </tbody>

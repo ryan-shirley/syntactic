@@ -54,6 +54,26 @@ exports.uploadFileToCloudStorage = async (file, targetName, id) => {
             public: true,
             destination
         })
-    
+
     return destination
+}
+
+/**
+ * deleteFolderFromCloudStorage() Delete folder on cloud storage
+ */
+exports.deleteFolderFromCloudStorage = async folder => {
+    const { Storage } = require("@google-cloud/storage")
+
+    // Creates a client - Use firebase account (seperate to NLP account)
+    const projectId = "syntactic-iadt-year-4-fb"
+    const keyFilename = "./firebase-storage-service.json"
+    const storage = new Storage({ projectId, keyFilename })
+
+    await storage
+        .bucket(process.env.FIREBASE_STORAGE_BUCKET)
+        .deleteFiles({ prefix: folder }, function(err) {
+            if (err) throw err
+        })
+
+    return true
 }
