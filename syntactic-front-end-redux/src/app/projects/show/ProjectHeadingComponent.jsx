@@ -25,9 +25,9 @@ class ProjectHeadingComponent extends Component {
                         </Badge>
                     </h1>
                     <p>
-                        {role !== "writer"
-                            ? "writer name*"
-                            : "content seeker name*"}
+                        {project.writer_id && role !== "writer"
+                            ? project.writer_id.first_name + ' ' + project.writer_id.last_name
+                            : project.content_seeker_id && (project.content_seeker_id.first_name + ' ' + project.content_seeker_id.last_name)}
                     </p>
                 </Col>
                 <Col className="text-right">
