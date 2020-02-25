@@ -3,6 +3,7 @@ const router = require("express").Router()
 
 // Services
 const UserService = require("../../services/user.service")
+const EmailService = require("../../services/email.service")
 
 /**
  * route('/register').post() Register new user
@@ -18,6 +19,9 @@ router.route("/register").post(async (req, res) => {
             fields: error.errors
         })
     })
+
+    // Send signup email
+    await EmailService.welcomeEmail(newUser)
 
     // Return new user
     return res.status(201).json(newUser)
