@@ -79,7 +79,7 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 requestProcessing: false,
-                error: action.payload
+                error: action.payload.message
             }
         default:
             return state
