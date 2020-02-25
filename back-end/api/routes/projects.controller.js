@@ -70,12 +70,12 @@ router.route("/:id").get(async (req, res) => {
     let authorised = true
     if (
         user.role[0].name === "content seeker" &&
-        project.content_seeker_id.toString() !== user._id.toString()
+        project.content_seeker_id._id.toString() !== user._id.toString()
     ) {
         authorised = false
     } else if (
         user.role[0].name === "writer" &&
-        project.writer_id.toString() !== user._id.toString()
+        project.writer_id._id.toString() !== user._id.toString()
     ) {
         authorised = false
     }
@@ -120,12 +120,12 @@ router.route("/:id").put(async (req, res) => {
     let authorised = true
     if (
         user.role[0].name === "content seeker" &&
-        project.content_seeker_id.toString() !== user._id.toString()
+        project.content_seeker_id._id.toString() !== user._id.toString()
     ) {
         authorised = false
     } else if (
         user.role[0].name === "writer" &&
-        project.writer_id.toString() !== user._id.toString()
+        project.writer_id._id.toString() !== user._id.toString()
     ) {
         authorised = false
     }
@@ -179,7 +179,7 @@ router
 
             // Check authorised to make request
             let authorised = true
-            if (oldProject.content_seeker_id.toString() !== user._id.toString()) {
+            if (oldProject.content_seeker_id._id.toString() !== user._id.toString()) {
                 authorised = false
             }
 
@@ -261,7 +261,7 @@ router
 
             // Check authorised to make request
             let authorised = true
-            if (oldProject.content_seeker_id.toString() !== user._id.toString()) {
+            if (oldProject.content_seeker_id._id.toString() !== user._id.toString()) {
                 authorised = false
             }
 
@@ -371,12 +371,12 @@ router.route("/:id/writers").get(async (req, res) => {
     let authorised = true
     if (
         user.role[0].name === "content seeker" &&
-        project.content_seeker_id.toString() !== user._id.toString()
+        project.content_seeker_id._id.toString() !== user._id.toString()
     ) {
         authorised = false
     } else if (
         user.role[0].name === "writer" &&
-        project.writer_id.toString() !== user._id.toString()
+        project.writer_id._id.toString() !== user._id.toString()
     ) {
         authorised = false
     }

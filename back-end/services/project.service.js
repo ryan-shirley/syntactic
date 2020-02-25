@@ -8,7 +8,7 @@ exports.getAllProjects = async user => {
         if (err) throw err
         
         return projects
-    })
+    }).populate('content_seeker_id writer_id', 'first_name last_name profile levels role')
 
     return projects
 }
@@ -21,7 +21,7 @@ exports.getProject = async _id => {
         if (err) throw err
 
         return project
-    })
+    }).populate('content_seeker_id writer_id', 'first_name last_name profile levels role')
     
 
     return project
