@@ -3,6 +3,7 @@ const initState = {
     singleProject: {},
     writersList: {},
     requestProcessing: false,
+    isProcessingCompletion: false,
     justCreated: false,
     error: ""
 }
@@ -22,6 +23,13 @@ const projectsReducer = (state = initState, action) => {
             return {
                 ...state,
                 requestProcessing: true,
+                error: ""
+            }
+
+        case "PROJECTS_FINISH_PROCESSING":
+            return {
+                ...state,
+                isProcessingCompletion: true,
                 error: ""
             }
 
@@ -46,6 +54,14 @@ const projectsReducer = (state = initState, action) => {
             return {
                 ...state,
                 requestProcessing: false,
+                singleProject: action.payload,
+                error: ""
+            }
+
+        case "PROJECT_COMPLETED_SUCCESSFULLY":
+            return {
+                ...state,
+                isProcessingCompletion: false,
                 singleProject: action.payload,
                 error: ""
             }

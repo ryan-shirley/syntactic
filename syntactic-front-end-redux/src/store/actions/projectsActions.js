@@ -263,3 +263,20 @@ export const deleteProject = (projectId) => {
             })
     }
 }
+
+/**
+ * finishProject() Finish project
+ */
+export const finishProject = (finalDeliverables, id) => {
+    return dispatch => {
+        dispatch({ type: "PROJECTS_FINISH_PROCESSING" })
+
+        API.put('/projects/' + id + '/finish', finalDeliverables)
+            .then(data => {
+                dispatch({ type: "PROJECT_COMPLETED_SUCCESSFULLY", payload: data })
+            }) 
+            .catch(error => {
+                dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}

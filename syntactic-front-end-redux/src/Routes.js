@@ -20,6 +20,7 @@ import ProjectShow from "./app/projects/show/ProjectShowContainer"
 import ProjectOverview from "./app/projects/show/ProjectOverviewComponent"
 import ProjectChat from "./app/projects/show/ProjectChatComponent"
 import ProjectTextEditor from "./app/projects/show/ProjectTextEditorComponent"
+import ProjectFinish from "./app/projects/show/ProjectFinishComponent"
 import LevelsContainer from "./app/levels/LevelsContainer"
 
 // Pages - Auth - Writer Only
@@ -108,6 +109,10 @@ const appLayoutRoutes = [
             {
                 path: '/editor',
                 page: ProjectTextEditor
+            },
+            {
+                path: '/finish',
+                page: ProjectFinish
             }
         ]
     },

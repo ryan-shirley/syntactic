@@ -7,12 +7,13 @@ import { ButtonGroup, Button } from "react-bootstrap"
 
 class ProjectTabsComponent extends Component {
     render() {
-        const { role, path } = this.props
+        const { role, path, project } = this.props
         return (
             <ButtonGroup aria-label="Basic example" className="border-bottom">
                 <Button variant="secondary" as={Link} to={`${path}/overview`} >Overview</Button>
                 <Button variant="secondary" as={Link} to={`${path}/chat`}>Chat</Button>
                 {role === 'writer' && <Button variant="secondary" as={Link} to={`${path}/editor`}>Text Editor</Button>}
+                {role === 'content seeker' && project.deliverables && project.deliverables.some(deliverable => deliverable.status === 'accepted') && <Button variant="secondary" as={Link} to={`${path}/finish`}>Finish</Button>}
             </ButtonGroup>
         )
     }

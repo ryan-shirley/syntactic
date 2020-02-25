@@ -15,7 +15,7 @@ class ProjectShowComponent extends Component {
                 <ProjectHeadingComponent project={project} role={role} />
                 <Row className="mb-5">
                     <Col>
-                        <ProjectTabsComponent role={role} path={url} />
+                        <ProjectTabsComponent role={role} path={url} project={project} />
                     </Col>
                 </Row>
             </>
