@@ -27,6 +27,13 @@ class ProjectShowContainer extends Component {
         return null
     }
 
+    /**
+     * componentWillMount() Clear single project state if creating new project
+     */
+    componentWillUnmount() {
+        this.props.clearSingleProject()
+    }
+
     render() {
         if (this.props.requestProcessing) {
             return <p>Loading...</p>
@@ -65,6 +72,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        clearSingleProject: () => dispatch({ type: "CLEAR_SINGLE_PROJECT" }),
         getProject: id => dispatch(getProject(id)),
         updateWriterDecision: (decision, project) =>
             dispatch(updateWriterDecision(decision, project))
