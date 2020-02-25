@@ -11,6 +11,7 @@ import ResourcesComponent from "./ResourcesComponent"
 import WriterComponent from "./WriterComponent"
 import ReviewComponent from "./ReviewComponent"
 import ProgressIndicatorComponent from "./ProgressIndicatorComponent"
+import { Redirect } from "react-router-dom"
 
 // Actions
 import {
@@ -109,6 +110,13 @@ class ProjectCreateContainer extends Component {
         if (this.props.projects.error.code === 401) {
             return this.props.projects.error.message
         }
+
+        // Redirect If already created
+        var statusCodes = ["draft", "invitation pending", "invitation rejected"];
+        if(this.props.projects.singleProject._id && !statusCodes.includes(this.props.projects.singleProject.status)) {
+            return <Redirect to={"/projects/" + this.props.projects.singleProject._id} />
+        }
+
         // Dynamic depending on route
         else if (path === "/projects/create") {
             createComponent = <OverviewComponent {...this.props} />
