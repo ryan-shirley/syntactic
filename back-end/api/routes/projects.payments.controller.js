@@ -13,7 +13,7 @@ router.route("/").post(async (req, res) => {
         payer_id: project.content_seeker_id,
         receiver_id: project.writer_id,
         project_id: project._id,
-        amount: 400.00,
+        amount: project.amount,
     }
 
     let payment = await PaymentService.create(paymentDTO).catch(error => {
