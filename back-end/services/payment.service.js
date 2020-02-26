@@ -26,6 +26,13 @@ exports.getAll = async id => {
 }
 
 /**
+ * getSingle() Return payment
+ */
+exports.getSingle = async id => {
+    return await Payment.findOne({ _id: id }).populate('project_id', 'title end_date')
+}
+
+/**
  * create() Create new payment
  */
 exports.create = async (paymentDTO) => {

@@ -16,7 +16,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getAllPayments: () => dispatch(getAllPayments())
+        getAllPayments: () => dispatch(getAllPayments()),
+        setPaymentBeingPayed: payment => dispatch({ type: "SET_PAYMENT_BEING_PAYED", payload: payment })
     }
 }
 

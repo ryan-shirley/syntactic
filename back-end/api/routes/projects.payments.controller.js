@@ -11,7 +11,6 @@ const PaymentService = require("../../services/payment.service")
  * route('/').post() Create payment
  */
 router.route("/").post(async (req, res) => {
-    const user = req.user
     const project = req.body
     const paymentDTO = {
         payer_id: project.content_seeker_id,

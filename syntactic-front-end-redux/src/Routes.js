@@ -23,6 +23,7 @@ import ProjectTextEditor from "./app/projects/show/ProjectTextEditorComponent"
 import ProjectFinish from "./app/projects/show/ProjectFinishComponent"
 import LevelsContainer from "./app/levels/LevelsContainer"
 import BillingContainer from "./app/billing/BillingContainer"
+import PaymentPayContainer from "./app/billing/PaymentContainer"
 
 // Pages - Auth - Writer Only
 // import Levels from "./components/pages/writer/Levels"
@@ -131,6 +132,15 @@ const appLayoutRoutes = [
         middleware: {
             type: 'private',
             role: 'writer'
+        }
+    },
+    {
+        path: '/billing/payment/:id',
+        page: PaymentPayContainer,
+        exact: true,
+        middleware: {
+            type: 'private',
+            role: 'content seeker'
         }
     },
     {

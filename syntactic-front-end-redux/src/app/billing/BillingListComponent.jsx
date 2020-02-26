@@ -2,14 +2,8 @@
 import React, { Component } from "react"
 
 // Components
-import { Elements } from "@stripe/react-stripe-js"
-import { loadStripe } from "@stripe/stripe-js"
-import CheckoutForm from "./CheckoutForm"
 import DataLoading from "../components/DataLoading"
-import { Card, Row, Col, Badge } from "react-bootstrap"
-
-// Stripe
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
+import { Card, Row, Col, Badge, Button } from "react-bootstrap"
 
 class BillingListComponent extends Component {
     constructor(props) {
@@ -17,6 +11,14 @@ class BillingListComponent extends Component {
 
         // Load all payments
         props.getAllPayments()
+    }
+
+    /**
+     * openPayment() Open payment form
+     */
+    openPayment = payment => {
+        this.props.setPaymentBeingPayed(payment)
+        this.props.history.push('/billing/payment/' + payment._id)
     }
 
     render() {
@@ -42,6 +44,9 @@ class BillingListComponent extends Component {
                                 {payment.status}
                             </Badge>
                         </Col>
+                        <Col>
+                            <Button onClick={() => this.openPayment(payment)} variant="primary">Pay</Button>
+                        </Col>
                     </Row>
                 </Card>
             ))
@@ -51,10 +56,6 @@ class BillingListComponent extends Component {
             <>
                 <h2>Payments List</h2>
                 {list}
-
-                {/* <Elements stripe={stripePromise}>
-                    <CheckoutForm />
-                </Elements> */}
             </>
         )
     }

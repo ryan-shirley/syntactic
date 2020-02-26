@@ -16,4 +16,16 @@ router.route("/").get(async (req, res) => {
     return res.status(200).json(payments)
 })
 
+/**
+ * route('/:id').get() Return single payment
+ */
+router.route("/:id").get(async (req, res) => {
+    const { id } = req.params
+
+    let payment = await PaymentService.getSingle(id)
+
+    // Return payment
+    return res.status(200).json(payment)
+})
+
 module.exports = router
