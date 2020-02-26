@@ -24,7 +24,7 @@ let PaymentsSchema = new mongoose.Schema(
         status: {
             type: String,
             required: true,
-            enum: ["pending", "payed"],
+            enum: ["pending", "paid"],
             default: "pending"
         }
     },

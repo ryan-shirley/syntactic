@@ -45,7 +45,7 @@ class BillingListComponent extends Component {
                             </Badge>
                         </Col>
                         <Col>
-                            <Button onClick={() => this.openPayment(payment)} variant="primary">Pay</Button>
+                            {payment.status !== 'paid' && <Button onClick={() => this.openPayment(payment)} variant="primary">Pay</Button>}
                         </Col>
                     </Row>
                 </Card>

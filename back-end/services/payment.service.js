@@ -39,7 +39,7 @@ exports.getSingle = async id => {
 exports.markPayed = async id => {
     let payment = await Payment.findOne({ _id: id })
 
-    payment.status = 'payed'
+    payment.status = 'paid'
 
     payment.save()
 

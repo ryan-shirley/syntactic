@@ -9,6 +9,7 @@ import API from "../../utils/API"
 
 // Components
 import CardSection from "./CardSection"
+import  { Redirect } from "react-router-dom"
 
 export default function CheckoutForm(props) {
     const stripe = useStripe()
@@ -26,16 +27,21 @@ export default function CheckoutForm(props) {
         }
 
         // Get Client Secret
-        let paymentIntent = await API.get(`/payments/${props.payment._id}/intent`)
+        let paymentIntent = await API.get(
+            `/payments/${props.payment._id}/intent`
+        )
 
-        const result = await stripe.confirmCardPayment(paymentIntent.client_secret, {
-            payment_method: {
-                card: elements.getElement(CardElement),
-                billing_details: {
-                    name: props.name
+        const result = await stripe.confirmCardPayment(
+            paymentIntent.client_secret,
+            {
+                payment_method: {
+                    card: elements.getElement(CardElement),
+                    billing_details: {
+                        name: props.name
+                    }
                 }
             }
-        })
+        )
 
         if (result.error) {
             // Show error to your customer (e.g., insufficient funds)
@@ -43,22 +49,26 @@ export default function CheckoutForm(props) {
         } else {
             // The payment has been processed!
             if (result.paymentIntent.status === "succeeded") {
-                props.history.replace('/billing')
-                
-                // Show a success message to your customer
-                // There's a risk of the customer closing the window before callback
-                // execution. Set up a webhook or plugin to listen for the
-                // payment_intent.succeeded event that handles any business critical
-                // post-payment actions.
+                // Wait for stripe webhook to notify to update payment
+                setTimeout(() => {
+                    props.history.replace("/billing")
+                }, 500)
             }
         }
+    }
+
+    // Redirect if payment payes
+    if(props.payment && props.payment.status === 'paid') {
+        return <Redirect to="/billing" />
     }
 
     return (
         <form onSubmit={handleSubmit}>
             <CardSection />
             <br />
-            <button disabled={!stripe} className="btn btn-primary">Confirm order</button>
+            <button disabled={!stripe} className="btn btn-primary">
+                Confirm order
+            </button>
         </form>
     )
 }
