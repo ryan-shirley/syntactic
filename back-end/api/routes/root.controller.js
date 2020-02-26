@@ -35,16 +35,14 @@ router.route("/webhook/stripe/payment").post(async (req, res) => {
     const endpointSecret = process.env.STRIPE_INTENT_WEBHOOK_SIGNING_SECRET
     let event
     try {
-        event = stripe.webhooks.constructEvent(
-            req.body,
-            sig,
-            endpointSecret
-        )
+        event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
     } catch (err) {
-        res.status(400).json(err)
+        res.status(400).json({
+            error: err.message,
+            message: "something went wrong"
+        })
         return
     }
-
 
     // Handle Type of webhook
     const intent = event.data.object
