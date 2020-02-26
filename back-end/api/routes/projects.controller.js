@@ -11,7 +11,6 @@ const ProjectService = require("../../services/project.service")
 const UserService = require("../../services/user.service")
 const StorageService = require("../../services/storage.service")
 const LevelService = require("../../services/level.service")
-const PaymentService = require("../../services/payment.service")
 const GoogleNLPService = require("../../services/google-nlp.service")
 
 // Config
@@ -665,57 +664,13 @@ router.route("/:id/download").get(async (req, res) => {
 })
 
 /**
- * route('/:id/payment-intent').get() Generate payment intent
- */
-router
-    .route("/:id/payment-intent")
-    .get(checkifContentSeeker, async (req, res) => {
-        const { id } = req.params
-        let user = req.user
-
-        // Call to service layer - Get all users projects
-        const project = await ProjectService.getProject(id).catch(error => {
-            return res.status(400).json({
-                code: 400,
-                message: error.message
-            })
-        })
-
-        // See if any project was found
-        if (!project.title) {
-            return res.status(204).json({
-                code: 204,
-                message: "No project was found"
-            })
-        }
-
-        // Check authorised to make request
-        let authorised = true
-        if (
-            user.role[0].name === "content seeker" &&
-            project.content_seeker_id._id.toString() !== user._id.toString()
-        ) {
-            authorised = false
-        }
-
-        if (!authorised) {
-            return res.status(401).json({
-                code: 401,
-                message: "You are not authorized to make this request"
-            })
-        }
-
-        // Call Service layer to generate payment intent
-        // TODO: Add project amount in here
-        let paymentIntent = await PaymentService.createPaymentIntent(400.00)
-
-        // Return payment intent
-        return res.status(200).json(paymentIntent)
-    })
-
-/**
- * route('/:id').use() Use messages router
+ * route('/:id/messages').use() Use messages router
  */
 router.use("/:id/messages", require("./messages.controller"))
+
+/**
+ * route('/:id/payments').use() Use project payments router
+ */
+router.use("/:id/payments", require("./projects.payments.controller"))
 
 module.exports = router

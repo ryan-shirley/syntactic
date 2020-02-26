@@ -24,3 +24,19 @@ exports.getAll = async id => {
         $or: [{ payer_id: id }, { receiver_id: id }]
     }).populate('project_id', 'title end_date')
 }
+
+/**
+ * create() Create new payment
+ */
+exports.create = async (paymentDTO) => {
+    try {
+        // Create payment in mongo
+        const payment = new Payment(paymentDTO)
+
+        const newPayment = await payment.save()
+
+        return newPayment
+    } catch (err) {
+        throw err
+    }
+}

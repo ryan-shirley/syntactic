@@ -167,6 +167,13 @@ export const updateWriterDecision = (decision, project) => {
         API.put('/projects/' + updatedProject._id, updatedProject)
             .then(data => {
                 dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data })
+
+                // Create payment for project
+                if(decision) {
+                    API.post('/projects/' + updatedProject._id + '/payments', updatedProject).then(payment => {
+                        dispatch({ type: "PROJECT_PAYMENT_SUCCESSFULLY_CREATED", payload: payment })
+                    })
+                }
             }) 
             .catch(error => {
                 dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
