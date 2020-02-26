@@ -8,7 +8,8 @@ class OverviewComponent extends Component {
 
         this.state = {
             title: "",
-            end_date: ""
+            end_date: "",
+            amount: ""
         }
     }
 
@@ -59,6 +60,22 @@ class OverviewComponent extends Component {
                             {error && error.fields && error.fields.title && (
                                 <span className="badge badge-pill badge-danger">
                                     {error.fields.title.message}
+                                </span>
+                            )}
+                        </Form.Group>
+
+                        <Form.Group controlId="formProjectAmount">
+                            <Form.Label>Amount</Form.Label>
+                            <Form.Control
+                                type="number"
+                                name="amount"
+                                value={this.state.amount}
+                                onChange={this.handleInputChange}
+                                required
+                            />
+                            {error && error.fields && error.fields.amount && (
+                                <span className="badge badge-pill badge-danger">
+                                    {error.fields.amount.message}
                                 </span>
                             )}
                         </Form.Group>

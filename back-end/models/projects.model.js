@@ -113,6 +113,10 @@ let ProjectsSchema = new mongoose.Schema({
     end_date: {
         type: Date,
         required: true
+    },
+    amount: {
+        type: Number,
+        required: true
     }
 })
 
