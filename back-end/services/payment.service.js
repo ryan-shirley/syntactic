@@ -22,5 +22,5 @@ exports.createPaymentIntent = async amount => {
 exports.getAll = async id => {
     return await Payment.find({
         $or: [{ payer_id: id }, { receiver_id: id }]
-    })
+    }).populate('project_id', 'title end_date')
 }

@@ -3,6 +3,7 @@ import authReducer from "./authReducer"
 // import googleNLAPIReducer from "./googleNLAPIReducer"
 import onboardingReducer from "./onboardingReducer"
 import projectsReducer from "./projectsReducer"
+import billingReducer from "./billingReducer"
 import { combineReducers } from "redux"
 import { firebaseReducer } from "react-redux-firebase"
 
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     // category: categoryReducer,
     projects: projectsReducer,
     firebase: firebaseReducer,
-    onboarding: onboardingReducer
+    onboarding: onboardingReducer,
+    billing: billingReducer
 })
 
 export default rootReducer
