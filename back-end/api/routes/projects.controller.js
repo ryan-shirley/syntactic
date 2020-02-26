@@ -11,6 +11,7 @@ const ProjectService = require("../../services/project.service")
 const UserService = require("../../services/user.service")
 const StorageService = require("../../services/storage.service")
 const LevelService = require("../../services/level.service")
+const PaymentService = require("../../services/payment.service")
 const GoogleNLPService = require("../../services/google-nlp.service")
 
 // Config
@@ -201,18 +202,18 @@ router.route("/:id/finish").put(checkifContentSeeker, async (req, res) => {
 
     // Get list of pain text deliverable content
     let textToBeAnalysed = []
-    for(let i = 0; i < deliverables.length; i++) {
+    for (let i = 0; i < deliverables.length; i++) {
         let markdown = deliverables[i].content
 
         let html = converter.makeHtml(markdown)
-        let text = html.replace(/<\/?[^>]+>/ig, " ");
+        let text = html.replace(/<\/?[^>]+>/ig, " ")
 
         textToBeAnalysed.push(text)
     }
 
     // Analsyse Text
     let writer_id = project.writer_id._id
-    for(let i = 0; i < textToBeAnalysed.length; i++) {
+    for (let i = 0; i < textToBeAnalysed.length; i++) {
         let text = textToBeAnalysed[i]
 
         // Call to service layer - Classify text and add results to writer in category
@@ -224,10 +225,13 @@ router.route("/:id/finish").put(checkifContentSeeker, async (req, res) => {
         for (var l = 0; l < results.length; l++) {
             let resultGroup = results[l]
 
-            for(let j = 0; j < resultGroup.categories.length; j++) {
+            for (let j = 0; j < resultGroup.categories.length; j++) {
                 let category = resultGroup.categories[j]
 
-                let level = await LevelService.generateLevel(category, writer_id)
+                let level = await LevelService.generateLevel(
+                    category,
+                    writer_id
+                )
                 newLevels.push({
                     category,
                     level
@@ -659,6 +663,55 @@ router.route("/:id/download").get(async (req, res) => {
             })
         })
 })
+
+/**
+ * route('/:id/payment-intent').get() Generate payment intent
+ */
+router
+    .route("/:id/payment-intent")
+    .get(checkifContentSeeker, async (req, res) => {
+        const { id } = req.params
+        let user = req.user
+
+        // Call to service layer - Get all users projects
+        const project = await ProjectService.getProject(id).catch(error => {
+            return res.status(400).json({
+                code: 400,
+                message: error.message
+            })
+        })
+
+        // See if any project was found
+        if (!project.title) {
+            return res.status(204).json({
+                code: 204,
+                message: "No project was found"
+            })
+        }
+
+        // Check authorised to make request
+        let authorised = true
+        if (
+            user.role[0].name === "content seeker" &&
+            project.content_seeker_id._id.toString() !== user._id.toString()
+        ) {
+            authorised = false
+        }
+
+        if (!authorised) {
+            return res.status(401).json({
+                code: 401,
+                message: "You are not authorized to make this request"
+            })
+        }
+
+        // Call Service layer to generate payment intent
+        // TODO: Add project amount in here
+        let paymentIntent = await PaymentService.createPaymentIntent(400.00)
+
+        // Return payment intent
+        return res.status(200).json(paymentIntent)
+    })
 
 /**
  * route('/:id').use() Use messages router

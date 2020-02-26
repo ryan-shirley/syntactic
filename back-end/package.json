@@ -26,7 +26,8 @@
     "newrelic": "^6.2.0",
     "pdf-parse": "^1.1.1",
     "showdown": "^1.9.1",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "stripe": "^8.22.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.1"

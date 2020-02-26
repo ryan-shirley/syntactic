@@ -22,6 +22,7 @@ import ProjectChat from "./app/projects/show/ProjectChatComponent"
 import ProjectTextEditor from "./app/projects/show/ProjectTextEditorComponent"
 import ProjectFinish from "./app/projects/show/ProjectFinishComponent"
 import LevelsContainer from "./app/levels/LevelsContainer"
+import BillingContainer from "./app/billing/BillingContainer"
 
 // Pages - Auth - Writer Only
 // import Levels from "./components/pages/writer/Levels"
@@ -130,6 +131,14 @@ const appLayoutRoutes = [
         middleware: {
             type: 'private',
             role: 'writer'
+        }
+    },
+    {
+        path: '/billing',
+        page: BillingContainer,
+        middleware: {
+            type: 'private',
+            role: 'content seeker'
         }
     },
     // {

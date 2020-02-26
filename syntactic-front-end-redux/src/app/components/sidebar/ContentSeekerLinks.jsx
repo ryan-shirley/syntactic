@@ -27,7 +27,7 @@ const ContentSeekerLinks = () => {
             </Nav.Link>
             <Nav.Link as={NavLink} to="/billing">
                 <FontAwesomeIcon icon={faWallet} className="text-danger" />
-                Billing*
+                Billing
             </Nav.Link>
         </Nav>
     )
