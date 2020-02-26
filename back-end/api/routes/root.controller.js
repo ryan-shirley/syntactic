@@ -33,16 +33,15 @@ router.route("/register").post(async (req, res) => {
 router.route("/webhook/stripe/payment").post(async (req, res) => {
     const sig = req.headers["stripe-signature"]
     const endpointSecret = process.env.STRIPE_INTENT_WEBHOOK_SIGNING_SECRET
-
     let event
     try {
         event = stripe.webhooks.constructEvent(
-            req.body.rawBody,
+            req.body,
             sig,
             endpointSecret
         )
     } catch (err) {
-        res.status(400).end()
+        res.status(400).json(err)
         return
     }
 
