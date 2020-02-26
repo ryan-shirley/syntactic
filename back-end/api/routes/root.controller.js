@@ -8,7 +8,7 @@ const EmailService = require("../../services/email.service")
 
 // Stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
-const endpointSecret = process.env.STRIPE_INTENT_WEBHOOK_SIGNING_SECRET
+const webhookSecret = process.env.STRIPE_INTENT_WEBHOOK_SIGNING_SECRET
 
 /**
  * route('/register').post() Register new user
