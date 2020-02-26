@@ -6,6 +6,7 @@ var express = require("express")
 var path = require("path")
 var logger = require("morgan")
 var cors = require("cors")
+const bodyParser = require("body-parser")
 
 // Set up Mongoose connection
 var mongoose = require("mongoose")
@@ -29,7 +30,13 @@ mongoose
 var app = express()
 
 app.use(logger("dev"))
-app.use(express.json())
+app.use((req, res, next) => {
+    if (req.originalUrl === "/webhook/stripe/payment") {
+        next()
+    } else {
+        bodyParser.json()(req, res, next)
+    }
+})
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, "public")))
 
