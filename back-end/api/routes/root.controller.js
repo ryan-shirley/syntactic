@@ -4,6 +4,7 @@ const router = require("express").Router()
 // Services
 const UserService = require("../../services/user.service")
 const EmailService = require("../../services/email.service")
+const PaymentService = require("../../services/payment.service")
 
 // Stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
@@ -57,11 +58,10 @@ router
         switch (event.type) {
             case "payment_intent.succeeded":
                 // Update database
-                // Send email
-                // Notify shipping department
+                let paymentID = intent.metadata.paymentID
+                await PaymentService.markPayed(paymentID)
 
-                console.log("Succeeded:", intent)
-                console.log("Body:", req.body);
+                // Send email
                 
                 break
             case "payment_intent.payment_failed":

@@ -34,6 +34,19 @@ exports.getSingle = async id => {
 }
 
 /**
+ * markPayed() Mark payment as payed
+ */
+exports.markPayed = async id => {
+    let payment = await Payment.findOne({ _id: id })
+
+    payment.status = 'payed'
+
+    payment.save()
+
+    return { success: true }
+}
+
+/**
  * create() Create new payment
  */
 exports.create = async (paymentDTO) => {
