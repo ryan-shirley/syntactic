@@ -5,6 +5,9 @@ const router = require("express").Router()
 const UserService = require("../../services/user.service")
 const EmailService = require("../../services/email.service")
 
+// Stripe
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
+
 /**
  * route('/register').post() Register new user
  */
@@ -37,10 +40,7 @@ router.route("/webhook/stripe/payment").post(async (req, res) => {
     try {
         event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
     } catch (err) {
-        res.status(400).json({
-            error: err.message,
-            message: "something went wrong"
-        })
+        res.status(400).json({ error: err.message })
         return
     }
 
