@@ -1,5 +1,6 @@
 // Express
 const router = require("express").Router()
+const bodyParser = require("body-parser")
 
 // Services
 const UserService = require("../../services/user.service")
@@ -7,6 +8,7 @@ const EmailService = require("../../services/email.service")
 
 // Stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
+const endpointSecret = process.env.STRIPE_INTENT_WEBHOOK_SIGNING_SECRET
 
 /**
  * route('/register').post() Register new user
@@ -33,15 +35,16 @@ router.route("/register").post(async (req, res) => {
 /**
  * route('/webhook/stripe/payment').post() Webhook that gets run from stripe intent success or fail
  */
-router.route("/webhook/stripe/payment").post(async (req, res) => {
+router.route("/webhook/stripe/payment").post(bodyParser.raw({type: 'application/json'}), async (req, res) => {
     const sig = req.headers["stripe-signature"]
-    const endpointSecret = process.env.STRIPE_INTENT_WEBHOOK_SIGNING_SECRET
+
     let event
     try {
-        event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret)
+        event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret)
     } catch (err) {
-        res.status(400).json({ error: err.message })
-        return
+        // On error, log and return the error message
+        console.log(`❌ Error message: ${err.message}`)
+        return res.status(400).send(`Webhook Error: ${err.message}`)
     }
 
     // Handle Type of webhook
@@ -62,7 +65,7 @@ router.route("/webhook/stripe/payment").post(async (req, res) => {
             break
     }
 
-    res.status(200).json({ success: true })
+    res.status(200).json({ received: true })
 })
 
 module.exports = router
