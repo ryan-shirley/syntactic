@@ -56,6 +56,11 @@ app.use(
     [checkIfAuthenticated],
     require("./api/routes/projects.controller")
 )
+app.use(
+    "/payments",
+    [checkIfAuthenticated],
+    require("./api/routes/payments.controller")
+)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
