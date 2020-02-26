@@ -77,45 +77,4 @@ router.route("/:id/intent").get(checkifContentSeeker, async (req, res) => {
     return res.status(200).json(paymentIntent)
 })
 
-/**
- * route('/webhook').get() Webhook that gets run from stripe intent success or fail
- */
-router.route("/webhook").get(async (req, res) => {
-    const sig = req.headers["stripe-signature"]
-    const endpointSecret = process.env.STRIPE_INTENT_WEBHOOK_SIGNING_SECRET
-
-    let event
-    try {
-        event = stripe.webhooks.constructEvent(
-            req.body.rawBody,
-            sig,
-            endpointSecret
-        )
-    } catch (err) {
-        res.status(400).end()
-        return
-    }
-
-
-    // Handle Type of webhook
-    const intent = event.data.object
-
-    switch (event.type) {
-        case "payment_intent.succeeded":
-            // Update database
-            // Send email
-            // Notify shipping department
-
-            console.log("Succeeded:", intent.id)
-            break
-        case "payment_intent.payment_failed":
-            const message =
-                intent.last_payment_error && intent.last_payment_error.message
-            console.log("Failed:", intent.id, message)
-            break
-    }
-
-    res.sendStatus(200)
-})
-
 module.exports = router
