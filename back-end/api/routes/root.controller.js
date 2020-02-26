@@ -1,6 +1,5 @@
 // Express
 const router = require("express").Router()
-const bodyParser = require("body-parser")
 
 // Services
 const UserService = require("../../services/user.service")
@@ -35,12 +34,12 @@ router.route("/register").post(async (req, res) => {
 /**
  * route('/webhook/stripe/payment').post() Webhook that gets run from stripe intent success or fail
  */
-router.route("/webhook/stripe/payment").post(bodyParser.raw({type: 'application/json'}), async (req, res) => {
+router.route("/webhook/stripe/payment").post(async (req, res) => {
     const sig = req.headers["stripe-signature"]
 
     let event
     try {
-        event = stripe.webhooks.constructEvent(req.body.toString(), sig, webhookSecret)
+        event = stripe.webhooks.constructEvent(req.rawBody.toString(), sig, webhookSecret)
     } catch (err) {
         // On error, log and return the error message
         console.log(`❌ Error message: ${err.message}`)
