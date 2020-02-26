@@ -60,7 +60,9 @@ router
                 // Send email
                 // Notify shipping department
 
-                console.log("Succeeded:", intent.id)
+                console.log("Succeeded:", intent)
+                console.log("Body:", req.body);
+                
                 break
             case "payment_intent.payment_failed":
                 const message =
