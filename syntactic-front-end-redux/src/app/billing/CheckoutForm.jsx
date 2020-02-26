@@ -43,7 +43,6 @@ export default function CheckoutForm(props) {
         } else {
             // The payment has been processed!
             if (result.paymentIntent.status === "succeeded") {
-                console.log(result);
                 props.history.replace('/billing')
                 
                 // Show a success message to your customer
