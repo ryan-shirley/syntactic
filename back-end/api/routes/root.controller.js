@@ -9,6 +9,13 @@ const EmailService = require("../../services/email.service")
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 const webhookSecret = process.env.STRIPE_INTENT_WEBHOOK_SIGNING_SECRET
 
+const bodyParser = require('body-parser');
+function rawBodySaver(req, res, buf, encoding) {
+    if (buf && buf.length) {
+        req.rawBody = buf.toString(encoding || "utf8") // additional property set on req object
+    }
+}
+
 /**
  * route('/register').post() Register new user
  */
@@ -34,16 +41,16 @@ router.route("/register").post(async (req, res) => {
 /**
  * route('/webhook/stripe/payment').post() Webhook that gets run from stripe intent success or fail
  */
-router.route("/webhook/stripe/payment").post(async (req, res) => {
+router.route("/webhook/stripe/payment").post(bodyParser.json({limit: '10mb', strict: false, verify: rawBodySaver}), async (req, res) => {
     const sig = req.headers["stripe-signature"]
 
     let event
     try {
-        event = stripe.webhooks.constructEvent(req.rawBody.toString(), sig, webhookSecret)
+        event = stripe.webhooks.constructEvent(req["rawBody"], sig, webhookSecret)
     } catch (err) {
         // On error, log and return the error message
         console.log(`❌ Error message: ${err.message}`)
-        return res.status(400).json({ error: `Webhook Error: ${err.message}`})
+        return res.status(400).json({ error: `Webhook Error: ${err.message}` })
     }
 
     // Handle Type of webhook
