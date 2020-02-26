@@ -7,10 +7,11 @@ import Payment from "../models/payments.model"
 /**
  * createPaymentIntent() Create payment intent using stripe
  */
-exports.createPaymentIntent = async amount => {
+exports.createPaymentIntent = async (paymentID, amount) => {
     const paymentIntent = await stripe.paymentIntents.create({
         amount,
-        currency: "eur"
+        currency: "eur",
+        metadata: { paymentID }
     })
 
     return paymentIntent

@@ -71,7 +71,7 @@ router.route("/:id/intent").get(checkifContentSeeker, async (req, res) => {
     }
 
     // Call Service layer to generate payment intent
-    let paymentIntent = await PaymentService.createPaymentIntent(payment.amount)
+    let paymentIntent = await PaymentService.createPaymentIntent(payment._id, payment.amount)
 
     // Return payment intent
     return res.status(200).json(paymentIntent)
