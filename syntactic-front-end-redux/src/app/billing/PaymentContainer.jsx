@@ -40,7 +40,7 @@ class PaymentContainer extends Component {
                 <h2>Single Payment</h2>
 
                 <Elements stripe={stripePromise}>
-                    <CheckoutForm />
+                    <CheckoutForm payment={this.props.payment} name={this.props.name} history={this.props.history} />
                 </Elements>
             </>
         )
@@ -50,7 +50,8 @@ class PaymentContainer extends Component {
 // Mapping
 const mapStateToProps = state => {
     return {
-        payment: state.billing.paymentBeingPayed
+        payment: state.billing.paymentBeingPayed,
+        name: state.auth.user.first_name + ' ' + state.auth.user.last_name
     }
 }
 

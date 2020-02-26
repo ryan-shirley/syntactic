@@ -10,7 +10,7 @@ import API from "../../utils/API"
 // Components
 import CardSection from "./CardSection"
 
-export default function CheckoutForm() {
+export default function CheckoutForm(props) {
     const stripe = useStripe()
     const elements = useElements()
 
@@ -26,14 +26,13 @@ export default function CheckoutForm() {
         }
 
         // Get Client Secret
-        // TODO: Replace with actual project id
-        let paymentIntent = await API.get(`/projects/${'5e46d1880464141925be6c02'}/payment-intent`)
+        let paymentIntent = await API.get(`/payments/${props.payment._id}/intent`)
 
         const result = await stripe.confirmCardPayment(paymentIntent.client_secret, {
             payment_method: {
                 card: elements.getElement(CardElement),
                 billing_details: {
-                    name: "Jenny Rosen"
+                    name: props.name
                 }
             }
         })
@@ -45,6 +44,7 @@ export default function CheckoutForm() {
             // The payment has been processed!
             if (result.paymentIntent.status === "succeeded") {
                 console.log(result);
+                props.history.replace('/billing')
                 
                 // Show a success message to your customer
                 // There's a risk of the customer closing the window before callback
