@@ -40,11 +40,11 @@ router.route("/webhook/stripe/payment").post(bodyParser.raw({type: 'application/
 
     let event
     try {
-        event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret)
+        event = stripe.webhooks.constructEvent(req.body.toString(), sig, webhookSecret)
     } catch (err) {
         // On error, log and return the error message
         console.log(`❌ Error message: ${err.message}`)
-        return res.status(400).send(`Webhook Error: ${err.message}`)
+        return res.status(400).json({ error: `Webhook Error: ${err.message}`})
     }
 
     // Handle Type of webhook
