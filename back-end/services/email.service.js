@@ -8,10 +8,9 @@ exports.welcomeEmail = async user => {
     const msg = {
         to: user.email,
         from: process.env.SENDGRID_FROM_EMAIL,
-        templateId: "d-df99bd7fb5e749a3a00d11219887bf9c",
+        templateId: "d-0bbc2153a67c43b8bb2eb59ca86e261b",
         dynamic_template_data: {
-            name: user.first_name,
-            role: user.role[0].name
+            name: user.first_name
         }
     }
 
