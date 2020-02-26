@@ -65,7 +65,7 @@ router.route("/webhook/stripe/payment").post(async (req, res) => {
             break
     }
 
-    res.sendStatus(200)
+    res.status(200).json({ success: true })
 })
 
 module.exports = router
