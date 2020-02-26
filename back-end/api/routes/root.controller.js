@@ -8,13 +8,7 @@ const EmailService = require("../../services/email.service")
 // Stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 const webhookSecret = process.env.STRIPE_INTENT_WEBHOOK_SIGNING_SECRET
-
-const bodyParser = require('body-parser');
-function rawBodySaver(req, res, buf, encoding) {
-    if (buf && buf.length) {
-        req.rawBody = buf.toString(encoding || "utf8") // additional property set on req object
-    }
-}
+const bodyParser = require("body-parser")
 
 /**
  * route('/register').post() Register new user
@@ -41,37 +35,42 @@ router.route("/register").post(async (req, res) => {
 /**
  * route('/webhook/stripe/payment').post() Webhook that gets run from stripe intent success or fail
  */
-router.route("/webhook/stripe/payment").post(bodyParser.json({limit: '10mb', strict: false, verify: rawBodySaver}), async (req, res) => {
-    const sig = req.headers["stripe-signature"]
+router
+    .route("/webhook/stripe/payment")
+    .post(bodyParser.raw({ type: "application/json" }), async (req, res) => {
+        const sig = req.headers["stripe-signature"]
 
-    let event
-    try {
-        event = stripe.webhooks.constructEvent(req["rawBody"], sig, webhookSecret)
-    } catch (err) {
-        // On error, log and return the error message
-        console.log(`❌ Error message: ${err.message}`)
-        return res.status(400).json({ error: `Webhook Error: ${err.message}` })
-    }
+        let event
+        try {
+            event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret)
+        } catch (err) {
+            // On error, log and return the error message
+            console.log(`❌ Error message: ${err.message}`)
+            return res
+                .status(400)
+                .json({ error: `Webhook Error: ${err.message}` })
+        }
 
-    // Handle Type of webhook
-    const intent = event.data.object
+        // Handle Type of webhook
+        const intent = event.data.object
 
-    switch (event.type) {
-        case "payment_intent.succeeded":
-            // Update database
-            // Send email
-            // Notify shipping department
+        switch (event.type) {
+            case "payment_intent.succeeded":
+                // Update database
+                // Send email
+                // Notify shipping department
 
-            console.log("Succeeded:", intent.id)
-            break
-        case "payment_intent.payment_failed":
-            const message =
-                intent.last_payment_error && intent.last_payment_error.message
-            console.log("Failed:", intent.id, message)
-            break
-    }
+                console.log("Succeeded:", intent.id)
+                break
+            case "payment_intent.payment_failed":
+                const message =
+                    intent.last_payment_error &&
+                    intent.last_payment_error.message
+                console.log("Failed:", intent.id, message)
+                break
+        }
 
-    res.status(200).json({ received: true })
-})
+        res.status(200).json({ received: true })
+    })
 
 module.exports = router
