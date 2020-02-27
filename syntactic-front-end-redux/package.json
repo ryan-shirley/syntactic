@@ -17,6 +17,7 @@
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
     "react-dropzone": "^10.2.1",
+    "react-firebaseui": "^4.1.0",
     "react-mde": "^8.0.2",
     "react-moment": "^0.9.7",
     "react-redux": "^5.0.7",

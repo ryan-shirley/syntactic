@@ -2,6 +2,19 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { signIn } from "../../store/actions/authActions"
 
+import { StyledFirebaseAuth } from "react-firebaseui"
+import firebase from "firebase"
+
+// Configure FirebaseUI.
+const uiConfig = {
+    // Popup signin flow rather than redirect flow.
+    signInFlow: "redirect",
+    // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+    signInSuccessUrl: "/dashboard",
+    // We will display Google as the auth provider.
+    signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID]
+}
+
 class SignIn extends Component {
     state = {
         email: "",
@@ -16,6 +29,7 @@ class SignIn extends Component {
         e.preventDefault()
         this.props.signIn(this.state)
     }
+
     render() {
         const { error, requestProcessing } = this.props
 
@@ -33,7 +47,11 @@ class SignIn extends Component {
                                 className="form-control"
                                 required
                             />
-                            {error && error.fields && <span className="badge badge-pill badge-danger">{error.fields.email}</span>}
+                            {error && error.fields && (
+                                <span className="badge badge-pill badge-danger">
+                                    {error.fields.email}
+                                </span>
+                            )}
                         </div>
 
                         <div className="form-group">
@@ -45,7 +63,11 @@ class SignIn extends Component {
                                 className="form-control"
                                 required
                             />
-                            {error && error.fields && <span className="badge badge-pill badge-danger">{error.fields.password}</span>}
+                            {error && error.fields && (
+                                <span className="badge badge-pill badge-danger">
+                                    {error.fields.password}
+                                </span>
+                            )}
                         </div>
                         {error && !error.fields && (
                             <p>
@@ -55,8 +77,23 @@ class SignIn extends Component {
                             </p>
                         )}
 
-                        <button className="btn btn-primary" type="submit" disabled={requestProcessing}>{requestProcessing ? 'Logging In..' : 'Login'}</button>
+                        <button
+                            className="btn btn-primary"
+                            type="submit"
+                            disabled={requestProcessing}
+                        >
+                            {requestProcessing ? "Logging In.." : "Login"}
+                        </button>
                     </form>
+
+                    <hr />
+
+                    <p className="text-center">Or</p>
+
+                    <StyledFirebaseAuth
+                        uiConfig={uiConfig}
+                        firebaseAuth={firebase.auth()}
+                    />
                 </div>
             </div>
         )

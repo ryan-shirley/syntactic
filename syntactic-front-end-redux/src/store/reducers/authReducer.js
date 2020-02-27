@@ -2,7 +2,7 @@ const initState = {
     requestProcessing: false,
     user: {},
     loadingUser: false,
-    error: null
+    error: null,
 }
 
 const authReducer = (state = initState, action) => {
@@ -80,6 +80,13 @@ const authReducer = (state = initState, action) => {
                 ...state,
                 requestProcessing: false,
                 error: action.payload.message
+            }
+
+        case "NO_USER_IN_MONGO":
+            return {
+                ...state,
+                requestProcessing: false,
+                error: action.payload
             }
         default:
             return state

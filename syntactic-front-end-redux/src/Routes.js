@@ -9,6 +9,9 @@ import SignUpWriter from "./app/auth/SignUpWriter"
 import SignUpContentSeeker from "./app/auth/SignUpContentSeeker"
 import NotFound404 from "./app/404"
 
+// Pages - Pre Auth - Role
+import RoleComponent from "./app/auth/RoleComponent"
+
 // Pages - Auth - Onboarding
 import OnboardingContentSeeker from "./app/onboarding/OnboardingContentSeekerContainer"
 import OnboardingWriter from "./app/onboarding/OnboardingWriterContainer"
@@ -65,6 +68,13 @@ const appLayoutRoutes = [
         middleware: {
             type: 'public',
             restricted: true
+        }
+    },
+    {
+        path: '/account-type',
+        page: RoleComponent,
+        middleware: {
+            type: 'pre-private'
         }
     },
     {

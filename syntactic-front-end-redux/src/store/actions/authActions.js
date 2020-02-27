@@ -1,4 +1,6 @@
 import axios from "axios"
+import API from "../../utils/API"
+
 const API_URL = process.env.REACT_APP_BACKEND_API
 
 /**
@@ -6,28 +8,29 @@ const API_URL = process.env.REACT_APP_BACKEND_API
  */
 export const signIn = credentials => {
     let error = {
-        message: '',
+        message: "",
         fields: {}
     }
 
     // validate details were sent
-    if(!credentials.email) {
+    if (!credentials.email) {
         error.fields.email = "You must enter an email address!"
     }
-    if(!credentials.password) {
+    if (!credentials.password) {
         error.fields.password = "You must enter a password!"
     }
-    
+
     // Check for errors
-    if(Object.entries(error.fields).length !== 0 && error.fields.constructor === Object) {
+    if (
+        Object.entries(error.fields).length !== 0 &&
+        error.fields.constructor === Object
+    ) {
         error.message = "You must fill out all the input fields."
-        
+
         return dispatch => {
             dispatch({ type: "ERROR_AUTH_NO_VALUE_INPUT", payload: error })
         }
     }
-    
-
 
     return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
@@ -44,7 +47,10 @@ export const signIn = credentials => {
                 })
             })
             .catch(err => {
-                dispatch({ type: "FIREBASE_LOGIN_ERROR", payload: { message: err.message } })
+                dispatch({
+                    type: "FIREBASE_LOGIN_ERROR",
+                    payload: { message: err.message }
+                })
             })
     }
 }
@@ -74,16 +80,24 @@ export const signUp = (newUser, role) => {
                         // console.log("New user signed up on Firebase!", result)
 
                         newUser.uid = result.user.uid
-                        newUser.role = role === "writer" ? "writer" : "content seeker"
+                        newUser.role =
+                            role === "writer" ? "writer" : "content seeker"
 
                         axios
                             .post(API_URL + "/register", newUser)
                             .then(resp => {
-
-                                dispatch({ type: "SIGNUP_SUCCESS", payload: resp.data })
+                                dispatch({
+                                    type: "SIGNUP_SUCCESS",
+                                    payload: resp.data
+                                })
                             })
                             .catch(err => {
-                                dispatch({ type: "SIGNUP_ERROR", payload: { message: err.response.data.message } })
+                                dispatch({
+                                    type: "SIGNUP_ERROR",
+                                    payload: {
+                                        message: err.response.data.message
+                                    }
+                                })
                             })
                     })
             })
@@ -93,19 +107,59 @@ export const signUp = (newUser, role) => {
     }
 }
 
+/**
+ * signUpWithRoleMongo() Signs up a new user using in
+ * mongo with set role.
+ */
+export const signUpWithRoleMongo = role => {
+    return (dispatch, getState, { getFirebase }) => {
+        let state = getState()
+        let { email, uid, displayName } = state.firebase.auth
+
+        // Get Name Seperated
+        const nameWords = displayName.split(" ")
+        let first_name = nameWords.shift()
+        let last_name = nameWords.join(" ")
+
+        let newUser = {
+            first_name,
+            last_name,
+            email,
+            uid,
+            role
+        }
+
+        dispatch({ type: "AUTH_REQUEST_PROCESSING_STARTED" })
+
+        API.post("/register", newUser)
+            .then(resp => {
+                dispatch({
+                    type: "SIGNUP_SUCCESS",
+                    payload: resp
+                })
+            })
+            .catch(err => {
+                dispatch({
+                    type: "SIGNUP_ERROR",
+                    payload: {
+                        message: err.response.data.message
+                    }
+                })
+            })
+    }
+}
 
 /**
  * signOut() Signs out using Firebase Auth
  */
-export const signOut =  () => {
+export const signOut = () => {
     return async (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
 
-        await firebase.auth().signOut();
+        await firebase.auth().signOut()
         dispatch({ type: "SIGNOUT_SUCCESS" })
     }
 }
-
 
 /**
  * getUser() Get the user that is current logged in
@@ -128,13 +182,26 @@ export const getUser = () => {
                     .then(res => {
                         let user = res.data
 
-                        dispatch({
-                            type: "FETCH_USER_SUCCESS",
-                            payload: user
-                        })
+                        if (user) {
+                            dispatch({
+                                type: "FETCH_USER_SUCCESS",
+                                payload: user
+                            })
+                        } else {
+                            dispatch({
+                                type: "NO_USER_IN_MONGO",
+                                payload: {
+                                    code: 404,
+                                    message: "No user found in mongo database."
+                                }
+                            })
+                        }
                     })
                     .catch(error => {
-                        dispatch({ type: "FETCH_USER_ERROR", payload: { messgae: error.message } } )
+                        dispatch({
+                            type: "FETCH_USER_ERROR",
+                            payload: { message: error.message }
+                        })
                     })
             })
             .catch(function(error) {

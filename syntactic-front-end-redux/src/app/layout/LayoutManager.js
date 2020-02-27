@@ -41,7 +41,7 @@ class LayoutManager extends Component {
         }
         // Private Route
         else if (type === 'private') {
-            let { user, loadingUser } = auth // User object from Monogo
+            let { user, loadingUser, error } = auth // User object from Monogo
 
             if(!loggedIn) {
                 // console.log("Not authorised. Redirecting..")
@@ -51,6 +51,11 @@ class LayoutManager extends Component {
                 // Load User details
                 if(!loadingUser) {
                     this.props.dispatch(getUser())
+                }
+
+                // If no user in mongo redirect to account type page
+                if(error && error.code === 404) {
+                    return <Redirect to="/account-type" />
                 }
                 
                 // Wait for user to be loaded
@@ -79,6 +84,30 @@ class LayoutManager extends Component {
             }
             else if (path.includes("/onboarding/")) {
                 // console.log("User has completed onboarding")
+                return <Redirect to="/dashboard" />
+            }
+        }
+        // Pre Private Route - Account Type
+        else if (type === 'pre-private') {
+            let { user, loadingUser, error } = auth // User object from Monogo
+
+            if(user === null || (Object.keys(user).length === 0 && user.constructor === Object && !error)) { // No user profile
+                // Load User details
+                if(!loadingUser) {
+                    this.props.dispatch(getUser())
+                }
+
+                // If no user in mongo redirect to account type page
+                if(error && error.code === 404 && path !== '/account-type') {
+                    return <Redirect to="/account-type" />
+                }
+                
+                // Wait for user to be loaded
+                return <DataLoading />
+            }
+            
+            // Recirect if not logged in or already have an account
+            if(!loggedIn || (user && user._id)) {
                 return <Redirect to="/dashboard" />
             }
         }

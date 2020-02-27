@@ -68,7 +68,8 @@ let UserSchema = new mongoose.Schema({
     },
     levels: {
         type: [LevelSchema],
-        required: false
+        required: false,
+        default: undefined
     },
 })
 
