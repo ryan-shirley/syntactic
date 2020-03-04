@@ -18,15 +18,15 @@ const ContentSeekerLinks = () => {
     return (
         <Nav className="flex-column">
             <Nav.Link as={NavLink} to="/dashboard">
-                <FontAwesomeIcon icon={faHome} className="text-orange" />
+                <FontAwesomeIcon icon={faHome} />
                 Dashboard
             </Nav.Link>
             <Nav.Link as={NavLink} to="/projects">
-                <FontAwesomeIcon icon={faThumbtack} className="text-orange" />
+                <FontAwesomeIcon icon={faThumbtack} />
                 Projects
             </Nav.Link>
             <Nav.Link as={NavLink} to="/billing">
-                <FontAwesomeIcon icon={faWallet} className="text-danger" />
+                <FontAwesomeIcon icon={faWallet} />
                 Billing
             </Nav.Link>
         </Nav>

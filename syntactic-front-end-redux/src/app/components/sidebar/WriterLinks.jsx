@@ -20,23 +20,23 @@ const WriterLinks = () => {
     return (
         <Nav className="flex-column">
             <Nav.Link as={NavLink} to="/dashboard">
-                <FontAwesomeIcon icon={faHome} className="text-warning" />
+                <FontAwesomeIcon icon={faHome} />
                 Dashboard
             </Nav.Link>
             <Nav.Link as={NavLink} to="/projects">
-                <FontAwesomeIcon icon={faThumbtack} className="text-orange" />
+                <FontAwesomeIcon icon={faThumbtack} />
                 Projects
             </Nav.Link>
             <Nav.Link as={NavLink} to="/levels">
-                <FontAwesomeIcon icon={faBolt} className="text-info" />
+                <FontAwesomeIcon icon={faBolt} />
                 Levels
             </Nav.Link>
             <Nav.Link as={NavLink} to="/billing">
-                <FontAwesomeIcon icon={faWallet} className="text-danger" />
+                <FontAwesomeIcon icon={faWallet} />
                 Billing*
             </Nav.Link>
             <Nav.Link as={NavLink} to="/earnings">
-                <FontAwesomeIcon icon={faMoneyBill} className="text-success" />
+                <FontAwesomeIcon icon={faMoneyBill} />
                 Earnings*
             </Nav.Link>
         </Nav>

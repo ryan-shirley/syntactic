@@ -18,15 +18,15 @@ const GuestLinks = () => {
     return (
         <Nav className="flex-column">
             <Nav.Link as={NavLink} to="/login">
-                <FontAwesomeIcon icon={faSignInAlt} className="text-warning" />
+                <FontAwesomeIcon icon={faSignInAlt} />
                 Log in
             </Nav.Link>
             <Nav.Link as={NavLink} to="/register/writer">
-                <FontAwesomeIcon icon={faPenFancy} className="text-orange" />
+                <FontAwesomeIcon icon={faPenFancy} />
                 Register Writer
             </Nav.Link>
             <Nav.Link as={NavLink} to="/register/content-seeker">
-                <FontAwesomeIcon icon={faAddressBook} className="text-info" />
+                <FontAwesomeIcon icon={faAddressBook} />
                 Register Content Seeker
             </Nav.Link>
         </Nav>

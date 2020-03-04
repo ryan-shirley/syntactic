@@ -22,7 +22,7 @@ const Sidebar = props => {
     }
 
     return (
-        <div id="sidebar-wrapper" className="bg-primary">
+        <div id="sidebar-wrapper" className="bg-dark">
             <div className="sidebar-heading">
                 <Link to="/">Syntactic</Link>
             </div>

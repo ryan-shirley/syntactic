@@ -19,7 +19,7 @@
     .sidebar-heading {
         padding: 1.125rem 1.25rem;
         font-size: 1.2rem;
-        background-color: $primary-dark;
+        background-color: darken($dark, 10%);
         margin-bottom: 20px;
         
         a {
@@ -34,13 +34,14 @@
     .nav {
         .nav-link {
             width: 15rem;
-            color: $primary-text-light;
-            padding: 0.75rem 1rem;
+            color: $dark-text;
+            padding: 1.125rem 1rem;
+            transition: all .15s ease;
 
             &:hover,
             &.active {
                 color: $white;
-                background-color: $primary-dark;
+                background-color: darken($dark, 10%);
             }
 
             svg {
