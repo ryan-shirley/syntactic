@@ -141,27 +141,25 @@ class ProjectChatComponent extends Component {
                     <span className="text-muted">{`${this.state.typing} is typing a message...`}</span>
                 )}
 
-                <div>
-                    <Form
-                        onSubmit={this.sendSocketIO}
-                        className="mt-3 chat-input"
-                    >
-                        <Form.Group controlId="formMessage">
-                            <Form.Control
-                                type="text"
-                                name="input"
-                                value={this.state.input}
-                                onChange={this.handleInputChange}
-                                placeholder="Message..."
-                                autoComplete="off"
-                            />
-                        </Form.Group>
+                <Form
+                    onSubmit={this.sendSocketIO}
+                    className="mt-3 chat-input shadow"
+                >
+                    <Form.Group controlId="formMessage">
+                        <Form.Control
+                            type="text"
+                            name="input"
+                            value={this.state.input}
+                            onChange={this.handleInputChange}
+                            placeholder="Message..."
+                            autoComplete="off"
+                        />
+                    </Form.Group>
 
-                        <Button type="submit">
-                            <FontAwesomeIcon icon={faPaperPlane} />
-                        </Button>
-                    </Form>
-                </div>
+                    <Button type="submit">
+                        <FontAwesomeIcon icon={faPaperPlane} />
+                    </Button>
+                </Form>
             </>
         )
     }
