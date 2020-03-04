@@ -1,11 +1,16 @@
 // Colour System
-$primary: #172B4D;
-$primary-text-light: #8B96BC;
-$primary-dark: darken($primary, 7.5%);
+$blue:    #498AFB;
+$red:     #F06C6C;
+$orange:  #FA8142;
+$yellow:  #FFCB2B;
+$green:   #09C372;
 
-$orange: #FF6200;
+// Theme Colours
+$dark: #0F1C33;
 
 $theme-colors: (
-    primary-dark: $primary-dark,
     orange: $orange
 );
+
+// text
+$dark-text: #B2BECD;
