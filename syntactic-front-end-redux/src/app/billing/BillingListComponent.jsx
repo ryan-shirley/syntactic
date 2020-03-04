@@ -18,7 +18,7 @@ class BillingListComponent extends Component {
      */
     openPayment = payment => {
         this.props.setPaymentBeingPayed(payment)
-        this.props.history.push('/billing/payment/' + payment._id)
+        this.props.history.push("/billing/payment/" + payment._id)
     }
 
     render() {
@@ -27,29 +27,51 @@ class BillingListComponent extends Component {
         let list = isLoadingdata ? (
             <DataLoading />
         ) : (
-            payments.map(payment => (
-                <Card body className="mb-1" key={payment._id}>
-                    <Row>
-                        <Col>{payment.project_id.title}</Col>
-                        <Col>€{payment.amount}</Col>
-                        <Col>
-                            <Badge
-                                variant={
-                                    payment.status === "pending"
-                                        ? "warning"
-                                        : "success"
-                                }
-                                className="badge-md text-uppercase"
-                            >
-                                {payment.status}
-                            </Badge>
-                        </Col>
-                        <Col>
-                            {payment.status !== 'paid' && <Button onClick={() => this.openPayment(payment)} variant="primary">Pay</Button>}
-                        </Col>
-                    </Row>
-                </Card>
-            ))
+            <ul
+                className={
+                    "card-list " +
+                    (payments.length === 1
+                        ? "single"
+                        : payments.length === 2
+                        ? "double"
+                        : "multi")
+                }
+            >
+                {payments.map(payment => (
+                    <li className="item" key={payment._id}>
+                        <Card body>
+                            <Row>
+                                <Col>{payment.project_id.title}</Col>
+                                <Col className="body-text-light">€{payment.amount}</Col>
+                                <Col>
+                                    <Badge
+                                        variant={
+                                            payment.status === "pending"
+                                                ? "warning"
+                                                : "success"
+                                        }
+                                        className="float-right badge-md text-uppercase"
+                                    >
+                                        {payment.status}
+                                    </Badge>
+                                </Col>
+                                {payment.status !== "paid" && (
+                                    <Col>
+                                        <Button
+                                            onClick={() =>
+                                                this.openPayment(payment)
+                                            }
+                                            variant="primary"
+                                        >
+                                            Pay
+                                        </Button>
+                                    </Col>
+                                )}
+                            </Row>
+                        </Card>
+                    </li>
+                ))}
+            </ul>
         )
 
         return (
