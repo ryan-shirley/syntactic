@@ -1,5 +1,4 @@
 .badge {
-
     &.badge-md {
         padding: $spacer/2 $spacer;
     }
@@ -8,7 +7,7 @@
         color: darken($yellow, 40%);
     }
 
-    &.badge-secondary  {
+    &.badge-secondary {
         color: $body-color;
     }
 }
