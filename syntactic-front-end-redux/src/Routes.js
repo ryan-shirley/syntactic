@@ -108,6 +108,7 @@ const appLayoutRoutes = [
         middleware: {
             type: 'private'
         },
+        isFullWidth: true,
         children: [
             {
                 path: '/overview',

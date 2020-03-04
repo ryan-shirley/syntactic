@@ -7,7 +7,14 @@ import Navbar from "../components/navbar/Navbar"
 import Sidebar from "../components/sidebar/Sidebar"
 import { Row, Col } from "react-bootstrap"
 
-const AppLayout = ({ component, path, exact, children, isExact }) => {
+const AppLayout = ({
+    component,
+    path,
+    exact,
+    children,
+    isExact,
+    isFullWidth
+}) => {
     let page = exact ? (
         <Route exact path={path} component={component} />
     ) : (
@@ -32,7 +39,9 @@ const AppLayout = ({ component, path, exact, children, isExact }) => {
             return childRoute.showOnRoot === true && childRoute.page
         })
 
-    rootChild = rootChild && isExact && <Route path="/" component={rootChild.page} />
+    rootChild = rootChild && isExact && (
+        <Route path="/" component={rootChild.page} />
+    )
 
     return (
         <div className="d-flex">
@@ -41,13 +50,21 @@ const AppLayout = ({ component, path, exact, children, isExact }) => {
             <div id="page-content-wrapper">
                 <Navbar />
                 <main className="container-fluid">
-                    <Row className="justify-content-md-center mt-5">
-                        <Col md={10} lg={8}>
+                    {isFullWidth ? (
+                        <>
                             {page}
                             {rootChild}
                             {childRoutes}
-                        </Col>
-                    </Row>
+                        </>
+                    ) : (
+                        <Row className="justify-content-md-center mt-5">
+                            <Col md={10} lg={8}>
+                                {page}
+                                {rootChild}
+                                {childRoutes}
+                            </Col>
+                        </Row>
+                    )}
                 </main>
             </div>
         </div>

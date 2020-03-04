@@ -26,7 +26,7 @@ class LayoutManager extends Component {
         } = this.props
 
         // Route details
-        const { page, middleware, children } = route
+        const { page, middleware, children, isFullWidth = false } = route
         // Middleware
         const { type, restricted = false, role: restrictedRole = false } = middleware
         const loggedIn = fbAuth.uid ? true : false
@@ -118,7 +118,7 @@ class LayoutManager extends Component {
         // Continue to get layouts
         switch (layout) {
             case "app":
-                return <AppLayout path={path} component={page} exact={exact} children={children} isExact={computedMatch.isExact} />
+                return <AppLayout path={path} component={page} exact={exact} children={children} isExact={computedMatch.isExact} isFullWidth={isFullWidth} />
             case "full":
                 return <FullLayout path={path} component={page} exact={exact} children={children} isExact={computedMatch.isExact} />
             default:
