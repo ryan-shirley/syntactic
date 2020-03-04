@@ -8,7 +8,7 @@ import { connect } from "react-redux"
 import { signUpWithRoleMongo } from "../../store/actions/authActions"
 
 // Components
-import { Row, Col, Button, Spinner } from "react-bootstrap"
+import { Row, Col, Button } from "react-bootstrap"
 
 class RoleComponent extends Component {
     /**
