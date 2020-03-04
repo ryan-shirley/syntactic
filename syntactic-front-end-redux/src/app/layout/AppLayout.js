@@ -53,8 +53,12 @@ const AppLayout = ({
                     {isFullWidth ? (
                         <>
                             {page}
-                            {rootChild}
-                            {childRoutes}
+                            <Row className="justify-content-md-center mt-5">
+                                <Col md={10} lg={8}>
+                                    {rootChild}
+                                    {childRoutes}
+                                </Col>
+                            </Row>
                         </>
                     ) : (
                         <Row className="justify-content-md-center mt-5">
