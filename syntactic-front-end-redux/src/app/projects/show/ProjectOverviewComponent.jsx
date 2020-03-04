@@ -62,29 +62,42 @@ class ProjectOverviewComponent extends Component {
                     <h6 className="text-uppercase">
                         Resources ({resources ? resources.length : 0})
                     </h6>
-                    {resources &&
-                        resources.map(res => (
-                            <Card body key={res._id}>
-                                <Row>
-                                    <Col>
-                                        <span
-                                            className="text-primary"
-                                            onClick={() =>
-                                                this.downloadFile(res.path)
-                                            }
-                                        >
-                                            {res.fileName}
-                                        </span>
-                                    </Col>
-                                    <Col>
-                                        <Moment format="DD MMM YYYY - h:mm a">
-                                            {res.createdAt}
-                                        </Moment>
-                                    </Col>
-                                    <Col>{res.size}</Col>
-                                </Row>
-                            </Card>
-                        ))}
+                    {resources && (
+                        <ul
+                            className={
+                                "card-list " +
+                                (resources.length === 1
+                                    ? "single"
+                                    : resources.length === 2
+                                    ? "double"
+                                    : "multi")
+                            }
+                        >
+                            {resources.map(res => (
+                                <li
+                                    className="item"
+                                    key={res._id}
+                                    onClick={() => this.downloadFile(res.path)}
+                                >
+                                    <Card body>
+                                        <Row>
+                                            <Col>
+                                                <span className="text-primary">
+                                                    {res.fileName}
+                                                </span>
+                                            </Col>
+                                            <Col>
+                                                <Moment format="DD MMM YYYY - h:mm a">
+                                                    {res.createdAt}
+                                                </Moment>
+                                            </Col>
+                                            <Col>{res.size}</Col>
+                                        </Row>
+                                    </Card>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </>
             )
         }
