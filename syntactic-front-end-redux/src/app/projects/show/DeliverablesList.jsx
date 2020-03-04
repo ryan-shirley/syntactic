@@ -29,9 +29,10 @@ class DeliverablesList extends Component {
 
         return (
             <>
-                <h6 className="text-uppercase">
-                    Deliverables ({deliverables ? deliverables.length : 0})
+                <h6 className="text-uppercase mb-3">
+                    <small>Deliverables ({deliverables ? deliverables.length : 0})</small>
                 </h6>
+                
                 {deliverables && (
                     <ul
                         className={

@@ -1,6 +1,7 @@
 .card-list {
     list-style: none;
     padding: 0;
+    margin-bottom: $spacer-lg;
 
     .item {
         transition: all .3s ease;

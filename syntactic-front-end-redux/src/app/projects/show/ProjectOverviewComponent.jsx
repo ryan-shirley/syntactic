@@ -41,9 +41,9 @@ class ProjectOverviewComponent extends Component {
                         }
                     />
 
-                    <hr />
-
-                    <h6 className="text-uppercase">Brief (1)</h6>
+                    <h6 className="text-uppercase mb-3">
+                        <small>Brief (1)</small>
+                    </h6>
                     <ul className="card-list single">
                         <li
                             className="item"
@@ -57,10 +57,10 @@ class ProjectOverviewComponent extends Component {
                         </li>
                     </ul>
 
-                    <hr />
-
-                    <h6 className="text-uppercase">
-                        Resources ({resources ? resources.length : 0})
+                    <h6 className="text-uppercase mb-3">
+                        <small>
+                            Resources ({resources ? resources.length : 0})
+                        </small>
                     </h6>
                     {resources && (
                         <ul
