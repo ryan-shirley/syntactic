@@ -1,5 +1,6 @@
 #page-content-wrapper {
     min-width: 100vw;
+    margin-bottom: $spacer-lg;
 
     @media(min-width: 768px) {
         min-width: 0;
