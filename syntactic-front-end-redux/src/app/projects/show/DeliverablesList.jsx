@@ -57,7 +57,7 @@ class DeliverablesList extends Component {
                                                 {item.title}
                                             </span>
                                         </Col>
-                                        <Col>
+                                        <Col className="body-text-light">
                                             <Moment format="DD MMM YYYY - h:mm a">
                                                 {item.createdAt}
                                             </Moment>
