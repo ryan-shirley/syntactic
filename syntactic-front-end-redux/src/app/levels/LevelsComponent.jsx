@@ -23,7 +23,13 @@ class LevelsComponent extends Component {
                         <Card body>
                             {level.category}{" "}
                             <Badge
-                                variant={level.level < 2 ? "warning" : level.level <= 4 ? "info" : "success"}
+                                variant={
+                                    level.level < 2
+                                        ? "warning"
+                                        : level.level <= 4
+                                        ? "info"
+                                        : "success"
+                                }
                                 className="float-right badge-md text-uppercase"
                             >
                                 lv {level.level}
@@ -34,7 +40,12 @@ class LevelsComponent extends Component {
             </ul>
         )
 
-        return levels
+        return (
+            <>
+                <h1 className="mb-4">Levels</h1>
+                {levels}
+            </>
+        )
     }
 }
 
