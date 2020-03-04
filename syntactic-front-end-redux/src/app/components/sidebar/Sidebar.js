@@ -27,6 +27,10 @@ const Sidebar = props => {
                 <Link to="/">Syntactic</Link>
             </div>
             {links}
+            <div className="sidebar-footer">
+                Built By
+                <a href="https://ryanshirley.ie" target="_blank">Ryan Shirley</a>
+            </div>
         </div>
     )
 }

@@ -21,7 +21,7 @@
         font-size: 1.2rem;
         background-color: darken($dark, 10%);
         margin-bottom: 20px;
-        
+
         a {
             color: $white;
 
@@ -31,12 +31,31 @@
         }
     }
 
+    .sidebar-footer {
+        color: $dark-text;
+        text-align: center;
+        display: grid;
+        position: fixed;
+        bottom: 20px;
+        right: calc(100% - 15rem);
+        left: 0;
+        font-size: 90%;
+
+        a {
+            color: $dark-text;
+
+            &:hover {
+                color: $white;
+            }
+        }
+    }
+
     .nav {
         .nav-link {
             width: 15rem;
             color: $dark-text;
             padding: 1.125rem 1rem;
-            transition: all .15s ease;
+            transition: all 0.15s ease;
 
             &:hover,
             &.active {
