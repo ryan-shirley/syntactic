@@ -7,4 +7,8 @@
     &.badge-warning {
         color: darken($yellow, 40%);
     }
+
+    &.badge-secondary  {
+        color: $body-color;
+    }
 }

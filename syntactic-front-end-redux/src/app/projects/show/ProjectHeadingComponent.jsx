@@ -46,7 +46,7 @@ class ProjectHeadingComponent extends Component {
                                     variant="secondary"
                                     className="h6 text-uppercase"
                                 >
-                                    Due:
+                                    <strong className="mr-2">Due:</strong>
                                     <Moment format="DD MMM YYYY">
                                         {project.end_date}
                                     </Moment>
