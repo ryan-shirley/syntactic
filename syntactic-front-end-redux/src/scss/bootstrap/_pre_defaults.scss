@@ -12,5 +12,20 @@ $theme-colors: (
     orange: $orange
 );
 
-// text
-$dark-text: #B2BECD;
+// Body
+//
+// Settings for the `<body>` element.
+
+$body-bg: #F5F5F5;
+$body-bg-dark: #E5E6EA;
+$body-color: #454E56;
+
+
+
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
+$headings-color: #12181B;
+$dark-text:  #B2BECD;
+
+$hr-border-color: $body-bg-dark;

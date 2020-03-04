@@ -1,0 +1,34 @@
+.project-tabs {
+    .btn {
+        color: $headings-color;
+        padding: 0.5rem 0;
+        margin-right: 3rem;
+        border-radius: 0;
+        position: relative;
+
+        &:hover, &:active, &:focus {
+            text-decoration: none;
+        }
+
+        &:after {
+            content: '';
+            width: 100%;
+            height: 3px;
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            background: $hr-border-color;
+            transition: all 0.15s ease-in-out;
+        }
+
+        &.active, &:hover {
+            color: $primary;
+
+            &:after {
+                background: $primary;
+            }
+        }
+    }
+
+    border-bottom: 3px solid $body-bg-dark;
+}
