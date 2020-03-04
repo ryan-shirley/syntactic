@@ -1,16 +1,22 @@
+// React
 import React, { Component } from "react"
+
+// Redux
 import { connect } from "react-redux"
+
+// Actions
 import { signIn } from "../../store/actions/authActions"
 
+// Firebase Auth
 import { StyledFirebaseAuth } from "react-firebaseui"
 import firebase from "firebase/app"
 import "firebase/auth"
 
-// Configure FirebaseUI.
+// Firebase UI.
 const uiConfig = {
     // Popup signin flow rather than redirect flow.
     signInFlow: "redirect",
-    // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+    // Redirect to /dashboard after sign in is successful.
     signInSuccessUrl: "/dashboard",
     // We will display Google as the auth provider.
     signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID]
@@ -21,11 +27,19 @@ class SignIn extends Component {
         email: "",
         password: ""
     }
+
+    /**
+     * handleChange() Handle form input
+     */
     handleChange = e => {
         this.setState({
             [e.target.id]: e.target.value
         })
     }
+
+    /**
+     * handleSubmit() Handle sign in with email and password
+     */
     handleSubmit = e => {
         e.preventDefault()
         this.props.signIn(this.state)
