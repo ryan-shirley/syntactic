@@ -12,12 +12,11 @@ const Sidebar = props => {
     const { user } = props
     let links
 
-    if(user.role) {
+    if (user.role) {
         let userRole = user.role[0].name
 
         links = userRole === "writer" ? <WriterLinks /> : <ContentSeekerLinks />
-    }
-    else {
+    } else {
         links = <GuestLinks />
     }
 
@@ -29,7 +28,13 @@ const Sidebar = props => {
             {links}
             <div className="sidebar-footer">
                 Built By
-                <a href="https://ryanshirley.ie" target="_blank">Ryan Shirley</a>
+                <a
+                    href="https://ryanshirley.ie"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Ryan Shirley
+                </a>
             </div>
         </div>
     )
