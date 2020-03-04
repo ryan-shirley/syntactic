@@ -34,12 +34,12 @@ class BillingListComponent extends Component {
                         <Col>€{payment.amount}</Col>
                         <Col>
                             <Badge
-                                pill
                                 variant={
                                     payment.status === "pending"
                                         ? "warning"
                                         : "success"
                                 }
+                                className="badge-md text-uppercase"
                             >
                                 {payment.status}
                             </Badge>
