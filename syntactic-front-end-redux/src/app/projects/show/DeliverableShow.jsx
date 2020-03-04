@@ -67,7 +67,7 @@ class DeliverableShow extends Component {
                 onHide={this.props.closeModal}
                 animation={true}
                 centered
-                size="lg"
+                size="xl"
             >
                 <Modal.Header>
                     <Modal.Title>{deliverable.title}</Modal.Title>
