@@ -44,14 +44,18 @@ class ProjectOverviewComponent extends Component {
                     <hr />
 
                     <h6 className="text-uppercase">Brief (1)</h6>
-                    <Card body>
-                        <span
-                            className="text-primary"
+                    <ul className="card-list single">
+                        <li
+                            className="item"
                             onClick={() => this.downloadFile(brief.path)}
                         >
-                            {brief.path}
-                        </span>
-                    </Card>
+                            <Card body>
+                                <span className="text-primary">
+                                    {brief.path}
+                                </span>
+                            </Card>
+                        </li>
+                    </ul>
 
                     <hr />
 

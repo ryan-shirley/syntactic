@@ -1,0 +1,48 @@
+.card-list {
+    list-style: none;
+    padding: 0;
+
+    .item {
+        transition: all .3s ease;
+
+        &:hover, &.open {
+            transform: scale(1.02, 1);
+            cursor: pointer;
+        }
+    }
+
+    // Two In List
+    &.double {
+        .item .card {
+            margin: -1px 0;
+        }
+
+        .item:first-child .card {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .item:last-child .card {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
+
+    // More than 3 in list
+    &.multi {
+        .item:first-child .card {
+            border-top-left-radius: $card-border-radius;
+            border-top-right-radius: $card-border-radius;
+        }
+
+        .item .card {
+            border-radius: 0;
+            margin: -1px 0;
+        }
+
+        .item:last-child .card {
+            border-bottom-left-radius: $card-border-radius;
+            border-bottom-right-radius: $card-border-radius;
+        }
+    }
+}
