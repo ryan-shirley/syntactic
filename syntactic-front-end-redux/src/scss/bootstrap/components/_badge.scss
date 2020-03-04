@@ -1,4 +1,9 @@
 .badge {
+
+    &.badge-md {
+        padding: $spacer/2 $spacer;
+    }
+
     &.badge-warning {
         color: darken($yellow, 40%);
     }

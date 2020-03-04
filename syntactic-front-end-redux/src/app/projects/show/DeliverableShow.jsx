@@ -79,7 +79,7 @@ class DeliverableShow extends Component {
                                 ? "danger"
                                 : "warning"
                         }
-                        className="float-right"
+                        className="float-right badge-md text-uppercase"
                     >
                         {deliverable.status}
                     </Badge>
