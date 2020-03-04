@@ -5,12 +5,14 @@ $orange:  #FA8142;
 $yellow:  #FFCB2B;
 $green:   #09C372;
 
+
 // Theme Colours
 $dark: #0F1C33;
 
 $theme-colors: (
     orange: $orange
 );
+
 
 // Body
 //
@@ -19,7 +21,6 @@ $theme-colors: (
 $body-bg: #F5F5F5;
 $body-bg-dark: #E5E6EA;
 $body-color: #454E56;
-
 
 
 // Typography
@@ -35,3 +36,6 @@ $hr-border-color: $body-bg-dark;
 //
 $spacer: 1rem;
 $spacer-lg: 2rem;
+
+// Cards
+$card-border-color: $body-bg-dark;
