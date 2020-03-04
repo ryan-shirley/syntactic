@@ -41,8 +41,8 @@ class ProjectOverviewComponent extends Component {
                         }
                     />
 
-                    <h6 className="text-uppercase mb-3">
-                        <small>Brief (1)</small>
+                    <h6 className="text-uppercase mb-3 text-reset">
+                        <small className="font-weight-bolder">Brief (1)</small>
                     </h6>
                     <ul className="card-list single">
                         <li
@@ -57,8 +57,8 @@ class ProjectOverviewComponent extends Component {
                         </li>
                     </ul>
 
-                    <h6 className="text-uppercase mb-3">
-                        <small>
+                    <h6 className="text-uppercase mb-3 text-reset">
+                        <small className="font-weight-bolder">
                             Resources ({resources ? resources.length : 0})
                         </small>
                     </h6>
