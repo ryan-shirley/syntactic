@@ -2,7 +2,8 @@
 import React, { Component } from "react"
 
 // Components
-import { Form, Button, Badge } from "react-bootstrap"
+import { Form, Button } from "react-bootstrap"
+import Message from "../../components/Message"
 
 // Redux
 import { connect } from "react-redux"
@@ -12,6 +13,10 @@ import openSocket from "socket.io-client"
 
 // API
 import API from "../../../utils/API"
+
+// Fonts
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 
 class ProjectChatComponent extends Component {
     constructor(props) {
@@ -122,58 +127,41 @@ class ProjectChatComponent extends Component {
                 <div className="chat-list">
                     {this.state.messages &&
                         this.state.messages.map(message => (
-                            <div
-                                className={
-                                    "message mb-3" +
-                                    (message.sender_id._id ===
-                                    this.props.user._id
-                                        ? " text-right"
-                                        : "")
-                                }
+                            <Message
+                                message={message}
+                                user={this.props.user}
                                 key={message._id}
                             >
-                                <span>
-                                    {message.sender_id._id ===
-                                    this.props.user._id
-                                        ? this.props.user.first_name +
-                                          " " +
-                                          this.props.user.last_name
-                                        : message.sender_id.first_name +
-                                          " " +
-                                          message.sender_id.last_name}
-                                </span>
-                                <br />
-                                <Badge
-                                    key={message._id}
-                                    variant={
-                                        message.sender_id._id ===
-                                        this.props.user._id
-                                            ? "primary"
-                                            : "secondary"
-                                    }
-                                >
-                                    {message.message}
-                                </Badge>
-                            </div>
+                                {message.message}
+                            </Message>
                         ))}
                 </div>
+
                 {this.state.typing && (
                     <span className="text-muted">{`${this.state.typing} is typing a message...`}</span>
                 )}
-                <hr />
-                <Form onSubmit={this.sendSocketIO} className="mt-3 chat-input">
-                    <Form.Group controlId="formProjectTitle">
-                        <Form.Label>Message</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="input"
-                            value={this.state.input}
-                            onChange={this.handleInputChange}
-                        />
-                    </Form.Group>
 
-                    <Button type="submit">Send</Button>
-                </Form>
+                <div>
+                    <Form
+                        onSubmit={this.sendSocketIO}
+                        className="mt-3 chat-input"
+                    >
+                        <Form.Group controlId="formMessage">
+                            <Form.Control
+                                type="text"
+                                name="input"
+                                value={this.state.input}
+                                onChange={this.handleInputChange}
+                                placeholder="Message..."
+                                autoComplete="off"
+                            />
+                        </Form.Group>
+
+                        <Button type="submit">
+                            <FontAwesomeIcon icon={faPaperPlane} />
+                        </Button>
+                    </Form>
+                </div>
             </>
         )
     }

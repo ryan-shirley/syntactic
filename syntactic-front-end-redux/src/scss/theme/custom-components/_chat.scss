@@ -1,20 +1,65 @@
 .chat-list {
-    margin-bottom: 7rem;
-    
+    margin-bottom: 140px;
+
     .message {
+        margin-bottom: $spacer-lg;
+
         .badge {
             padding: 1rem 1.5rem;
             font-weight: 400;
             font-size: initial;
+        }
+
+        .badge-secondary {
+            color: $body-color;
+        }
+
+        .details {
+            margin-bottom: $spacer / 2;
+            display: block;
+            color: $headings-color;
+
+            .profile {
+                width: 30px;
+                height: 30px;
+                margin-right: $spacer;
+            }
+
+            .timestamp {
+                margin-left: $spacer;
+                color: $body-color;
+                font-size: 10px;
+            }
         }
     }
 }
 
 .chat-input {
     position: fixed;
-    bottom: 0;
+    bottom: 0px;
     left: 15rem;
     right: 0;
-    width: 60%;
+    width: calc(100% - 15rem);
     margin: 0 auto;
+    background-color: $body-bg;
+    padding: $spacer-lg;
+    border-top: 1px solid $hr-border-color;
+
+    .form-group {
+        margin: 0;
+    }
+
+    input,
+    input:focus {
+        width: calc(100% - 80px);
+        float: left;
+        background: none;
+        border: none;
+        box-shadow: none;
+    }
+
+    button {
+        width: 60px;
+        float: right;
+    }
 }

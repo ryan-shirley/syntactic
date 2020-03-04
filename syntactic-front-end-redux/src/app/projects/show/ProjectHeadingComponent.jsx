@@ -9,6 +9,16 @@ class ProjectHeadingComponent extends Component {
     render() {
         let { project, role } = this.props
 
+        let name =
+            project.writer_id && role !== "writer"
+                ? project.writer_id.first_name +
+                  " " +
+                  project.writer_id.last_name
+                : project.content_seeker_id &&
+                  project.content_seeker_id.first_name +
+                      " " +
+                      project.content_seeker_id.last_name
+
         return (
             <Row>
                 <Col>
@@ -24,11 +34,7 @@ class ProjectHeadingComponent extends Component {
                             </Moment>
                         </Badge>
                     </h1>
-                    <p>
-                        {project.writer_id && role !== "writer"
-                            ? project.writer_id.first_name + ' ' + project.writer_id.last_name
-                            : project.content_seeker_id && (project.content_seeker_id.first_name + ' ' + project.content_seeker_id.last_name)}
-                    </p>
+                    <p>{name}</p>
                 </Col>
                 <Col className="text-right">
                     <Badge variant="warning" className="h3 text-uppercase">
