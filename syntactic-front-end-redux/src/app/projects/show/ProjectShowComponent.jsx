@@ -14,9 +14,14 @@ class ProjectShowComponent extends Component {
         return (
             <>
                 <ProjectHeadingComponent project={project} role={role} />
-                <Row className="mb-5">
-                    <Col>
-                        <ProjectTabsComponent role={role} path={url} pathname={pathname} project={project} />
+                <Row className="justify-content-md-center mt-5">
+                    <Col md={10} lg={8}>
+                        <ProjectTabsComponent
+                            role={role}
+                            path={url}
+                            pathname={pathname}
+                            project={project}
+                        />
                     </Col>
                 </Row>
             </>

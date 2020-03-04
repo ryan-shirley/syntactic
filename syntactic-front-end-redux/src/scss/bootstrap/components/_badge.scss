@@ -1,0 +1,5 @@
+.badge {
+    &.badge-warning {
+        color: darken($yellow, 40%);
+    }
+}

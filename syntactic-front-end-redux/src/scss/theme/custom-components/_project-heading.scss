@@ -1,0 +1,27 @@
+.project-heading {
+    .status {
+        padding: $spacer $spacer-lg;
+        font-size: $h4-font-size;
+        text-transform: uppercase;
+    }
+}
+
+.project-bar {
+    background-color: $white;
+    padding: $spacer/2 0;
+    border-top: 1px solid $card-border-color;
+    border-bottom: 1px solid $card-border-color;
+    box-shadow: 1px 2px 2px 0px rgba(23, 43, 77, 0.05);
+
+    span {
+        margin: 0;
+    }
+
+    .user {
+        .profile {
+            width: 25px;
+            height: 25px;
+            margin-right: $spacer / 2;
+        }
+    }
+}
