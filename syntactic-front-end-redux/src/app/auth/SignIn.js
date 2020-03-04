@@ -3,7 +3,8 @@ import { connect } from "react-redux"
 import { signIn } from "../../store/actions/authActions"
 
 import { StyledFirebaseAuth } from "react-firebaseui"
-import firebase from "firebase"
+import firebase from "firebase/app"
+import "firebase/auth"
 
 // Configure FirebaseUI.
 const uiConfig = {
