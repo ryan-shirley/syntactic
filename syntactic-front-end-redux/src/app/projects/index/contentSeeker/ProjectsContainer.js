@@ -26,7 +26,7 @@ class ProjectsContainer extends Component {
 
         return (
             <>
-                <Row>
+                <Row className="mb-3">
                     <Col>
                         <h1>Projects list</h1>
                     </Col>

@@ -2,61 +2,129 @@
 import React, { Component } from "react"
 
 // Components
-import { Table, Button } from "react-bootstrap"
+import {
+    Row,
+    Col,
+    Card,
+    Badge,
+    DropdownButton,
+    Dropdown
+} from "react-bootstrap"
 import Moment from "react-moment"
 import DataLoading from "../../components/DataLoading"
 import { Link } from "react-router-dom"
 
+// Icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"
+
 class ProjectsListComponent extends Component {
     render() {
-        let { projects, loading } = this.props
+        let { projects, loading, isWriter = false } = this.props
 
         if (!projects.length || loading) {
             return <DataLoading />
         } else {
             return (
-                <Table striped bordered hover className="mt-3">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Due Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {projects &&
-                            projects.map(project => (
-                                <tr key={project._id}>
-                                    <td>
-                                        <Link to={"/projects/" + project._id}>
+                projects && (
+                    <Row className="project-list">
+                        {projects.map(project => (
+                            <Col
+                                sm={4}
+                                md={3}
+                                key={project._id}
+                                className="project"
+                            >
+                                <Card>
+                                    <Card.Body>
+                                        <Card.Title
+                                            as={Link}
+                                            className="h6 d-block"
+                                            to={"/projects/" + project._id}
+                                        >
                                             {project.title}
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Moment format="DD/MM/YYYY">
-                                            {project.end_date}
-                                        </Moment>
-                                    </td>
-                                    <td>{project.status}</td>
-                                    <td>
-                                        {project.status === "draft" && (
-                                            <Button
-                                                variant="danger"
-                                                onClick={() =>
-                                                    this.props.deleteProject(
-                                                        project._id
-                                                    )
-                                                }
-                                            >
-                                                Delete
-                                            </Button>
+                                        </Card.Title>
+                                        <Badge
+                                            variant="warning"
+                                            className="h6 text-uppercase status"
+                                        >
+                                            {project.status}
+                                        </Badge>
+                                        <Badge
+                                            variant="secondary"
+                                            className="h6 text-uppercase due-date"
+                                        >
+                                            <strong className="mr-2">
+                                                Due:
+                                            </strong>
+                                            <Moment format="DD MMM YYYY">
+                                                {project.end_date}
+                                            </Moment>
+                                        </Badge>
+                                    </Card.Body>
+                                    <hr />
+                                    <ul>
+                                        {isWriter && (
+                                            <li>
+                                                <Card.Link
+                                                    as={Link}
+                                                    to={`/projects/${project._id}/editor`}
+                                                >
+                                                    Text Editor
+                                                </Card.Link>
+                                            </li>
                                         )}
-                                    </td>
-                                </tr>
-                            ))}
-                    </tbody>
-                </Table>
+                                        <li>
+                                            <Card.Link
+                                                as={Link}
+                                                to={`/projects/${project._id}/chat`}
+                                            >
+                                                Chat
+                                            </Card.Link>
+                                        </li>
+                                        {!isWriter && (
+                                            <li>
+                                                <DropdownButton
+                                                    id="project-dropdown-details"
+                                                    title={
+                                                        <FontAwesomeIcon
+                                                            icon={faEllipsisV}
+                                                        />
+                                                    }
+                                                    size="sm"
+                                                    variant="outline-secondary"
+                                                    alignRight
+                                                >
+                                                    <Dropdown.Item
+                                                        as={Link}
+                                                        to={
+                                                            "/projects/" +
+                                                            project._id
+                                                        }
+                                                    >
+                                                        View Project
+                                                    </Dropdown.Item>
+                                                    {project.status ===
+                                                        "draft" && (
+                                                        <Dropdown.Item
+                                                            onClick={() =>
+                                                                this.props.deleteProject(
+                                                                    project._id
+                                                                )
+                                                            }
+                                                        >
+                                                            Delete Project
+                                                        </Dropdown.Item>
+                                                    )}
+                                                </DropdownButton>
+                                            </li>
+                                        )}
+                                    </ul>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
+                )
             )
         }
     }

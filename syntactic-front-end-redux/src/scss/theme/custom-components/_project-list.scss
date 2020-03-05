@@ -1,0 +1,51 @@
+.project-list {
+    .project {
+        margin-bottom: $spacer;
+        transition: all .3s ease;
+
+        &:hover {
+            transform: scale(1.04);
+        }
+
+        .badge {
+            font-size: 12px;
+
+            &.status {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+    
+            &.due-date {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+
+        hr {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: right;
+
+            li {
+                display: inline-block;
+                padding: $spacer/2 $spacer;
+                border-left: 1px solid $hr-border-color;
+
+                .dropdown-toggle::after {
+                    display: none;
+                }
+
+                .dropdown .btn {
+                    padding: 0 $spacer/2;
+                    border-color: transparent;
+                    color: $body-color;
+                }
+            }
+        }
+    }
+}

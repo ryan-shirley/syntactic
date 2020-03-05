@@ -16,6 +16,7 @@ class ProjectsContainer extends Component {
                 projects={projects}
                 loading={requestProcessing}
                 history={this.props.history}
+                isWriter={true}
             />
         )
 
