@@ -9,12 +9,20 @@ import { connect } from "react-redux"
 import ProjectsListContainer from "../ProjectsListComponent"
 import DataLoading from "../../../components/DataLoading"
 import Error from "../../../components/Error"
-import { Row, Col } from "react-bootstrap"
+import { Row, Col, Button } from "react-bootstrap"
 
 // Actions
 import { deleteProject } from "../../../../store/actions/projectsActions"
 
 class ProjectsContainer extends Component {
+    constructor() {
+        super()
+
+        this.state = {
+            display: 'table'
+        }
+    }
+
     render() {
         let { projects, requestProcessing, error } = this.props.projects
 
@@ -28,12 +36,12 @@ class ProjectsContainer extends Component {
             <>
                 <Row className="mb-3">
                     <Col>
-                        <h1>Projects list</h1>
+                        <h1>All Projects</h1>
                     </Col>
                     <Col className="text-right">
-                        <Link to="/projects/create" className="btn btn-primary">
+                        <Button as={Link} to="/projects/create">
                             New Project
-                        </Link>
+                        </Button>
                     </Col>
                 </Row>
 
@@ -42,6 +50,7 @@ class ProjectsContainer extends Component {
                     loading={this.props.projects.requestProcessing}
                     history={this.props.history}
                     deleteProject={this.props.deleteProject}
+                    display={this.state.display}
                 />
             </>
         )

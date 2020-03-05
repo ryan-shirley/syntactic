@@ -6,6 +6,14 @@ import { Alert } from "react-bootstrap"
 import ProjectsListContainer from "../ProjectsListComponent"
 
 class ProjectsContainer extends Component {
+    constructor() {
+        super()
+
+        this.state = {
+            display: 'table'
+        }
+    }
+    
     render() {
         let { projects, requestProcessing, error } = this.props.projects
 
@@ -17,6 +25,7 @@ class ProjectsContainer extends Component {
                 loading={requestProcessing}
                 history={this.props.history}
                 isWriter={true}
+                display={this.state.display}
             />
         )
 

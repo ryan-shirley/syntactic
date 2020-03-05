@@ -43,4 +43,20 @@
             }
         }
     }
+
+    .datatable {
+        .status, .due-date {
+            font-size: 12px;
+        }
+
+        .dropdown .btn {
+            padding: 0 $spacer/2;
+            border-color: transparent;
+            color: $body-color;
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+    }
 }
