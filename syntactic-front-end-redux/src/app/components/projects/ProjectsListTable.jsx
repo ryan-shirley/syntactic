@@ -52,6 +52,20 @@ class ProjectsListTable extends Component {
                 )
             },
             {
+                name: "Due Date",
+                selector: "end_date",
+                maxWidth: "250px",
+                sortable: true,
+                cell: row => (
+                    <Badge
+                        variant="secondary"
+                        className="h6 text-uppercase due-date"
+                    >
+                        <Moment format="DD MMM YYYY">{row.end_date}</Moment>
+                    </Badge>
+                )
+            },
+            {
                 name: "Status",
                 selector: "status",
                 maxWidth: "250px",
@@ -68,21 +82,6 @@ class ProjectsListTable extends Component {
                         className="h6 mb-0 text-uppercase status"
                     >
                         {row.status}
-                    </Badge>
-                )
-            },
-            {
-                name: "Due Date",
-                selector: "end_date",
-                maxWidth: "250px",
-                sortable: true,
-                cell: row => (
-                    <Badge
-                        variant="secondary"
-                        className="h6 text-uppercase due-date"
-                    >
-                        <strong className="mr-2">Due:</strong>
-                        <Moment format="DD MMM YYYY">{row.end_date}</Moment>
                     </Badge>
                 )
             },
@@ -139,39 +138,8 @@ class ProjectsListTable extends Component {
                 data={projects}
                 defaultSortField="createdAt"
                 keyField="_id"
-                // onRowClicked={project => history.push(`/projects/${project._id}`)}
-                // selectableRows={true}
-                // selectableRowsNoSelectAll={noSelectAll}
-                // selectableRowsHighlight={selectableRowsHighlight}
-                // expandableRows={expandableRows}
-                // expandOnRowClicked={expandOnRowClick}
                 pagination={true}
-                // highlightOnHover={true}
-                // striped={striped}
-                // pointerOnHover={true}
-                // dense={true}
-                // noTableHead={tableHead}
-                // persistTableHead={persist}
-                // progressPending={loading}
                 noHeader={true}
-                // subHeader={subHeader}
-                // subHeaderComponent={
-                //     <div style={{ display: "flex", alignItems: "center" }}>
-                //         <TextField
-                //             id="outlined-basic"
-                //             label="Search"
-                //             variant="outlined"
-                //             size="small"
-                //             style={{ margin: "5px" }}
-                //         />
-                //         <Icon1 style={{ margin: "5px" }} color="action" />
-                //         <Icon2 style={{ margin: "5px" }} color="action" />
-                //         <Icon3 style={{ margin: "5px" }} color="action" />
-                //     </div>
-                // }
-                // subHeaderAlign={subHeaderAlign}
-                // fixedHeader={fixedHeader}
-                // fixedHeaderScrollHeight="300px"
             />
         )
     }
