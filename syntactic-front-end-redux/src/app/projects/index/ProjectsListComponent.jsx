@@ -19,111 +19,173 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"
 
 class ProjectsListComponent extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            projects: props.projects.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            ),
+            loading: props.loading,
+            isWriter: false,
+            sortBy: "created"
+        }
+    }
+
+    /**
+     * sortProjects() Sort projects
+     */
+    sortProjects(sortOrder) {
+        let newOrder,
+            projects = this.state.projects
+
+        if (sortOrder) {
+            if (sortOrder === "created") {
+                newOrder = projects.sort(
+                    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                )
+            }
+            if (sortOrder === "dueDate") {
+                newOrder = projects.sort(
+                    (a, b) => new Date(a.end_date) - new Date(b.end_date)
+                )
+            }
+            if (sortOrder === "amount") {
+                newOrder = projects.sort((a, b) => b.amount - a.amount)
+            }
+        }
+
+        this.setState({ sortBy: sortOrder, projects: newOrder })
+    }
+
     render() {
-        let { projects, loading, isWriter = false } = this.props
+        let { projects, loading, isWriter = false } = this.state
 
         if (!projects.length || loading) {
             return <DataLoading />
         } else {
             return (
                 projects && (
-                    <Row className="project-list">
-                        {projects.map(project => (
-                            <Col
-                                sm={4}
-                                md={3}
-                                key={project._id}
-                                className="project"
-                            >
-                                <Card>
-                                    <Card.Body>
-                                        <Card.Title
-                                            as={Link}
-                                            className="h6 d-block"
-                                            to={"/projects/" + project._id}
-                                        >
-                                            {project.title}
-                                        </Card.Title>
-                                        <Badge
-                                            variant="warning"
-                                            className="h6 text-uppercase status"
-                                        >
-                                            {project.status}
-                                        </Badge>
-                                        <Badge
-                                            variant="secondary"
-                                            className="h6 text-uppercase due-date"
-                                        >
-                                            <strong className="mr-2">
-                                                Due:
-                                            </strong>
-                                            <Moment format="DD MMM YYYY">
-                                                {project.end_date}
-                                            </Moment>
-                                        </Badge>
-                                    </Card.Body>
-                                    <hr />
-                                    <ul>
-                                        {isWriter && (
+                    <>
+                        <Row className="project-filters">
+                            <Col>
+                                <label>Sort by</label>
+                                <select
+                                    className="form-select ml-2"
+                                    id="sortby"
+                                    value={this.state.sortBy}
+                                    onChange={event =>
+                                        this.sortProjects(event.target.value)
+                                    }
+                                >
+                                    <option value="created">Created</option>
+                                    <option value="dueDate">Due Date</option>
+                                    <option value="amount">Cost</option>
+                                </select>
+                            </Col>
+                        </Row>
+
+                        <Row className="project-list">
+                            {projects.map(project => (
+                                <Col
+                                    sm={4}
+                                    md={3}
+                                    key={project._id}
+                                    className="project"
+                                >
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title
+                                                as={Link}
+                                                className="h6 d-block"
+                                                to={"/projects/" + project._id}
+                                            >
+                                                {project.title}
+                                            </Card.Title>
+                                            <Badge
+                                                variant="warning"
+                                                className="h6 text-uppercase status"
+                                            >
+                                                {project.status}
+                                            </Badge>
+                                            <Badge
+                                                variant="secondary"
+                                                className="h6 text-uppercase due-date"
+                                            >
+                                                <strong className="mr-2">
+                                                    Due:
+                                                </strong>
+                                                <Moment format="DD MMM YYYY">
+                                                    {project.end_date}
+                                                </Moment>
+                                            </Badge>
+                                            <p>{project.amount}</p>
+                                        </Card.Body>
+                                        <hr />
+                                        <ul>
+                                            {isWriter && (
+                                                <li>
+                                                    <Card.Link
+                                                        as={Link}
+                                                        to={`/projects/${project._id}/editor`}
+                                                    >
+                                                        Text Editor
+                                                    </Card.Link>
+                                                </li>
+                                            )}
                                             <li>
                                                 <Card.Link
                                                     as={Link}
-                                                    to={`/projects/${project._id}/editor`}
+                                                    to={`/projects/${project._id}/chat`}
                                                 >
-                                                    Text Editor
+                                                    Chat
                                                 </Card.Link>
                                             </li>
-                                        )}
-                                        <li>
-                                            <Card.Link
-                                                as={Link}
-                                                to={`/projects/${project._id}/chat`}
-                                            >
-                                                Chat
-                                            </Card.Link>
-                                        </li>
-                                        {!isWriter && (
-                                            <li>
-                                                <DropdownButton
-                                                    id="project-dropdown-details"
-                                                    title={
-                                                        <FontAwesomeIcon
-                                                            icon={faEllipsisV}
-                                                        />
-                                                    }
-                                                    size="sm"
-                                                    variant="outline-secondary"
-                                                    alignRight
-                                                >
-                                                    <Dropdown.Item
-                                                        as={Link}
-                                                        to={
-                                                            "/projects/" +
-                                                            project._id
+                                            {!isWriter && (
+                                                <li>
+                                                    <DropdownButton
+                                                        id="project-dropdown-details"
+                                                        title={
+                                                            <FontAwesomeIcon
+                                                                icon={
+                                                                    faEllipsisV
+                                                                }
+                                                            />
                                                         }
+                                                        size="sm"
+                                                        variant="outline-secondary"
+                                                        alignRight
                                                     >
-                                                        View Project
-                                                    </Dropdown.Item>
-                                                    {project.status ===
-                                                        "draft" && (
                                                         <Dropdown.Item
-                                                            onClick={() =>
-                                                                this.props.deleteProject(
-                                                                    project._id
-                                                                )
+                                                            as={Link}
+                                                            to={
+                                                                "/projects/" +
+                                                                project._id
                                                             }
                                                         >
-                                                            Delete Project
+                                                            View Project
                                                         </Dropdown.Item>
-                                                    )}
-                                                </DropdownButton>
-                                            </li>
-                                        )}
-                                    </ul>
-                                </Card>
-                            </Col>
-                        ))}
-                    </Row>
+                                                        {project.status ===
+                                                            "draft" && (
+                                                            <Dropdown.Item
+                                                                onClick={() =>
+                                                                    this.props.deleteProject(
+                                                                        project._id
+                                                                    )
+                                                                }
+                                                            >
+                                                                Delete Project
+                                                            </Dropdown.Item>
+                                                        )}
+                                                    </DropdownButton>
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </Card>
+                                </Col>
+                            ))}
+                        </Row>
+                    </>
                 )
             )
         }

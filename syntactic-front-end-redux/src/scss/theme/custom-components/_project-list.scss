@@ -1,11 +1,6 @@
 .project-list {
     .project {
         margin-bottom: $spacer;
-        transition: all .3s ease;
-
-        &:hover {
-            transform: scale(1.04);
-        }
 
         .badge {
             font-size: 12px;
