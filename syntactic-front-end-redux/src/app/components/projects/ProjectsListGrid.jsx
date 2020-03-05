@@ -27,7 +27,7 @@ class ProjectsListGrid extends Component {
         }
     }
 
-       /**
+    /**
      * sortProjects() Sort projects
      */
     sortProjects(sortOrder) {
@@ -53,11 +53,10 @@ class ProjectsListGrid extends Component {
         this.setState({ sortBy: sortOrder, projects: newOrder })
     }
 
-
     render() {
         let projects = this.state.projects
         let { isWriter } = this.props
-        
+
         return (
             projects && (
                 <>
@@ -83,7 +82,7 @@ class ProjectsListGrid extends Component {
                         {projects.map(project => (
                             <Col
                                 sm={4}
-                                md={3}
+                                lg={3}
                                 key={project._id}
                                 className="project"
                             >
@@ -94,7 +93,10 @@ class ProjectsListGrid extends Component {
                                             className="h6 d-block"
                                             to={"/projects/" + project._id}
                                         >
-                                            {project.title}
+                                            {project.title + ' '}
+                                            <span className="body-text-light price">
+                                                €{project.amount}
+                                            </span>
                                         </Card.Title>
                                         <Badge
                                             variant="warning"
@@ -113,7 +115,6 @@ class ProjectsListGrid extends Component {
                                                 {project.end_date}
                                             </Moment>
                                         </Badge>
-                                        <p>{project.amount}</p>
                                     </Card.Body>
                                     <hr />
                                     <ul>
@@ -141,9 +142,7 @@ class ProjectsListGrid extends Component {
                                                     id="project-dropdown-details"
                                                     title={
                                                         <FontAwesomeIcon
-                                                            icon={
-                                                                faEllipsisV
-                                                            }
+                                                            icon={faEllipsisV}
                                                         />
                                                     }
                                                     size="sm"
