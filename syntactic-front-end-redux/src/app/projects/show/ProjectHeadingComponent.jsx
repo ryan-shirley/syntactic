@@ -29,7 +29,13 @@ class ProjectHeadingComponent extends Component {
                             </Col>
                             <Col className="text-right">
                                 <Badge
-                                    variant="warning"
+                                    variant={
+                                        project.status === "completed"
+                                            ? "success"
+                                            : project.status === "draft"
+                                            ? "warning"
+                                            : "primary"
+                                    }
                                     className="status"
                                 >
                                     {project.status}
