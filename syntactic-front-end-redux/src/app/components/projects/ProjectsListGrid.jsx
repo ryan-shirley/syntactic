@@ -53,6 +53,17 @@ class ProjectsListGrid extends Component {
         this.setState({ sortBy: sortOrder, projects: newOrder })
     }
 
+    /**
+     * deleteProject() Delete project
+     */
+    deleteProject(id) {
+        this.props.deleteProject(id)
+
+        // Remove from local list
+        let filtered = this.state.projects.filter(project => project._id !== id)
+        this.setState({ projects: filtered })
+    }
+
     render() {
         let projects = this.state.projects
         let { isWriter } = this.props
@@ -93,7 +104,7 @@ class ProjectsListGrid extends Component {
                                             className="h6 d-block"
                                             to={"/projects/" + project._id}
                                         >
-                                            {project.title + ' '}
+                                            {project.title + " "}
                                             <span className="body-text-light price">
                                                 €{project.amount}
                                             </span>
@@ -128,14 +139,16 @@ class ProjectsListGrid extends Component {
                                                 </Card.Link>
                                             </li>
                                         )}
-                                        {project.status !== 'draft' && <li>
-                                            <Card.Link
-                                                as={Link}
-                                                to={`/projects/${project._id}/chat`}
-                                            >
-                                                Chat
-                                            </Card.Link>
-                                        </li>}
+                                        {project.status !== "draft" && (
+                                            <li>
+                                                <Card.Link
+                                                    as={Link}
+                                                    to={`/projects/${project._id}/chat`}
+                                                >
+                                                    Chat
+                                                </Card.Link>
+                                            </li>
+                                        )}
                                         {!isWriter && (
                                             <li>
                                                 <DropdownButton
@@ -162,7 +175,7 @@ class ProjectsListGrid extends Component {
                                                         "draft" && (
                                                         <Dropdown.Item
                                                             onClick={() =>
-                                                                this.props.deleteProject(
+                                                                this.deleteProject(
                                                                     project._id
                                                                 )
                                                             }
