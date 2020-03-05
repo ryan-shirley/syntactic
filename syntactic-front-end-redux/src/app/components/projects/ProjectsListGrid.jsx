@@ -101,16 +101,22 @@ class ProjectsListGrid extends Component {
                                     <Card.Body>
                                         <Card.Title
                                             as={Link}
-                                            className="h6 d-block"
+                                            className="h6 d-block text-decoration-none"
                                             to={"/projects/" + project._id}
                                         >
                                             {project.title + " "}
-                                            <span className="body-text-light price">
+                                            <span className="body-text-light price float-right">
                                                 €{project.amount}
                                             </span>
                                         </Card.Title>
                                         <Badge
-                                            variant="warning"
+                                            variant={
+                                                project.status === "completed"
+                                                    ? "success"
+                                                    : project.status === "draft"
+                                                    ? "warning"
+                                                    : "primary"
+                                            }
                                             className="h6 text-uppercase status"
                                         >
                                             {project.status}
