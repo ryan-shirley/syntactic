@@ -19,4 +19,12 @@
     .dGqwdB {
         border-top-color: $card-border-color;
     }
+
+    .status {
+        padding: $spacer/3 $spacer;
+    }
+
+    .due-date {
+        margin-bottom: 0;
+    }
 }
