@@ -47,7 +47,9 @@ class ProjectsListTable extends Component {
                 selector: "amount",
                 maxWidth: "150px",
                 sortable: true,
-                cell: row => <span className="body-text-light">{`€${row.amount}`}</span>
+                cell: row => (
+                    <span className="body-text-light">{`€${row.amount}`}</span>
+                )
             },
             {
                 name: "Status",
@@ -85,34 +87,47 @@ class ProjectsListTable extends Component {
                 )
             },
             {
-                cell: project =>
-                    !isWriter && (
-                        <DropdownButton
-                            id="project-dropdown-details"
-                            title={<FontAwesomeIcon icon={faEllipsisV} />}
-                            size="sm"
-                            variant="outline-secondary"
-                            alignRight
+                cell: project => (
+                    <DropdownButton
+                        id="project-dropdown-details"
+                        title={<FontAwesomeIcon icon={faEllipsisV} />}
+                        size="sm"
+                        variant="outline-secondary"
+                        alignRight
+                    >
+                        <Dropdown.Item
+                            as={Link}
+                            to={"/projects/" + project._id}
                         >
+                            View Project
+                        </Dropdown.Item>
+                        {!isWriter && project.status === "draft" && (
+                            <Dropdown.Item
+                                onClick={() =>
+                                    this.props.deleteProject(project._id)
+                                }
+                            >
+                                Delete Project
+                            </Dropdown.Item>
+                        )}
+                        {project.status !== "draft" && (
                             <Dropdown.Item
                                 as={Link}
-                                to={"/projects/" + project._id}
+                                to={`/projects/${project._id}/chat`}
                             >
-                                View Project
+                                Chat
                             </Dropdown.Item>
-                            {project.status === "draft" && (
-                                <Dropdown.Item
-                                    onClick={() =>
-                                        this.props.deleteProject(
-                                            project._id
-                                        )
-                                    }
-                                >
-                                    Delete Project
-                                </Dropdown.Item>
-                            )}
-                        </DropdownButton>
-                    ),
+                        )}
+                        {isWriter && (
+                            <Dropdown.Item
+                                as={Link}
+                                to={`/projects/${project._id}/editor`}
+                            >
+                                Text Editor
+                            </Dropdown.Item>
+                        )}
+                    </DropdownButton>
+                ),
                 maxWidth: "20px"
             }
         ]

@@ -7,18 +7,9 @@ import ProjectsListTable from "../../components/projects/ProjectsListTable"
 import ProjectsListGrid from "../../components/projects/ProjectsListGrid"
 
 class ProjectsListComponent extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            loading: props.loading,
-            isWriter: false
-        }
-    }
 
     render() {
-        let { loading, isWriter = false } = this.state
-        let { projects, display = 'table', history, deleteProject } = this.props
+        let { projects, display = 'table', history, deleteProject, isWriter = false, loading } = this.props
 
         if (!projects.length || loading) {
             return <DataLoading />

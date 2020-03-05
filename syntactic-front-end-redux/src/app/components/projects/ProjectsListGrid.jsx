@@ -128,14 +128,14 @@ class ProjectsListGrid extends Component {
                                                 </Card.Link>
                                             </li>
                                         )}
-                                        <li>
+                                        {project.status !== 'draft' && <li>
                                             <Card.Link
                                                 as={Link}
                                                 to={`/projects/${project._id}/chat`}
                                             >
                                                 Chat
                                             </Card.Link>
-                                        </li>
+                                        </li>}
                                         {!isWriter && (
                                             <li>
                                                 <DropdownButton
