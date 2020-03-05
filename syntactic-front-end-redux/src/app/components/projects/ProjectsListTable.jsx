@@ -43,6 +43,13 @@ class ProjectsListTable extends Component {
                 sortable: true
             },
             {
+                name: "Price",
+                selector: "amount",
+                maxWidth: "150px",
+                sortable: true,
+                cell: row => <span className="body-text-light">{`€${row.amount}`}</span>
+            },
+            {
                 name: "Status",
                 selector: "status",
                 maxWidth: "250px",

@@ -27,7 +27,7 @@ class ProjectsListComponent extends Component {
                 <section className="project-list">
                     {display === "table" ? (
                         <ProjectsListTable projects={projects} isWriter={isWriter} history={history} deleteProject={deleteProject} />
-                    ) : display === "grid" ? (
+                    ) : display === "box" ? (
                         <ProjectsListGrid projects={projects} isWriter={isWriter} deleteProject={deleteProject} />
                     ) : (
                         "Unknown Display Type"
