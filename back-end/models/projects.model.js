@@ -118,6 +118,8 @@ let ProjectsSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
+}, {
+    timestamps: true
 })
 
 // Export the model
