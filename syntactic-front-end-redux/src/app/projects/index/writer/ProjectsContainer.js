@@ -11,14 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThLarge, faBars } from "@fortawesome/free-solid-svg-icons"
 
 class ProjectsContainer extends Component {
-    constructor() {
-        super()
-
-        this.state = {
-            display: 'table'
-        }
-    }
-    
     render() {
         let { projects, requestProcessing, error } = this.props.projects
 
@@ -30,7 +22,7 @@ class ProjectsContainer extends Component {
                 loading={requestProcessing}
                 history={this.props.history}
                 isWriter={true}
-                display={this.state.display}
+                display={this.props.projects.projectDisplay}
             />
         )
 
@@ -46,19 +38,19 @@ class ProjectsContainer extends Component {
                             size="sm"
                             className={
                                 "mr-2" +
-                                (this.state.display === "table"
+                                (this.props.projects.projectDisplay === "table"
                                     ? " active"
                                     : "")
                             }
-                            onClick={() => this.setState({ display: "table" })}
+                            onClick={() => this.props.changeProjectLayout("table")}
                         >
                             <FontAwesomeIcon icon={faBars} />
                         </Button>
                         <Button
                             variant="secondary"
                             size="sm"
-                            className={this.state.display === "grid" ? " active" : ""}
-                            onClick={() => this.setState({ display: "grid" })}
+                            className={this.props.projects.projectDisplay === "grid" ? " active" : ""}
+                            onClick={() => this.props.changeProjectLayout("grid")}
                         >
                             <FontAwesomeIcon icon={faThLarge} />
                         </Button>
@@ -79,4 +71,11 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ProjectsContainer)
+
+const mapDispatchToProps = dispatch => {
+    return {
+        changeProjectLayout: newLayout => dispatch({ type: "SWITCH_PROJECT_LAYOUT", payload: newLayout })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer)

@@ -19,14 +19,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThLarge, faBars } from "@fortawesome/free-solid-svg-icons"
 
 class ProjectsContainer extends Component {
-    constructor() {
-        super()
-
-        this.state = {
-            display: "table"
-        }
-    }
-
     render() {
         let { projects, requestProcessing, error } = this.props.projects
 
@@ -48,11 +40,11 @@ class ProjectsContainer extends Component {
                             size="sm"
                             className={
                                 "mr-2" +
-                                (this.state.display === "table"
+                                (this.props.projects.projectDisplay === "table"
                                     ? " active"
                                     : "")
                             }
-                            onClick={() => this.setState({ display: "table" })}
+                            onClick={() => this.props.changeProjectLayout("table")}
                         >
                             <FontAwesomeIcon icon={faBars} />
                         </Button>
@@ -61,9 +53,9 @@ class ProjectsContainer extends Component {
                             size="sm"
                             className={
                                 "mr-5" +
-                                (this.state.display === "grid" ? " active" : "")
+                                (this.props.projects.projectDisplay === "grid" ? " active" : "")
                             }
-                            onClick={() => this.setState({ display: "grid" })}
+                            onClick={() => this.props.changeProjectLayout("grid")}
                         >
                             <FontAwesomeIcon icon={faThLarge} />
                         </Button>
@@ -79,7 +71,7 @@ class ProjectsContainer extends Component {
                     loading={this.props.projects.requestProcessing}
                     history={this.props.history}
                     deleteProject={this.props.deleteProject}
-                    display={this.state.display}
+                    display={this.props.projects.projectDisplay}
                 />
             </>
         )
@@ -94,7 +86,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        deleteProject: projectId => dispatch(deleteProject(projectId))
+        deleteProject: projectId => dispatch(deleteProject(projectId)),
+        changeProjectLayout: newLayout => dispatch({ type: "SWITCH_PROJECT_LAYOUT", payload: newLayout })
     }
 }
 

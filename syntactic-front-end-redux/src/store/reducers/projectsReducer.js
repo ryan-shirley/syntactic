@@ -5,7 +5,8 @@ const initState = {
     requestProcessing: false,
     isProcessingCompletion: false,
     justCreated: false,
-    error: ""
+    error: "",
+    projectDisplay: 'table'
 }
 
 const projectsReducer = (state = initState, action) => {
@@ -92,6 +93,12 @@ const projectsReducer = (state = initState, action) => {
                 ...state,
                 singleProject: {},
                 justCreated: false
+            }
+
+        case "SWITCH_PROJECT_LAYOUT":
+            return {
+                ...state,
+                projectDisplay: action.payload
             }
 
         case "PROJECTS_RECEIVED_SUCCESSFULLY":
