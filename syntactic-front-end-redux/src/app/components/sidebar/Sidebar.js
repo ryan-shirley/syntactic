@@ -9,7 +9,7 @@ import ContentSeekerLinks from "./ContentSeekerLinks"
 import GuestLinks from "./GuestLinks"
 
 const Sidebar = props => {
-    const { user } = props
+    const { user, isSidebarOpenMobile } = props
     let links
 
     if (user.role) {
@@ -21,7 +21,7 @@ const Sidebar = props => {
     }
 
     return (
-        <div id="sidebar-wrapper" className="bg-dark">
+        <div id="sidebar-wrapper" className={"bg-dark" + (isSidebarOpenMobile ? " openMobile" : "")}>
             <div className="sidebar-heading">
                 <Link to="/">Syntactic</Link>
             </div>
@@ -42,7 +42,8 @@ const Sidebar = props => {
 
 const mapStateToProps = state => {
     return {
-        user: state.auth.user
+        user: state.auth.user,
+        isSidebarOpenMobile: state.auth.isSidebarOpenMobile
     }
 }
 
