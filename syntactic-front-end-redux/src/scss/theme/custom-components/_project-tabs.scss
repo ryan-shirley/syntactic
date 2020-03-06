@@ -1,3 +1,11 @@
+.project-tabs-container {
+    margin-top: $spacer-lg;
+
+    @media (max-width: 767px) {
+        margin-top: $spacer;
+    }
+}
+
 .project-tabs {
     .btn {
         color: $headings-color;

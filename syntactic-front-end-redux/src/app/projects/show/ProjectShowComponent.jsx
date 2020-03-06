@@ -14,7 +14,7 @@ class ProjectShowComponent extends Component {
         return (
             <>
                 <ProjectHeadingComponent project={project} role={role} />
-                <Row className="justify-content-md-center mt-5">
+                <Row className="justify-content-md-center project-tabs-container">
                     <Col md={10} lg={8}>
                         <ProjectTabsComponent
                             role={role}

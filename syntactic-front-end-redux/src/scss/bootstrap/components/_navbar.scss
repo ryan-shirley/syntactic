@@ -8,6 +8,11 @@
     z-index: 100;
     background: $white;
 
+    // Mobile only
+    @media (max-width: 767px) {
+        margin-bottom: $spacer;
+    }
+
     button {
         background: none;
         border: none;
