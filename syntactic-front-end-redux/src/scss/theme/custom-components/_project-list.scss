@@ -34,6 +34,7 @@
                 display: inline-block;
                 padding: $spacer/2 $spacer;
                 border-left: 1px solid $hr-border-color;
+                min-height: 42px;
 
                 .dropdown-toggle::after {
                     display: none;
