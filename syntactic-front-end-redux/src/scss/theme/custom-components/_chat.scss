@@ -1,8 +1,12 @@
 .chat-list {
     width: 100%;
-    max-height: calc(100vh - 500px);
+    max-height: calc(100vh - 460px);
     overflow-y: scroll;
     -ms-overflow-style: none;
+
+    @media (max-width: 767px) {
+        max-height: calc(100vh - 355px);
+    }
 
     &::-webkit-scrollbar {
         display: none;
