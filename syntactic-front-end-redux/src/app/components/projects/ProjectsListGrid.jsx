@@ -22,7 +22,9 @@ class ProjectsListGrid extends Component {
         super(props)
 
         this.state = {
-            projects: props.projects,
+            projects: props.projects.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            ),
             sortBy: "created"
         }
     }

@@ -137,6 +137,7 @@ class ProjectsListTable extends Component {
                 columns={columns}
                 data={projects}
                 defaultSortField="createdAt"
+                defaultSortAsc={false}
                 keyField="_id"
                 pagination={true}
                 noHeader={true}
