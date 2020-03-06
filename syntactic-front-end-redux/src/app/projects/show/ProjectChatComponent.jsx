@@ -151,6 +151,11 @@ class ProjectChatComponent extends Component {
                                 {message.message}
                             </Message>
                         ))}
+                    
+                    {this.state.typing && (
+                        <span className="text-muted mb-4 d-block">{`${this.state.typing} is typing a message...`}</span>
+                    )}
+
                     <div
                         style={{ float: "left", clear: "both" }}
                         ref={el => {
@@ -158,10 +163,6 @@ class ProjectChatComponent extends Component {
                         }}
                     ></div>
                 </div>
-
-                {this.state.typing && (
-                    <span className="text-muted">{`${this.state.typing} is typing a message...`}</span>
-                )}
 
                 <Form
                     onSubmit={this.sendSocketIO}
