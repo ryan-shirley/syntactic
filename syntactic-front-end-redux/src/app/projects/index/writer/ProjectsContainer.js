@@ -29,10 +29,10 @@ class ProjectsContainer extends Component {
         return (
             <>
             <Row className="mb-3">
-                    <Col>
+                    <Col xs={8}>
                         <h1>All Projects</h1>
                     </Col>
-                    <Col className="text-right">
+                    <Col xs={4} className="text-right">
                         <Button
                             variant="secondary"
                             size="sm"
