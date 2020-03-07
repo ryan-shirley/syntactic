@@ -17,6 +17,10 @@ class ProjectsListComponent extends Component {
             loading
         } = this.props
 
+        if(loading) {
+            return <DataLoading />
+        }
+
         return (
             <section className="project-list">
                 {display === "table" ? (

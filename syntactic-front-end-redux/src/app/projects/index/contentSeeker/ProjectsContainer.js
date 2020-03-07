@@ -25,15 +25,15 @@ class ProjectsContainer extends Component {
     componentWillUnmount() {
         this.props.clearProjects()
     }
-    
+
     render() {
         let { projects, requestProcessing, error } = this.props.projects
-        let requestError
+        let status
 
         if (requestProcessing && !error) {
-            return <DataLoading />
+            status = <DataLoading />
         } else if (!requestProcessing && error && error.code !== 204) {
-            requestError = <Error error={error} />
+            status = <Error error={error} />
         }
 
         return (
@@ -74,7 +74,7 @@ class ProjectsContainer extends Component {
                     </Col>
                 </Row>
 
-                {requestError}
+                {status}
 
                 <ProjectsListContainer
                     projects={projects}
