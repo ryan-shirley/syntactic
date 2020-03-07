@@ -6,19 +6,23 @@ import { Card, Badge } from "react-bootstrap"
 
 class LevelsComponent extends Component {
     render() {
+        let sortedLevels = this.props.levels.sort(
+            (a, b) => new Date(b.level) - new Date(a.level)
+        )
+
         let levels = (
             <ul
                 className={
                     "card-list " +
-                    (this.props.levels.length === 1
+                    (sortedLevels.length === 1
                         ? "single"
-                        : this.props.levels.length === 2
+                        : sortedLevels.length === 2
                         ? "double"
                         : "multi")
                 }
             >
                 {" "}
-                {this.props.levels.map(level => (
+                {sortedLevels.map(level => (
                     <li className="item" key={level.category}>
                         <Card body>
                             {level.category}{" "}
