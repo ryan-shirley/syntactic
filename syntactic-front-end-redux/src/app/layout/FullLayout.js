@@ -23,12 +23,12 @@ const FullLayout = ({ component, path, children, isExact }) => {
         rootChild = rootChild && isExact && <Route path="/" component={rootChild.page} />
 
     return (
-        <div className="container">
+        <>
             <Route path={path} component={component} />
 
             {rootChild}
             {childRoutes}
-        </div>
+        </>
     )
 }
 
