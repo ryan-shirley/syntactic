@@ -9,15 +9,15 @@ import ContentSeekerLinks from "./ContentSeekerLinks"
 import GuestLinks from "./GuestLinks"
 
 const Sidebar = props => {
-    const { user, isSidebarOpenMobile } = props
+    const { user, isSidebarOpenMobile, toggleSidebar } = props
     let links
 
     if (user.role) {
         let userRole = user.role[0].name
 
-        links = userRole === "writer" ? <WriterLinks /> : <ContentSeekerLinks />
+        links = userRole === "writer" ? <WriterLinks toggleSidebar={toggleSidebar} /> : <ContentSeekerLinks toggleSidebar={toggleSidebar} />
     } else {
-        links = <GuestLinks />
+        links = <GuestLinks toggleSidebar={toggleSidebar} />
     }
 
     return (
@@ -47,4 +47,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Sidebar)
+const mapDispatchToProps = dispatch => {
+    return {
+        toggleSidebar: () => dispatch({ type: "TOGGLE_MOBILE_SIDEBAR" })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
