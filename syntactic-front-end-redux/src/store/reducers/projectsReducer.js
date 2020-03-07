@@ -95,6 +95,12 @@ const projectsReducer = (state = initState, action) => {
                 justCreated: false
             }
 
+        case "CLEAR_PROJECTS_LIST":
+            return {
+                ...state,
+                projects: []
+            }
+
         case "SWITCH_PROJECT_LAYOUT":
             return {
                 ...state,

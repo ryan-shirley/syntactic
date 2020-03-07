@@ -12,6 +12,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThLarge, faBars } from "@fortawesome/free-solid-svg-icons"
 
 class ProjectsContainer extends Component {
+    /**
+     * componentWillMount() Clear projects state
+     */
+    componentWillUnmount() {
+        this.props.clearProjects()
+    }
+
     render() {
         let { projects, requestProcessing, error } = this.props.projects
 
@@ -75,7 +82,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        changeProjectLayout: newLayout => dispatch({ type: "SWITCH_PROJECT_LAYOUT", payload: newLayout })
+        changeProjectLayout: newLayout => dispatch({ type: "SWITCH_PROJECT_LAYOUT", payload: newLayout }),
+        clearProjects: () => dispatch({ type: "CLEAR_PROJECTS_LIST" })
     }
 }
 
