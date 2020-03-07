@@ -23,7 +23,7 @@ const Sidebar = props => {
     return (
         <div id="sidebar-wrapper" className={"bg-dark" + (isSidebarOpenMobile ? " openMobile" : "")}>
             <div className="sidebar-heading">
-                <Link to="/">Syntactic</Link>
+                <Link to="/" onClick={toggleSidebar}>Syntactic</Link>
             </div>
             {links}
             <div className="sidebar-footer">
