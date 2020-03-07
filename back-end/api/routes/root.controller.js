@@ -111,7 +111,9 @@ router.route("/dashboard").get(checkIfAuthenticated, async (req, res) => {
             invitationPending: projects.filter(
                 p => p.status === "invitation pending"
             ).length,
-            billing: payments.reduce((acc, p) => acc + p.amount, 0)
+            billing: payments
+                .filter(p => p.status === "paid")
+                .reduce((acc, p) => acc + p.amount, 0)
         },
         projects: {
             invitationPending: projects.filter(
