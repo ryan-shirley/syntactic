@@ -115,8 +115,13 @@ class ProjectsListGrid extends Component {
                                             variant={
                                                 project.status === "completed"
                                                     ? "success"
-                                                    : project.status === "draft"
+                                                    : project.status === "draft" ||
+                                                    project.status ===
+                                                          "invitation pending"
                                                     ? "warning"
+                                                    : project.status ===
+                                                      "invitation rejected"
+                                                    ? "danger"
                                                     : "primary"
                                             }
                                             className="h6 text-uppercase status"

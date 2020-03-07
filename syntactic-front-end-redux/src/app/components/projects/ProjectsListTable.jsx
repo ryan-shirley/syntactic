@@ -75,8 +75,11 @@ class ProjectsListTable extends Component {
                         variant={
                             row.status === "completed"
                                 ? "success"
-                                : row.status === "draft"
+                                : row.status === "draft" ||
+                                  row.status === "invitation pending"
                                 ? "warning"
+                                : row.status === "invitation rejected"
+                                ? "danger"
                                 : "primary"
                         }
                         className="h6 mb-0 text-uppercase status"
