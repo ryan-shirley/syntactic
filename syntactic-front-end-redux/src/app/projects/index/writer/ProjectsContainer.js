@@ -5,6 +5,7 @@ import { Alert } from "react-bootstrap"
 // Components
 import ProjectsListContainer from "../ProjectsListComponent"
 import { Row, Col, Button } from "react-bootstrap"
+import DataLoading from "../../../components/DataLoading"
 
 // Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -15,7 +16,7 @@ class ProjectsContainer extends Component {
         let { projects, requestProcessing, error } = this.props.projects
 
         let projectList = requestProcessing ? (
-            "Loading projects..."
+            <DataLoading />
         ) : (
             <ProjectsListContainer
                 projects={projects}
