@@ -21,11 +21,12 @@ import { faThLarge, faBars } from "@fortawesome/free-solid-svg-icons"
 class ProjectsContainer extends Component {
     render() {
         let { projects, requestProcessing, error } = this.props.projects
+        let requestError
 
-        if (!projects.length && requestProcessing && !error) {
+        if (requestProcessing && !error) {
             return <DataLoading />
-        } else if (!requestProcessing && error) {
-            return <Error error={error} />
+        } else if (!requestProcessing && error && error.code !== 204) {
+            requestError = <Error error={error} />
         }
 
         return (
@@ -65,6 +66,8 @@ class ProjectsContainer extends Component {
                         </Button>
                     </Col>
                 </Row>
+
+                {requestError}
 
                 <ProjectsListContainer
                     projects={projects}

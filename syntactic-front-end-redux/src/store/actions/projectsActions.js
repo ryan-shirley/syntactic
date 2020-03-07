@@ -53,8 +53,8 @@ export const getAllProjects = () => {
                         headers: { authorization: `Bearer ${token}` }
                     })
                     .then(res => {
-                        if(res.data.code === 204) {
-                            dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: { message: res.data.message } })
+                        if(res.status === 204) {
+                            dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: { code: 204, message: 'No projects' } })
                         }
                         else {
                             dispatch({ type: "PROJECTS_RECEIVED_SUCCESSFULLY", payload: res.data })
