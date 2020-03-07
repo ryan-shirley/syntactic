@@ -5,8 +5,8 @@ const Error = props => {
     let { message, code } = props.error
 
     return (
-        <Alert variant="danger" dismissible>
-            <Alert.Heading>Code: {code}</Alert.Heading>
+        <Alert variant="danger">
+            <Alert.Heading className="text-reset">Code: {code}</Alert.Heading>
             <p>{message}</p>
         </Alert>
     )
