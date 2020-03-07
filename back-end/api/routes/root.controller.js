@@ -1,10 +1,14 @@
 // Express
 const router = require("express").Router()
 
+// Middlewares
+import { checkIfAuthenticated } from "../middlewares/auth-middleware"
+
 // Services
 const UserService = require("../../services/user.service")
 const EmailService = require("../../services/email.service")
 const PaymentService = require("../../services/payment.service")
+const ProjectService = require("../../services/project.service")
 
 // Stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
@@ -62,7 +66,7 @@ router
                 await PaymentService.markPayed(paymentID)
 
                 // Send email
-                
+
                 break
             case "payment_intent.payment_failed":
                 const message =
@@ -74,5 +78,55 @@ router
 
         res.status(200).json({ received: true })
     })
+
+/**
+ * route('/dashboard').get() Get dashboard information
+ */
+router.route("/dashboard").get(checkIfAuthenticated, async (req, res) => {
+    const user = req.user
+
+    // Call to service layer
+    const projects = await ProjectService.getAllProjects(user).catch(error => {
+        return res.status(400).json({
+            code: 400,
+            message: error.message
+        })
+    })
+
+    const payments = await PaymentService.getAll(user._id).catch(error => {
+        return res.status(400).json({
+            code: 400,
+            message: error.message
+        })
+    })
+
+    let weekFromNow = new Date()
+    weekFromNow.setDate(weekFromNow.getDate() + 3 * 7)
+
+    let data = {
+        stats: {
+            activeProjects: projects.filter(p => p.status === "writing").length,
+            completedProjects: projects.filter(p => p.status === "completed")
+                .length,
+            invitationPending: projects.filter(
+                p => p.status === "invitation pending"
+            ).length,
+            billing: payments.reduce((acc, p) => acc + p.amount, 0)
+        },
+        projects: {
+            invitationPending: projects.filter(
+                p => p.status === "invitation pending"
+            ),
+            dueSoon: projects
+                .filter(
+                    p => p.end_date < weekFromNow && p.status !== "completed"
+                )
+                .sort((a, b) => new Date(a.end_date) - new Date(b.end_date))
+        }
+    }
+
+    // Return data
+    return res.status(200).json(data)
+})
 
 module.exports = router

@@ -2,6 +2,7 @@
     border: 1px solid $card-border-color;
     box-shadow: 1px 2px 2px 0px rgba(23, 43, 77, 0.05);
     border-radius: $card-border-radius;
+    margin-bottom: $spacer-lg;
 
     .rdt_TableHeadRow {
         background-color: lighten($body-bg, 1.5%);
