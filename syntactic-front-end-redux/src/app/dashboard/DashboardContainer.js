@@ -11,6 +11,7 @@ import API from "../../utils/API"
 import StatsList from "../components/StatsList"
 import Error from "../components/Error"
 import ProjectsListTable from "../components/projects/ProjectsListTable"
+import DataLoading from "../components/DataLoading"
 
 // Fonts
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -32,13 +33,16 @@ class DashboardContainer extends Component {
                 invitationPending: [],
                 dueSoon: []
             },
-            error: {}
+            error: {},
+            loading: false
         }
     }
     /**
      * componentDidMount() Load data
      */
     componentDidMount() {
+        this.setState({ loading: true })
+
         API.get("/dashboard")
             .then(data => {
                 let role = this.props.role
@@ -108,13 +112,17 @@ class DashboardContainer extends Component {
                           ]
 
                 // Update state
-                this.setState({ stats, projects: data.projects })
+                this.setState({ stats, projects: data.projects, loading: false })
             })
             .catch(error => this.setState({ error }))
     }
 
     render() {
-        let { stats, error, projects } = this.state
+        let { stats, error, projects, loading } = this.state
+
+        if(loading) {
+            return <DataLoading />
+        }
 
         return (
             <section className="dashboard">
