@@ -92,13 +92,15 @@ const projectsReducer = (state = initState, action) => {
             return {
                 ...state,
                 singleProject: {},
-                justCreated: false
+                justCreated: false,
+                error: ""
             }
 
         case "CLEAR_PROJECTS_LIST":
             return {
                 ...state,
-                projects: []
+                projects: [],
+                error: ""
             }
 
         case "SWITCH_PROJECT_LAYOUT":
