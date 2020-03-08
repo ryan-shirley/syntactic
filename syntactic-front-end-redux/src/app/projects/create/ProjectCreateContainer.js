@@ -152,6 +152,7 @@ class ProjectCreateContainer extends Component {
                     project={this.props.projects.singleProject}
                     onClick={this.setCurrentView}
                 />
+
                 {createComponent}
             </>
         )

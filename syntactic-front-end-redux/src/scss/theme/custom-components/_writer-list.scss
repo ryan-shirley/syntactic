@@ -1,0 +1,34 @@
+.writer-list {
+    .writer {
+        text-align: center;
+        transition: all 0.25s ease-out;
+
+        &:hover {
+            box-shadow: 1px 2px 2px 0px rgba(23,43,77,0.2);
+            transform: scale(1.015);
+        }
+    }
+}
+
+.writer {
+    .profile {
+        margin-bottom: $spacer;
+    }
+
+    .name {
+        color: $headings-color;
+    }
+
+    .location {
+        color: $body-color-light;
+        font-size: 12px;
+        display: block;
+    }
+}
+
+.writer-popover {
+    .badge {
+        display: table;
+        margin-bottom: $spacer/2;
+    }
+}
