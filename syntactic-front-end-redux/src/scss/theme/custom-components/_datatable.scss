@@ -28,9 +28,10 @@
         padding: $spacer/3 $spacer;
     }
 
-
     .hirIJV:hover {
         background-color: $body-bg;
+        border-color: $card-border-color !important;
+        outline-color: $card-border-color !important;
     }
 
     .due-date {
