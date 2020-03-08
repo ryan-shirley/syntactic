@@ -2,7 +2,7 @@
 import React from "react"
 
 // Components
-import { Row, Col, Card } from "react-bootstrap"
+import { Row, Col } from "react-bootstrap"
 import Stat from "./Stat"
 
 const StatsList = props => {
