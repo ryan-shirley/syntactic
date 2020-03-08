@@ -144,6 +144,7 @@ class ProjectsListTable extends Component {
                 keyField="_id"
                 pagination={true}
                 noHeader={true}
+                highlightOnHover={true}
             />
         )
     }
