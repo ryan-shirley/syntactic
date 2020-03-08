@@ -51,7 +51,7 @@ export default class UserInvite extends Component {
         )
 
         return (
-            <Col sm={3} key={writer.user._id}>
+            <Col sm={3}>
                 <OverlayTrigger
                     trigger="hover"
                     placement="right"
