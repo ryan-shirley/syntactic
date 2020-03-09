@@ -1,0 +1,14 @@
+.chart {
+    height: 500px;
+    margin-bottom: $spacer-lg;
+
+    &.billing {
+        g line {
+            stroke: $body-bg-dark;
+        }
+
+        text {
+            fill: $body-color !important;
+        }
+    }
+}

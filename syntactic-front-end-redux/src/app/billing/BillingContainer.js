@@ -2,7 +2,7 @@
 import { connect } from "react-redux"
 
 // Components
-import BillingListComponent from "./BillingListComponent"
+import BillingComponent from "./BillingComponent"
 
 // Actions
 import { getAllPayments } from "../../store/actions/billingActions"
@@ -22,4 +22,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 // Export
-export default connect(mapStateToProps, mapDispatchToProps)(BillingListComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(BillingComponent)
