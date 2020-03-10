@@ -1,19 +1,31 @@
 #sidebar-wrapper {
-    min-height: 100vh;
+    height: 100vh;
     transition: margin 0.25s ease-out;
-    position: absolute;
     z-index: 100;
-    left: 0;
+    left: -15rem;
     top: 0;
-    display: none;
+    margin-left: -15rem;
+    position: sticky;
 
     @media (min-width: 768px) {
         position: sticky;
         display: table;
+        margin-left: 0;
+
+        .sidebar-footer {
+            left: 0;
+            margin-left: 0;
+        }
     }
 
     &.openMobile {
         display: block;
+        margin-left: 0;
+
+        .sidebar-footer {
+            left: 0;
+            margin-left: 0;
+        }
     }
 
     .sidebar-heading {
@@ -32,13 +44,15 @@
     }
 
     .sidebar-footer {
+        transition: margin 0.25s ease-out;
         color: $dark-text;
         text-align: center;
         display: grid;
-        position: fixed;
+        position: absolute;
         bottom: 20px;
         right: calc(100% - 15rem);
         left: 0;
+        margin-left: -22rem;
         font-size: 90%;
 
         a {

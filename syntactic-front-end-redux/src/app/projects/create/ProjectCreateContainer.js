@@ -28,7 +28,7 @@ class ProjectCreateContainer extends Component {
         super(props)
 
         this.state = {
-            currentView: "",
+            currentView: "overview",
             useProjectState: true
         }
 
@@ -146,12 +146,12 @@ class ProjectCreateContainer extends Component {
 
         return (
             <>
-                <h1 className="text-center">Create Project</h1>
                 <ProgressIndicatorComponent
                     active={currentView}
                     project={this.props.projects.singleProject}
                     onClick={this.setCurrentView}
                 />
+
                 {createComponent}
             </>
         )

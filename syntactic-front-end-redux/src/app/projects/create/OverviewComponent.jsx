@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Alert, Form, Row, Col, Button, Spinner } from "react-bootstrap"
+import { Alert, Form, Row, Col, Button, Spinner, Card } from "react-bootstrap"
 import { Redirect } from "react-router-dom"
 
 class OverviewComponent extends Component {
@@ -41,78 +41,117 @@ class OverviewComponent extends Component {
         }
 
         return (
-            <Row className="justify-content-md-center mt-5">
-                <Col sm={4}>
-                    <Form onSubmit={this.onSubmit} className="mt-3">
-                        {error && (
-                            <Alert variant="danger">{error.message}</Alert>
-                        )}
+            <Row className="justify-content-md-center">
+                <Col sm={6}>
+                    <Card body>
+                        <h2>Create Project</h2>
+                        <hr />
+                        <p>Let’s get your new project started today! Following the next few steps we will match you with some of the best and most relevant writers for you’re project.</p>
 
-                        <Form.Group controlId="formProjectTitle">
-                            <Form.Label>Title</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="title"
-                                value={this.state.title}
-                                onChange={this.handleInputChange}
-                                required
-                            />
-                            {error && error.fields && error.fields.title && (
-                                <span className="badge badge-pill badge-danger">
-                                    {error.fields.title.message}
-                                </span>
+                        <Form onSubmit={this.onSubmit} className="mt-5">
+                            {error && (
+                                <Alert variant="danger">{error.message}</Alert>
                             )}
-                        </Form.Group>
 
-                        <Form.Group controlId="formProjectAmount">
-                            <Form.Label>Amount</Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="amount"
-                                value={this.state.amount}
-                                onChange={this.handleInputChange}
-                                required
-                            />
-                            {error && error.fields && error.fields.amount && (
-                                <span className="badge badge-pill badge-danger">
-                                    {error.fields.amount.message}
-                                </span>
-                            )}
-                        </Form.Group>
+                            <Form.Group controlId="formProjectTitle">
+                                <Form.Label>Title</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="title"
+                                    value={this.state.title}
+                                    onChange={this.handleInputChange}
+                                    required
+                                />
+                                <Form.Text className="text-muted">
+                                    Make this short but still descriptive so
+                                    everyone will know what this project is
+                                    about at a glance.
+                                </Form.Text>
 
-                        <Form.Group controlId="formProjectEndDate">
-                            <Form.Label>End Date</Form.Label>
-                            <Form.Control
-                                type="date"
-                                name="end_date"
-                                value={this.state.end_date}
-                                onChange={this.handleInputChange}
-                                required
-                            />
-                            {error && error.fields && error.fields.end_date && (
-                                <span className="badge badge-pill badge-danger">
-                                    {error.fields.end_date.message}
-                                </span>
-                            )}
-                        </Form.Group>
+                                {error &&
+                                    error.fields &&
+                                    error.fields.title && (
+                                        <span className="badge badge-pill badge-danger">
+                                            {error.fields.title.message}
+                                        </span>
+                                    )}
+                            </Form.Group>
 
-                        <Button type="submit" disabled={requestProcessing}>
-                            {requestProcessing
-                                ? 
+                            <Form.Row>
+                                <Col>
+                                    <Form.Group controlId="formProjectAmount">
+                                        <Form.Label>Amount</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            name="amount"
+                                            value={this.state.amount}
+                                            onChange={this.handleInputChange}
+                                            required
+                                        />
+                                        <Form.Text className="text-muted">
+                                            How much you are willing to pay.
+                                        </Form.Text>
+
+                                        {error &&
+                                            error.fields &&
+                                            error.fields.amount && (
+                                                <span className="badge badge-pill badge-danger">
+                                                    {
+                                                        error.fields.amount
+                                                            .message
+                                                    }
+                                                </span>
+                                            )}
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId="formProjectEndDate">
+                                        <Form.Label>Due Date</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            name="end_date"
+                                            value={this.state.end_date}
+                                            onChange={this.handleInputChange}
+                                            required
+                                        />
+                                        <Form.Text className="text-muted">
+                                            When you need this project completed
+                                            by
+                                        </Form.Text>
+
+                                        {error &&
+                                            error.fields &&
+                                            error.fields.end_date && (
+                                                <span className="badge badge-pill badge-danger">
+                                                    {
+                                                        error.fields.end_date
+                                                            .message
+                                                    }
+                                                </span>
+                                            )}
+                                    </Form.Group>
+                                </Col>
+                            </Form.Row>
+
+                            <Button type="submit" disabled={requestProcessing}>
+                                {requestProcessing ? (
                                     <>
-                                    <Spinner
-                                        as="span"
-                                        animation="grow"
-                                        size="sm"
-                                        role="status"
-                                        aria-hidden="true"
-                                        className="mr-3"
-                                    />
-                                    Processing...
+                                        <Spinner
+                                            as="span"
+                                            animation="grow"
+                                            size="sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                            className="mr-3"
+                                        />
+                                        Processing...
                                     </>
-                                : "Submit"}
-                        </Button>
-                    </Form>
+                                ) : (
+                                    "Create"
+                                )}
+                            </Button>
+                        </Form>
+                    </Card>
                 </Col>
             </Row>
         )

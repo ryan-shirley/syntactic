@@ -65,7 +65,7 @@ exports.getWriters = async categoriesMatched => {
                     name: cat_level1
                 }).populate({
                     path: "users.user",
-                    select: 'first_name last_name levels profile'
+                    select: "first_name last_name levels profile"
                 })
 
                 if (level1_categories === null) {
@@ -85,7 +85,7 @@ exports.getWriters = async categoriesMatched => {
                         .equals(level1_categories._id)
                         .populate({
                             path: "users.user",
-                            select: 'first_name last_name levels profile'
+                            select: "first_name last_name levels profile"
                         })
 
                     for (let i = 0; i < subCategories.length; i++) {
@@ -105,7 +105,7 @@ exports.getWriters = async categoriesMatched => {
                             .equals(category._id)
                             .populate({
                                 path: "users.user",
-                                select: 'first_name last_name levels profile'
+                                select: "first_name last_name levels profile"
                             })
 
                         subLevel2Categories.forEach(cat => {
@@ -129,7 +129,7 @@ exports.getWriters = async categoriesMatched => {
                     name: cat_level2
                 }).populate({
                     path: "users.user",
-                    select: 'first_name last_name levels profile'
+                    select: "first_name last_name levels profile"
                 })
 
                 if (level2_categories === null) {
@@ -149,7 +149,7 @@ exports.getWriters = async categoriesMatched => {
                         .equals(level2_categories._id)
                         .populate({
                             path: "users.user",
-                            select: 'first_name last_name levels profile'
+                            select: "first_name last_name levels profile"
                         })
 
                     for (let i = 0; i < subCategories.length; i++) {
@@ -170,7 +170,7 @@ exports.getWriters = async categoriesMatched => {
                         .equals(level2_categories._parent_category_id)
                         .populate({
                             path: "users.user",
-                            select: 'first_name last_name levels profile'
+                            select: "first_name last_name levels profile"
                         })
 
                     results.others.categories.push(parentCategory.name)
@@ -191,7 +191,7 @@ exports.getWriters = async categoriesMatched => {
                         .equals(parentCategory._id)
                         .populate({
                             path: "users.user",
-                            select: 'first_name last_name levels profile'
+                            select: "first_name last_name levels profile"
                         })
 
                     for (let i = 0; i < subCategories.length; i++) {
@@ -211,7 +211,7 @@ exports.getWriters = async categoriesMatched => {
                             .equals(category._id)
                             .populate({
                                 path: "users.user",
-                                select: 'first_name last_name levels profile'
+                                select: "first_name last_name levels profile"
                             })
 
                         subLevel2Categories.forEach(cat => {
@@ -238,7 +238,7 @@ exports.getWriters = async categoriesMatched => {
                     name: cat_level3
                 }).populate({
                     path: "users.user",
-                    select: 'first_name last_name levels profile'
+                    select: "first_name last_name levels profile"
                 })
 
                 if (level3_categories === null) {
@@ -258,7 +258,7 @@ exports.getWriters = async categoriesMatched => {
                         .equals(level3_categories._parent_category_id)
                         .populate({
                             path: "users.user",
-                            select: 'first_name last_name levels profile'
+                            select: "first_name last_name levels profile"
                         })
                     let secondLevelCatId = parentCategory._id
 
@@ -280,7 +280,7 @@ exports.getWriters = async categoriesMatched => {
                         .equals(parentCategory._id)
                         .populate({
                             path: "users.user",
-                            select: 'first_name last_name levels profile'
+                            select: "first_name last_name levels profile"
                         })
 
                     for (let i = 0; i < subCategories.length; i++) {
@@ -301,7 +301,7 @@ exports.getWriters = async categoriesMatched => {
                         .equals(parentCategory._parent_category_id)
                         .populate({
                             path: "users.user",
-                            select: 'first_name last_name levels profile'
+                            select: "first_name last_name levels profile"
                         })
 
                     results.others.categories.push(parentCategory.name)
@@ -322,7 +322,7 @@ exports.getWriters = async categoriesMatched => {
                         .equals(parentCategory._id)
                         .populate({
                             path: "users.user",
-                            select: 'first_name last_name levels profile'
+                            select: "first_name last_name levels profile"
                         })
 
                     for (let i = 0; i < subCategories.length; i++) {
@@ -342,7 +342,7 @@ exports.getWriters = async categoriesMatched => {
                             .equals(category._id)
                             .populate({
                                 path: "users.user",
-                                select: 'first_name last_name levels profile'
+                                select: "first_name last_name levels profile"
                             })
 
                         subLevel2Categories.forEach(cat => {
@@ -361,6 +361,45 @@ exports.getWriters = async categoriesMatched => {
             default:
         }
     }
+
+    // Remove Duplicates in each list
+    results.recommended.writers = removeDuplicates(results.recommended.writers)
+    results.relevant.writers = removeDuplicates(results.relevant.writers)
+    results.others.writers = removeDuplicates(results.others.writers)
+
+    // Filter writer lists so writer only in once and in most relevant list
+    results.relevant.writers = results.relevant.writers.filter(
+        (value, index, arr) => {
+            for (let i = 0; i < results.recommended.writers.length; i++) {
+                let writer = results.recommended.writers[i]
+
+                if (writer.user._id.toString() === value.user._id.toString()) {
+                    return false
+                }
+            }
+
+            return true
+        }
+    )
+
+    // Array of recommended and relevant writers
+    let usersRecRel = results.relevant.writers.concat(
+        results.recommended.writers
+    )
+
+    results.others.writers = results.relevant.writers.filter(
+        (value, index, arr) => {
+            for (let i = 0; i < usersRecRel.length; i++) {
+                let writer = usersRecRel[i]
+
+                if (writer.user._id.toString() === value.user._id.toString()) {
+                    return false
+                }
+            }
+
+            return true
+        }
+    )
 
     return results
 }
@@ -478,6 +517,7 @@ exports.addCategoriesToWriter = async (cats, userID) => {
 
     return
 }
+
 /**
  * seperateCategories() Takes category string and seperates it out
  */
@@ -494,4 +534,20 @@ seperateCategories = categories => {
             confidence
         }
     })
+}
+
+/**
+ * removeDuplicates() Removes duplicate writers from an array
+ */
+removeDuplicates = ary => {
+    return ary.reduce((acc, current) => {
+        const x = acc.find(
+            item => item.user._id.toString() === current.user._id.toString()
+        )
+        if (!x) {
+            return acc.concat([current])
+        } else {
+            return acc
+        }
+    }, [])
 }

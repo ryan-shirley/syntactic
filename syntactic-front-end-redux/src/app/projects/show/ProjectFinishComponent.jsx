@@ -67,8 +67,8 @@ class ProjectFinishComponent extends Component {
         let { project, role, isProcessingCompletion } = this.props
         let { error } = this.state
 
-        // Restrict for Content Seeker only
-        if (role !== "content seeker") {
+        // Restrict for Content Seeker only or if completed
+        if (role !== "content seeker" || this.props.project.status === 'completed') {
             return <Redirect to={`/projects/${project._id}`} />
         }
 

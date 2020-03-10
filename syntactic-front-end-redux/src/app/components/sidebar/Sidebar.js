@@ -9,21 +9,21 @@ import ContentSeekerLinks from "./ContentSeekerLinks"
 import GuestLinks from "./GuestLinks"
 
 const Sidebar = props => {
-    const { user } = props
+    const { user, isSidebarOpenMobile, toggleSidebar } = props
     let links
 
     if (user.role) {
         let userRole = user.role[0].name
 
-        links = userRole === "writer" ? <WriterLinks /> : <ContentSeekerLinks />
+        links = userRole === "writer" ? <WriterLinks toggleSidebar={toggleSidebar} /> : <ContentSeekerLinks toggleSidebar={toggleSidebar} />
     } else {
-        links = <GuestLinks />
+        links = <GuestLinks toggleSidebar={toggleSidebar} />
     }
 
     return (
-        <div id="sidebar-wrapper" className="bg-dark">
+        <div id="sidebar-wrapper" className={"bg-dark" + (isSidebarOpenMobile ? " openMobile" : "")}>
             <div className="sidebar-heading">
-                <Link to="/">Syntactic</Link>
+                <Link to="/" onClick={toggleSidebar}>Syntactic</Link>
             </div>
             {links}
             <div className="sidebar-footer">
@@ -42,8 +42,15 @@ const Sidebar = props => {
 
 const mapStateToProps = state => {
     return {
-        user: state.auth.user
+        user: state.auth.user,
+        isSidebarOpenMobile: state.auth.isSidebarOpenMobile
     }
 }
 
-export default connect(mapStateToProps)(Sidebar)
+const mapDispatchToProps = dispatch => {
+    return {
+        toggleSidebar: () => dispatch({ type: "TOGGLE_MOBILE_SIDEBAR" })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

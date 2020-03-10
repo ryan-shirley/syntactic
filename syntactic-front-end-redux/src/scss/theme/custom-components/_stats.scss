@@ -1,0 +1,49 @@
+.stats {
+    margin-bottom: $spacer-lg;
+
+    .stat {
+        margin-bottom: $spacer;
+
+        .icon {
+            font-size: 24px;
+            background-color: lighten($primary, 30%);
+            padding: $spacer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 66px;
+            height: 66px;
+            border-radius: $card-border-radius;
+
+            &.icon-primary {
+                color: $primary;
+            }
+
+            &.icon-warning {
+                color: $warning;
+                background-color: lighten($warning, 26%);
+            }
+
+            &.icon-success {
+                color: $success;
+                background-color: lighten($success, 54.5%);
+            }
+
+            &.icon-orange {
+                color: $orange;
+                background-color: lighten($orange, 32.5%);
+            }
+        }
+
+        .details {
+            text-transform: uppercase;
+
+            .number {
+                display: block;
+                font-weight: bold;
+                font-size: 24px;
+                color: $headings-color;
+            }
+        }
+    }
+}

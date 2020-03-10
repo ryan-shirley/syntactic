@@ -14,18 +14,20 @@ import {
 /**
  * GuestLinks() Sidebar links for a guests
  */
-const GuestLinks = () => {
+const GuestLinks = props => {
+    let { toggleSidebar } = props
+
     return (
         <Nav className="flex-column">
-            <Nav.Link as={NavLink} to="/login">
+            <Nav.Link as={NavLink} to="/login" onClick={toggleSidebar}>
                 <FontAwesomeIcon icon={faSignInAlt} />
                 Log in
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/register/writer">
+            <Nav.Link as={NavLink} to="/register/writer" onClick={toggleSidebar}>
                 <FontAwesomeIcon icon={faPenFancy} />
                 Register Writer
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/register/content-seeker">
+            <Nav.Link as={NavLink} to="/register/content-seeker" onClick={toggleSidebar}>
                 <FontAwesomeIcon icon={faAddressBook} />
                 Register Content Seeker
             </Nav.Link>

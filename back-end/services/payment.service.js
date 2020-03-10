@@ -23,14 +23,20 @@ exports.createPaymentIntent = async (paymentID, amount) => {
 exports.getAll = async id => {
     return await Payment.find({
         $or: [{ payer_id: id }, { receiver_id: id }]
-    }).populate('project_id', 'title end_date')
+    })
+        .populate("project_id", "title end_date")
+        .populate("payer_id receiver_id", "first_name last_name")
+        .sort({ createdAt: "asc" })
 }
 
 /**
  * getSingle() Return payment
  */
 exports.getSingle = async id => {
-    return await Payment.findOne({ _id: id }).populate('project_id', 'title end_date')
+    return await Payment.findOne({ _id: id }).populate(
+        "project_id",
+        "title end_date"
+    )
 }
 
 /**
@@ -39,7 +45,7 @@ exports.getSingle = async id => {
 exports.markPayed = async id => {
     let payment = await Payment.findOne({ _id: id })
 
-    payment.status = 'paid'
+    payment.status = "paid"
 
     payment.save()
 
@@ -49,7 +55,7 @@ exports.markPayed = async id => {
 /**
  * create() Create new payment
  */
-exports.create = async (paymentDTO) => {
+exports.create = async paymentDTO => {
     try {
         // Create payment in mongo
         const payment = new Payment(paymentDTO)

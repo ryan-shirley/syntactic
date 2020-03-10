@@ -122,7 +122,7 @@ class ProjectTextEditorComponent extends Component {
     }
 
     render() {
-        if (this.props.role === "content seeker" && this.props.project._id) {
+        if ((this.props.role === "content seeker" && this.props.project._id) || this.props.project.status === 'completed') {
             return <Redirect push to={`/projects/${this.props.project._id}`} />
         }
 

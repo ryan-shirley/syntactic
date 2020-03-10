@@ -21,15 +21,21 @@ class ProjectHeadingComponent extends Component {
 
         return (
             <>
-                <Row className="justify-content-md-center mt-5 project-heading">
+                <Row className="justify-content-md-center project-heading">
                     <Col md={10} lg={8}>
                         <Row>
-                            <Col>
+                            <Col xs={7}>
                                 <h1>{project.title}</h1>
                             </Col>
-                            <Col className="text-right">
+                            <Col xs={5} className="text-right">
                                 <Badge
-                                    variant="warning"
+                                    variant={
+                                        project.status === "completed"
+                                            ? "success"
+                                            : project.status === "draft"
+                                            ? "warning"
+                                            : "primary"
+                                    }
                                     className="status"
                                 >
                                     {project.status}
@@ -38,7 +44,7 @@ class ProjectHeadingComponent extends Component {
                         </Row>
                     </Col>
                 </Row>
-                <Row className="justify-content-md-center mt-5 project-bar">
+                <Row className="justify-content-md-center project-bar">
                     <Col md={10} lg={8}>
                         <Row>
                             <Col>

@@ -2,6 +2,10 @@
     .project {
         margin-bottom: $spacer;
 
+        .price {
+            font-size: 12px;
+        }
+
         .badge {
             font-size: 12px;
 
@@ -30,6 +34,7 @@
                 display: inline-block;
                 padding: $spacer/2 $spacer;
                 border-left: 1px solid $hr-border-color;
+                min-height: 42px;
 
                 .dropdown-toggle::after {
                     display: none;
@@ -41,6 +46,22 @@
                     color: $body-color;
                 }
             }
+        }
+    }
+
+    .datatable {
+        .status, .due-date {
+            font-size: 12px;
+        }
+
+        .dropdown .btn {
+            padding: 0 $spacer/2;
+            border-color: transparent;
+            color: $body-color;
+        }
+
+        .dropdown-toggle::after {
+            display: none;
         }
     }
 }

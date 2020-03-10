@@ -2,10 +2,10 @@
 import React, { Component } from "react"
 
 // Components
-import { Table } from "react-bootstrap"
 import UserInvite from "../../components/UserInvite"
 import DataLoading from "../../components/DataLoading"
 import Error from "../../components/Error"
+import { Row } from "react-bootstrap"
 
 class WriterComponent extends Component {
     /**
@@ -23,13 +23,13 @@ class WriterComponent extends Component {
 
         // Recommended
         let recommendedWriters
-        recommended && (recommendedWriters = recommended.writers.map(writer => <UserInvite writer={writer} categories={recommended.categories} onInviteClick={this.onInviteClick} />))
+        recommended && (recommendedWriters = recommended.writers.map(writer => <UserInvite key={writer._id} writer={writer} categories={recommended.categories} onInviteClick={this.onInviteClick} writersList={writersList} />))
         // Relevant
         let relevantWriters
-        relevant && (relevantWriters = relevant.writers.map(writer => <UserInvite writer={writer} categories={relevant.categories} onInviteClick={this.onInviteClick} />))
+        relevant && (relevantWriters = relevant.writers.map(writer => <UserInvite key={writer._id} writer={writer} categories={relevant.categories} onInviteClick={this.onInviteClick} writersList={writersList} />))
         // Others
         let othersWriters
-        others && (othersWriters = others.writers.map(writer => <UserInvite writer={writer} categories={others.categories} onInviteClick={this.onInviteClick} />))
+        others && (othersWriters = others.writers.map(writer => <UserInvite key={writer._id} writer={writer} categories={others.categories} onInviteClick={this.onInviteClick} writersList={writersList} />))
 
         let writerList = [recommendedWriters, relevantWriters, othersWriters]
 
@@ -40,18 +40,9 @@ class WriterComponent extends Component {
                 {requestProcessing ? (
                     <DataLoading />
                 ) : (
-                    <Table striped bordered hover className="mt-3">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Articles Written</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {writerList}
-                        </tbody>
-                    </Table>
+                    <Row className="justify-content-md-center writer-list">
+                        {writerList}
+                    </Row>
                 )}
             </>
         )

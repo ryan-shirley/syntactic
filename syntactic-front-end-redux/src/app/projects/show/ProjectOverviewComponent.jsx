@@ -25,6 +25,16 @@ class ProjectOverviewComponent extends Component {
         ).then(url => window.open(url, "_blank"))
     }
 
+    /**
+     * bytesToSize() Return file size in a better format
+     */
+    bytesToSize(bytes) {
+        var sizes = ["Bytes", "KB", "MB", "GB", "TB"]
+        if (bytes === 0) return "0 Byte"
+        var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
+        return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i]
+    }
+
     render() {
         let { project, requestProcessing } = this.props
         let { brief, deliverables, resources } = project
@@ -87,11 +97,16 @@ class ProjectOverviewComponent extends Component {
                                                 </span>
                                             </Col>
                                             <Col>
-                                                <Moment format="DD MMM YYYY - h:mm a">
+                                                <Moment
+                                                    format="DD MMM YYYY - h:mm a"
+                                                    className="body-text-light"
+                                                >
                                                     {res.createdAt}
                                                 </Moment>
                                             </Col>
-                                            <Col>{res.size}</Col>
+                                            <Col className="body-text-light">
+                                                {this.bytesToSize(res.size)}
+                                            </Col>
                                         </Row>
                                     </Card>
                                 </li>

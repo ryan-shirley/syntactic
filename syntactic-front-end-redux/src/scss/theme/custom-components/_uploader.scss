@@ -1,8 +1,9 @@
 .multi-file-uploader {
-    background: lightgray;
+    background: lighten($primary, 30%);
+    color: $body-color;
     text-align: center;
     padding: 2rem;
-    border: 2px dashed gray;
+    border: 2px dashed $primary;
 
     p {
         margin: 0;

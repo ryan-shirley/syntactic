@@ -8,10 +8,21 @@
     z-index: 100;
     background: $white;
 
-    button {
+    // Mobile only
+    @media (max-width: 767px) {
+        margin-bottom: $spacer;
+        padding: 10px 15px;
+    }
+
+    .dropdown-toggle {
         background: none;
         border: none;
         outline: none;
+    }
+
+    .sidebar-toggle {
+        font-size: 12px;
+        padding: $spacer/4 $spacer/2;
     }
 
     time {

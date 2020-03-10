@@ -3,6 +3,7 @@ const initState = {
     user: {},
     loadingUser: false,
     error: null,
+    isSidebarOpenMobile: false
 }
 
 const authReducer = (state = initState, action) => {
@@ -13,6 +14,12 @@ const authReducer = (state = initState, action) => {
                 ...state,
                 requestProcessing: true,
                 error: null
+            }
+
+        case "TOGGLE_MOBILE_SIDEBAR":
+            return {
+                ...state,
+                isSidebarOpenMobile: !state.isSidebarOpenMobile
             }
 
         case "FIREBASE_LOGIN_SUCCESS":

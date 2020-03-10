@@ -1,8 +1,7 @@
 import React from "react"
 import SignedInLinks from "./SignedInLinks"
 import { connect } from "react-redux"
-import { Row, Col } from "react-bootstrap"
-import Moment from "react-moment"
+import { Row, Col, Button } from "react-bootstrap"
 
 const Navbar = props => {
     const { auth, user } = props
@@ -12,7 +11,7 @@ const Navbar = props => {
         <div className="main-nav">
             <Row>
                 <Col className="mt-2 text-muted">
-                    <Moment format=" h:mm A DD/MM/YYYY">{new Date()}</Moment>
+                    <span className="d-block d-sm-none"><Button variant="primary" className="sidebar-toggle" onClick={props.toggleSidebar}>Toggle Menu</Button></span>
                 </Col>
                 <Col className="text-right">{links}</Col>
             </Row>
@@ -27,4 +26,11 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Navbar)
+const mapDispatchToProps = dispatch => {
+    return {
+        toggleSidebar: () => dispatch({ type: "TOGGLE_MOBILE_SIDEBAR" })
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

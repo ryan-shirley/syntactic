@@ -1,12 +1,29 @@
 .project-heading {
+    margin-top: $spacer-lg;
+
     .status {
         padding: $spacer $spacer-lg;
         font-size: $h4-font-size;
         text-transform: uppercase;
     }
+
+    // Mobile only
+    @media (max-width: 767px) {
+        margin-top: 20px;
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .status {
+            padding: $spacer/2 $spacer;
+            font-size: 14px;
+        }
+    }
 }
 
 .project-bar {
+    margin-top: $spacer;
     background-color: $white;
     padding: $spacer/2 0;
     border-top: 1px solid $card-border-color;

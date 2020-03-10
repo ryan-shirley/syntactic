@@ -61,9 +61,14 @@ class ProjectChatComponent extends Component {
             `/projects/${this.props.match.params.id}/messages`
         )
 
-        this.setState({
-            messages: messagesList
-        })
+        this.setState(
+            {
+                messages: messagesList
+            },
+            () => {
+                this.scrollToBottom()
+            }
+        )
     }
 
     /**
@@ -73,12 +78,14 @@ class ProjectChatComponent extends Component {
         // Listen for chat message to be sent
         this.state.socket.on("chat", data => {
             let messages = this.state.messages.concat(data)
-            this.setState({ messages, typing: "" })
+            this.setState({ messages, typing: "" }, () =>
+                this.scrollToBottom("smooth")
+            )
         })
 
         // Listen for typing events
         this.state.socket.on("typing", name => {
-            this.setState({ typing: name })
+            this.setState({ typing: name }, () => this.scrollToBottom("smooth"))
         })
     }
 
@@ -118,7 +125,16 @@ class ProjectChatComponent extends Component {
         // Append message to local list and reset
         message._id = Date.now()
         let messages = this.state.messages.concat(message)
-        this.setState({ messages, typing: "", input: "" })
+        this.setState({ messages, typing: "", input: "" }, () =>
+            this.scrollToBottom("smooth")
+        )
+    }
+
+    /**
+     * scrollToBottom() Scroll to bottom of chat list
+     */
+    scrollToBottom = behavior => {
+        this.messagesEnd.scrollIntoView({ behavior })
     }
 
     render() {
@@ -135,11 +151,18 @@ class ProjectChatComponent extends Component {
                                 {message.message}
                             </Message>
                         ))}
-                </div>
+                    
+                    {this.state.typing && (
+                        <span className="text-muted mb-4 d-block">{`${this.state.typing} is typing a message...`}</span>
+                    )}
 
-                {this.state.typing && (
-                    <span className="text-muted">{`${this.state.typing} is typing a message...`}</span>
-                )}
+                    <div
+                        style={{ float: "left", clear: "both" }}
+                        ref={el => {
+                            this.messagesEnd = el
+                        }}
+                    ></div>
+                </div>
 
                 <Form
                     onSubmit={this.sendSocketIO}
