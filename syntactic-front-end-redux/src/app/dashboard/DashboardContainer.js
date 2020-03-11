@@ -69,7 +69,9 @@ class DashboardContainer extends Component {
                               },
                               {
                                   colour: "success",
-                                  icon: <FontAwesomeIcon icon={faCalendarCheck} />,
+                                  icon: (
+                                      <FontAwesomeIcon icon={faCalendarCheck} />
+                                  ),
                                   title: "Completed projects",
                                   number: data.stats.completedProjects
                               },
@@ -99,7 +101,9 @@ class DashboardContainer extends Component {
                               },
                               {
                                   colour: "success",
-                                  icon: <FontAwesomeIcon icon={faCalendarCheck} />,
+                                  icon: (
+                                      <FontAwesomeIcon icon={faCalendarCheck} />
+                                  ),
                                   title: "Completed projects",
                                   number: data.stats.completedProjects
                               },
@@ -112,7 +116,11 @@ class DashboardContainer extends Component {
                           ]
 
                 // Update state
-                this.setState({ stats, projects: data.projects, loading: false })
+                this.setState({
+                    stats,
+                    projects: data.projects,
+                    loading: false
+                })
             })
             .catch(error => this.setState({ error }))
     }
@@ -120,7 +128,7 @@ class DashboardContainer extends Component {
     render() {
         let { stats, error, projects, loading } = this.state
 
-        if(loading) {
+        if (loading) {
             return <DataLoading />
         }
 
@@ -135,6 +143,7 @@ class DashboardContainer extends Component {
                         <h3>Invitations</h3>
                         <ProjectsListTable
                             projects={projects.invitationPending}
+                            isWriter={this.props.role === "writer"}
                         />
                     </section>
                 ) : (
@@ -144,7 +153,10 @@ class DashboardContainer extends Component {
                 {projects.dueSoon.length ? (
                     <section className="project-list">
                         <h3>Projects Due Soon</h3>
-                        <ProjectsListTable projects={projects.dueSoon} />
+                        <ProjectsListTable
+                            projects={projects.dueSoon}
+                            isWriter={this.props.role === "writer"}
+                        />
                     </section>
                 ) : (
                     ""
