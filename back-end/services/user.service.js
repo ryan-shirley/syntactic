@@ -118,3 +118,16 @@ exports.patchUpdate = async (oldUser, userDTO) => {
         }
     )
 }
+
+/**
+ * update() Update user profile
+ */
+exports.update = async userDTO => {
+    await User.updateOne({ _id: userDTO._id }, userDTO, (err, res) => {
+        if (err) throw err
+
+        return res
+    })
+
+    return userDTO
+}

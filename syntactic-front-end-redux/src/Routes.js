@@ -18,6 +18,7 @@ import OnboardingWriter from "./app/onboarding/OnboardingWriterContainer"
 
 // Pages - Auth Required
 import Dashboard from "./app/dashboard/DashboardContainer"
+import EditProfile from "./app/auth/EditProfileContainer"
 import Projects from "./app/projects/ProjectsAuthManager"
 import ProjectShow from "./app/projects/show/ProjectShowContainer"
 import ProjectOverview from "./app/projects/show/ProjectOverviewComponent"
@@ -27,11 +28,6 @@ import ProjectFinish from "./app/projects/show/ProjectFinishComponent"
 import LevelsContainer from "./app/levels/LevelsContainer"
 import BillingContainer from "./app/billing/BillingContainer"
 import PaymentPayContainer from "./app/billing/PaymentContainer"
-
-// Pages - Auth - Writer Only
-// import Levels from "./components/pages/writer/Levels"
-
-// import AddContent from "./components/pages/writer/AddContent"
 
 // Page - Auth - Content Seeker Only
 import ProjectCreate from "./app/projects/create/ProjectCreateContainer"
@@ -162,14 +158,13 @@ const appLayoutRoutes = [
             role: 'content seeker'
         }
     },
-    // {
-    //     path: '/add-content',
-    //     page: AddContent,
-    //     middleware: {
-    //         type: 'private',
-    //         role: 'writer'
-    //     }
-    // }
+    {
+        path: '/profile',
+        page: EditProfile,
+        middleware: {
+            type: 'private',
+        }
+    }
 ]
 
 // Full-With Routes

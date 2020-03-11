@@ -1,8 +1,13 @@
 // Express
 const router = require("express").Router()
+const fs = require("fs")
 
 // Services
 const UserService = require("../../services/user.service")
+const StorageService = require("../../services/storage.service")
+
+// Middleware
+import { upload } from "../middlewares/storage.middleware"
 
 /**
  * route('/current').get() Get currently logged in user
@@ -59,6 +64,65 @@ router.route("/:id").patch(async (req, res) => {
     //         message: error.message
     //     })
     // })
+})
+
+/**
+ * route('/:id').put() Update user profile
+ */
+router.route("/:id").put(upload.single("file"), async (req, res) => {
+    const { id } = req.params
+    const currentUser = req.user
+    let userDTO = req.body
+
+    // Parse object
+    for (const property in userDTO) {
+        userDTO[property] = JSON.parse(userDTO[property])
+    }
+
+    // Profile picture
+    const fileUploaded = req.file ? true : false
+    let source, targetName
+    if (fileUploaded) {
+        source = req.file.path
+        targetName = req.file.filename
+    }
+
+    try {
+        // Make sure same user updating
+        if(currentUser.uid !== req.authId || id !== currentUser._id.toString()) {
+            return res.status(403).json({
+                code: 403,
+                message: 'You are not authorised to do this!'
+            })
+        }
+
+        if (fileUploaded) {
+            // Upload file to cloud & Add profile picture to user
+            userDTO.profile_picture = await StorageService.uploadFileToCloudStorage(
+                source, `users/${id}`
+            )
+
+            // Remove file from express
+            fs.unlink(source, fsErr => {
+                if (fsErr)
+                    return res.status(500).json({
+                        code: 500,
+                        message: fsErr
+                    })
+            })
+        }
+
+        // Update User
+        const updatedUser = await UserService.update(userDTO)
+
+        // Return updated user
+        return res.status(200).json(updatedUser)
+    } catch (err) {
+        return res.status(err.code).json({
+            code: err.code,
+            message: err.message
+        })
+    }
 })
 
 module.exports = router

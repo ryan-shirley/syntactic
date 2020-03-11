@@ -60,6 +60,10 @@ let UserSchema = new mongoose.Schema({
             required: false
         }
     },
+    profile_picture: {
+        type: String,
+        required: false
+    },
     uid: {
         type: String,
         required: true,

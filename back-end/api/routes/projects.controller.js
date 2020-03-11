@@ -205,7 +205,7 @@ router.route("/:id/finish").put(checkifContentSeeker, async (req, res) => {
         let markdown = deliverables[i].content
 
         let html = converter.makeHtml(markdown)
-        let text = html.replace(/<\/?[^>]+>/ig, " ")
+        let text = html.replace(/<\/?[^>]+>/gi, " ")
 
         textToBeAnalysed.push(text)
     }
@@ -357,10 +357,11 @@ router
             const writers = await GoogleNLPService.getWriters(results)
 
             // Upload file to cloud storage
-            const destination = await StorageService.uploadFileToCloudStorage(
+
+            const destination = `projects/${id}/${targetName}`
+            await StorageService.uploadFileToCloudStorage(
                 source,
-                targetName,
-                id
+                destination
             )
 
             // Update Project
@@ -442,10 +443,11 @@ router
                 const type = file.mimetype
 
                 // Upload files to cloud storage
-                const destination = await StorageService.uploadFileToCloudStorage(
+                const destination = `projects/${id}/${targetName}`
+                
+                await StorageService.uploadFileToCloudStorage(
                     source,
-                    targetName,
-                    id
+                    destination
                 )
 
                 let newFile = {

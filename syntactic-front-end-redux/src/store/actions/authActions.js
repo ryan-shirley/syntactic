@@ -210,3 +210,21 @@ export const getUser = () => {
             })
     }
 }
+
+/**
+ * updateUser() Upate user
+ */
+export const updateUser = (userDTO) => {
+    return dispatch => {
+        dispatch({ type: "USER_REQUEST_PROCESSING" })
+        
+        API.uploadFilePut('/users/' + userDTO._id, userDTO)
+            .then(data => {
+                // dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data.project })
+                // dispatch({ type: "PROJECT_WRITER_LIST_RECEIVED", payload: data.writers })
+            }) 
+            .catch(error => {
+                // dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
+            })
+    }
+}

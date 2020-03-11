@@ -26,8 +26,7 @@ exports.getTextFromFile = async file => {
 /**
  * uploadFileToCloudStorage() Return file destination on cloud storage
  */
-exports.uploadFileToCloudStorage = async (file, targetName, id) => {
-    const destination = `projects/${id}/${targetName}`
+exports.uploadFileToCloudStorage = async (file, destination) => {
 
     // Imports the Google Cloud client library
     const { Storage } = require("@google-cloud/storage")
@@ -55,7 +54,7 @@ exports.uploadFileToCloudStorage = async (file, targetName, id) => {
             destination
         })
 
-    return destination
+    return upload[0].metadata.mediaLink
 }
 
 /**

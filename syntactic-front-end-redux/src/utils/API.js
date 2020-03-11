@@ -74,6 +74,43 @@ export default {
                 })
         })
     },
+    uploadFilePut: (url, data) => {
+        // Setup request config
+        let config = {}
+        const state = store.getState()
+        let token = state.firebase.auth.stsTokenManager.accessToken
+        config.headers = {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data"
+        }
+
+        // axios request
+        // Return promise so that .then & .catch can be called from outside the class when this method is called
+        return new Promise((resolve, reject) => {
+            let formData = new FormData()
+
+            for (const property in data) {
+                if(property === 'file') {
+                    formData.append([property], data[property])
+                } else {
+                    var details = JSON.stringify(data[property]);
+                    formData.append([property], details);
+                }
+            }
+
+            axios.defaults.headers.common[
+                "Authorization"
+            ] = localStorage.getItem("jwtToken")
+            axios
+                .put(API_URI + url, formData, config)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    reject(error.response.data)
+                })
+        })
+    },
     uploadFiles: (url, files) => {
         // Setup request config
         let config = {}
