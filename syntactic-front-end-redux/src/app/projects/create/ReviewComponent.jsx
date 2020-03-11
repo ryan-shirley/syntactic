@@ -119,7 +119,7 @@ class ReviewComponent extends Component {
                         <Row>
                             <Col xs="auto">
                                 <Image
-                                    src="/img/profile.jpg"
+                                    src={writer.profile_picture || "/img/default-profile.jpg"}
                                     className="profile rounded-circle img-fluid"
                                     width="80"
                                     height="80"

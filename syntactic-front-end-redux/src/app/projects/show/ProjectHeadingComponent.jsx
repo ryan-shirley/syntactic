@@ -19,6 +19,12 @@ class ProjectHeadingComponent extends Component {
                       " " +
                       project.content_seeker_id.last_name
 
+        let profile_picture =
+            project.writer_id && role !== "writer"
+                ? project.writer_id.profile_picture
+                : project.content_seeker_id &&
+                  project.content_seeker_id.profile_picture
+
         return (
             <>
                 <Row className="justify-content-md-center project-heading">
@@ -60,7 +66,10 @@ class ProjectHeadingComponent extends Component {
                             </Col>
                             <Col className="text-right user">
                                 <Image
-                                    src="/img/profile.jpg"
+                                    src={
+                                        profile_picture ||
+                                        "/img/default-profile.jpg"
+                                    }
                                     className="rounded-circle profile"
                                     alt={name}
                                 />{" "}

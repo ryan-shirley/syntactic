@@ -59,7 +59,7 @@ export default class UserInvite extends Component {
                 >
                     <Card body className="writer">
                         <Image
-                            src="/img/profile.jpg"
+                            src={writer.user.profile_picture || "/img/default-profile.jpg"}
                             className="profile rounded-circle img-fluid"
                             width="80"
                             height="80"

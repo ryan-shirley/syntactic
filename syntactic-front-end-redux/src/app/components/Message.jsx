@@ -15,7 +15,11 @@ const Message = props => {
                   " " +
                   message.sender_id.last_name,
         buttonColour =
-            message.sender_id._id === props.user._id ? "primary" : "secondary"
+            message.sender_id._id === props.user._id ? "primary" : "secondary",
+        profile_picture =
+            message.sender_id._id === props.user._id
+                ? props.user.profile_picture
+                : message.sender_id.profile_picture
 
     return (
         <div
@@ -27,7 +31,7 @@ const Message = props => {
         >
             <span className="details">
                 <Image
-                    src="/img/profile.jpg"
+                    src={profile_picture || "/img/default-profile.jpg"}
                     className="rounded-circle profile"
                     alt={
                         message.sender_id.first_name +

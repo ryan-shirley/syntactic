@@ -8,7 +8,7 @@ exports.get = async project_id => {
     // Get messages
     return await Message.find({
         project_id
-    }).populate('sender_id receiver_id', 'first_name last_name')
+    }).populate('sender_id receiver_id', 'first_name last_name profile_picture')
 }
 
 /**

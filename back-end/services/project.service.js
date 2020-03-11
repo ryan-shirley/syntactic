@@ -32,7 +32,7 @@ exports.getProject = async _id => {
         return project
     }).populate(
         "content_seeker_id writer_id",
-        "first_name last_name profile levels role"
+        "first_name last_name profile levels role profile_picture"
     )
 
     return project
