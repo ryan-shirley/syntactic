@@ -20,6 +20,10 @@ module.exports = {
         for (let i = 0; i < categories.length; i++) {
             let category = categories[i]
 
+            // Setup category
+            categories[i]._id = this.generateMongoObjectId()
+            categories[i].users = []
+
             // Replace string with ObjectId
             if (category.hasOwnProperty("_parent_category_id")) {
                 let parentName = category._parent_category_id

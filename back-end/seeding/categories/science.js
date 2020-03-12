@@ -4,27 +4,19 @@ module.exports = function seedCategories(writers) {
     // Define Categories
     let categories = [
         {
-            _id: seeding_utils.generateMongoObjectId(),
-            name: "Science",
-            users: []
+            name: "Science"
         },
         {
-            _id: seeding_utils.generateMongoObjectId(),
             name: "Computer Science",
-            _parent_category_id: "Science",
-            users: []
+            _parent_category_id: "Science"
         },
         {
-            _id: seeding_utils.generateMongoObjectId(),
             name: "Engineering & Technology",
-            _parent_category_id: "Science",
-            users: []
+            _parent_category_id: "Science"
         },
         {
-            _id: seeding_utils.generateMongoObjectId(),
             name: "Robotics",
-            _parent_category_id: "Engineering & Technology",
-            users: []
+            _parent_category_id: "Engineering & Technology"
         }
     ]
 
