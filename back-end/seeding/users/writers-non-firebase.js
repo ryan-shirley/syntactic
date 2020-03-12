@@ -3,7 +3,7 @@ var faker = require("faker")
 
 let users = []
 
-for (let i = 0; i < 25; i++) {
+for (let i = 0; i < 50; i++) {
     let first_name = faker.fake("{{name.firstName}}"),
         last_name = faker.fake("{{name.lastName}}"),
         email = `${first_name}.${last_name}@syntactic.com`
