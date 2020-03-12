@@ -1,5 +1,5 @@
 // Collection Seeder Functions
-let seedCategories = require("./categories/categories")
+let seedCategories = require("./categories/categories-seeder")
 
 // Import Collections
 let nonFirebaseContentSeekers = require("./users/content-seekers-non-firebase")
