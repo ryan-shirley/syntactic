@@ -1,6 +1,7 @@
 let science_seeder = require("./science")
 let computersElectronics_seeder = require("./computersElectronics")
 let foodDrink_seeder = require("./foodDrink")
+let sports_seeder = require("./sports")
 
 module.exports = function seedCategories(writers) {
     // Create Writer Groups
@@ -9,10 +10,9 @@ module.exports = function seedCategories(writers) {
 
     // Seed Categories with writers
     let scienceWriters = science_seeder(writerGroup1),
-        ComputersElectronicsWriters = computersElectronics_seeder(writerGroup1)
-
-    let FoodDrinkWriters = foodDrink_seeder(writerGroup2)
-    //     SportsWriters = FoodDrinkWriters,
+        ComputersElectronicsWriters = computersElectronics_seeder(writerGroup1),
+        FoodDrinkWriters = foodDrink_seeder(writerGroup2),
+        SportsWriters = sports_seeder(writerGroup2)
     //     TravelWriters = FoodDrinkWriters,
     //     HomeGardenWriters = FoodDrinkWriters,
     //     HealthWriters = FoodDrinkWriters
@@ -22,7 +22,7 @@ module.exports = function seedCategories(writers) {
     //     OnlineCommunitiesWriters = BusinessIndustrialWriter,
     //     NewsWriters = BusinessIndustrialWriter
 
-    let seededCategories = scienceWriters.concat(ComputersElectronicsWriters, FoodDrinkWriters)
+    let seededCategories = scienceWriters.concat(ComputersElectronicsWriters, FoodDrinkWriters, SportsWriters)
 
     return seededCategories
 }
