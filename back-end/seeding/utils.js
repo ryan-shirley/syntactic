@@ -1,4 +1,5 @@
 var faker = require("faker")
+var moment = require("moment")
 
 module.exports = {
     generateMongoObjectId: function() {
@@ -55,5 +56,49 @@ module.exports = {
         }
 
         return categories
+    },
+    seedProject: function(title, writers, contentSeekers, status) {
+        let _id = this.generateMongoObjectId(),
+            end_date = faker.date.past(1), // Past year
+            content = `# **${title}** \nWe are releasing our brand **NEW** collection in the summer of 2020`,
+            writer = writers[Math.floor(Math.random() * writers.length)],
+            content_seeker =
+                contentSeekers[
+                    Math.floor(Math.random() * contentSeekers.length)
+                ]
+
+        return {
+            _id,
+            title,
+            status,
+            end_date,
+            content_seeker_id: content_seeker._id,
+            writer_id: writer._id,
+            content,
+            deliverables: [
+                {
+                    status: "rejected",
+                    title: "First draft",
+                    content_seeker_notes:
+                        "Good start however, I would I feel like you need to highlight the facts a little more as I do not think they are clear.",
+                    content,
+                    createdAt: moment(end_date).subtract(1, "months")
+                },
+                {
+                    status: "accepted",
+                    title: "Second draft",
+                    content_seeker_notes: "Well done!! I love this. Good job.",
+                    content,
+                    createdAt: moment(end_date).subtract(4, "days")
+                }
+            ],
+            brief: {
+                path: `seeded-projects/${_id}/Brief.pdf`
+            },
+            amount:
+                Math.ceil((Math.random() * (750 - 150) + 150) / 10) *
+                10,
+            createdAt: moment(end_date).subtract(2, "months")
+        }
     }
 }
