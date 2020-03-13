@@ -7,11 +7,11 @@ seeder.connect(process.env.MONGODB_URI_LIVE, function() {
     // Load Mongoose models
     console.log('Loading Models');
     
-    seeder.loadModels(["./models/user.model.js", "./models/categories.model.js", "./models/projects.model.js", "./models/payments.model.js"])
+    seeder.loadModels(["./models/user.model.js", "./models/categories.model.js", "./models/projects.model.js", "./models/payments.model.js", "./models/messages.model.js"])
 
     // Clear specified collections
     console.log('Clearing Collections');
-    seeder.clearModels(["User", "Category", "Project", "Payment"], function() {
+    seeder.clearModels(["User", "Category", "Project", "Payment", "Message"], function() {
         // Callback to populate DB once collections have been cleared
         console.log('Populate Models');
         seeder.populateModels(data, async function() {
