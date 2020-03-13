@@ -67,15 +67,24 @@ module.exports = {
                     Math.floor(Math.random() * contentSeekers.length)
                 ]
 
-        return {
+        // Inital project details
+        let project = {
             _id,
             title,
             status,
             end_date,
             content_seeker_id: content_seeker._id,
-            writer_id: writer._id,
-            content,
-            deliverables: [
+            amount: Math.ceil((Math.random() * (750 - 150) + 150) / 10) * 10,
+            createdAt: moment(end_date).subtract(2, "months")
+        }
+
+        // Add information based on project status
+        if (["invitation pending", "writing", "completed"].includes(status)) {
+            project.writer_id = writer._id
+        }
+        if (["writing", "completed"].includes(status)) {
+            project.content = content
+            project.deliverables = [
                 {
                     status: "rejected",
                     title: "First draft",
@@ -91,14 +100,25 @@ module.exports = {
                     content,
                     createdAt: moment(end_date).subtract(4, "days")
                 }
-            ],
-            brief: {
-                path: `seeded-projects/${_id}/Brief.pdf`
-            },
-            amount:
-                Math.ceil((Math.random() * (750 - 150) + 150) / 10) *
-                10,
-            createdAt: moment(end_date).subtract(2, "months")
+            ]
         }
+        if (!["draft"].includes(status)) {
+            project.brief = {
+                path: `seeded-projects/${_id}/Brief.pdf`
+            }
+        }
+
+        return project
+    },
+    randomProjectStatus: function() {
+        let possibleStats = [
+            "draft",
+            "invitation pending",
+            "invitation rejected",
+            "writing",
+            "completed"
+        ]
+
+        return possibleStats[Math.floor(Math.random() * possibleStats.length)]
     }
 }
