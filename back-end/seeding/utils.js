@@ -140,23 +140,48 @@ module.exports = {
         }
         if (["writing", "completed"].includes(status)) {
             project.content = content
-            project.deliverables = [
-                {
-                    status: "rejected",
-                    title: "First draft",
-                    content_seeker_notes:
-                        "Good start however, I would I feel like you need to highlight the facts a little more as I do not think they are clear.",
-                    content,
-                    createdAt: moment(end_date).subtract(1, "months")
-                },
-                {
-                    status: "accepted",
-                    title: "Second draft",
-                    content_seeker_notes: "Well done!! I love this. Good job.",
-                    content,
-                    createdAt: moment(end_date).subtract(4, "days")
-                }
-            ]
+
+            if (status === "writing") {
+                project.deliverables = [
+                    {
+                        status: "rejected",
+                        title: "First draft",
+                        writer_notes: "What do you think of this?",
+                        content_seeker_notes:
+                            "Good start however, I would I feel like you need to highlight the facts a little more as I do not think they are clear.",
+                        content,
+                        createdAt: moment(end_date).subtract(1, "months")
+                    },
+                    {
+                        status: "pending approval",
+                        title: "Second draft",
+                        writer_notes:
+                            "This is a revision of the first draft that I send to you.",
+                        content,
+                        createdAt: moment(end_date).subtract(12, "days")
+                    }
+                ]
+            } else {
+                project.deliverables = [
+                    {
+                        status: "rejected",
+                        title: "First draft",
+                        writer_notes: "What do you think of this?",
+                        content_seeker_notes:
+                            "Good start however, I would I feel like you need to highlight the facts a little more as I do not think they are clear.",
+                        content,
+                        createdAt: moment(end_date).subtract(1, "months")
+                    },
+                    {
+                        status: "accepted",
+                        title: "Second draft",
+                        content_seeker_notes:
+                            "Well done!! I love this. Good job.",
+                        content,
+                        createdAt: moment(end_date).subtract(4, "days")
+                    }
+                ]
+            }
         }
         if (!["draft"].includes(status)) {
             project.brief = {
