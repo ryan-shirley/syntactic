@@ -60,7 +60,7 @@ module.exports = {
     seedProject: function(titleObj, writers, contentSeekers, status) {
         let _id = this.generateMongoObjectId(),
             title = titleObj.name,
-            end_date = faker.date.past(1), // Past year
+            end_date = status === 'completed' ? faker.date.past(1) : faker.date.future(1),
             content = `# **${title}** \nWe are releasing our brand **NEW** collection in the summer of 2020`,
             writer = writers[Math.floor(Math.random() * writers.length)],
             content_seeker =
