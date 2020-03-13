@@ -1,6 +1,10 @@
 var faker = require("faker")
 var moment = require("moment")
 
+// Services
+const LevelService = require("../services/level.service")
+const UserService = require("../services/user.service")
+
 module.exports = {
     generateMongoObjectId: function() {
         var timestamp = ((new Date().getTime() / 1000) | 0).toString(16)
@@ -13,8 +17,48 @@ module.exports = {
                 .toLowerCase()
         )
     },
-    randomNumber: function(min, max) {
-        return Math.floor(Math.random() * (max - min) + min)
+    seedLevels: async function(writers, categories) {
+        // Loop all categories
+        for (let i = 0; i < categories.length; i++) {
+            let category = categories[i],
+                cat_name = category.name,
+                cat_parent = category._parent_category_id,
+                cat_users = category.users
+
+            // Loop all users in a category
+            for (let j = 0; j < cat_users.length; j++) {
+                let user = cat_users[j],
+                    { user: id, articles_written, confidence } = user
+
+                // Generate level
+                let level = await LevelService.generateLevel(cat_name, id)
+
+                // Add levels to user
+                for (let k = 0; k < writers.length; k++) {
+                    let writer = writers[k]
+
+                    // Found writer
+                    if (writer._id === id) {
+                        if (writer.levels) {
+                            writers[k].levels.push({
+                                category: cat_name,
+                                level
+                            })
+                        } else {
+                            writers[k].levels = [{
+                                category: cat_name,
+                                level
+                            }]
+                        }
+                    }
+                }
+                console.log(`Category: ${cat_name}. User: ${id}. Lv: ${level}`)
+            }
+        }
+
+        console.log(writers)
+
+        return writers
     },
     seedCategories: function(categories, writers) {
         // Update _parent_category_id referance and add writers
@@ -114,6 +158,9 @@ module.exports = {
         }
 
         return project
+    },
+    randomNumber: function(min, max) {
+        return Math.floor(Math.random() * (max - min) + min)
     },
     randomProjectStatus: function() {
         let items = [

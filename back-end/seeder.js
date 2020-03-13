@@ -14,7 +14,10 @@ seeder.connect(process.env.MONGODB_URI_LIVE, function() {
     seeder.clearModels(["User", "Category", "Project"], function() {
         // Callback to populate DB once collections have been cleared
         console.log('Populate Models');
-        seeder.populateModels(data, function() {
+        seeder.populateModels(data, async function() {
+
+            // Generate Writer Levels
+            let users = await users_seed.generateLevels(usersObj, data[0].documents)
 
             // Seed users
             seeder.populateModels(users, function() {
@@ -33,6 +36,3 @@ let usersObj = users_seed.createUsers()
 
 let main_seed = require("./seeding/main-seeder")
 let data = main_seed.seedData(usersObj)
-
-// Generate Levels
-let users = users_seed.generateLevels(usersObj)

@@ -16,18 +16,18 @@ module.exports = module.exports = {
             firebaseWriters
         }
     },
-    generateLevels: function(usersObj) {
+    generateLevels: async function(usersObj, categories) {
         let {
             nonFirebaseContentSeekers,
             firebaseContentSeekers,
             nonFirebaseWriters,
             firebaseWriters
         } = usersObj
+        
+        let writersWithLevels = await seeding_utils.seedLevels(firebaseWriters.concat(nonFirebaseWriters), categories)
 
-        // let writersWithLevels = seeding_utils.seedLevels(firebaseWriters.concat(nonFirebaseWriters), categories)
-
-        let users = nonFirebaseContentSeekers.concat(firebaseContentSeekers, nonFirebaseWriters, firebaseWriters)
-
+        let users = writersWithLevels.concat(firebaseContentSeekers, nonFirebaseContentSeekers)
+        
         return [
             {
                 model: "User",

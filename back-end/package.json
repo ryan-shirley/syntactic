@@ -5,7 +5,7 @@
   "scripts": {
     "heroku-postbuild": "node config/gcpNLPSetup.js",
     "start": "node -r esm ./bin/www",
-    "seed": "node seeder.js",
+    "seed": "node -r esm seeder.js",
     "dev": "PORT=4444 nodemon -r esm ./bin/www"
   },
   "dependencies": {
