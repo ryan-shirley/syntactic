@@ -39,6 +39,7 @@ const projectsReducer = (state = initState, action) => {
                 ...state,
                 requestProcessing: false,
                 singleProject: action.payload,
+                writersList: {},
                 error: ""
             }
 
