@@ -123,7 +123,7 @@ module.exports = {
             "writing",
             "completed"
         ]
-        let chances = [10, 10, 5, 45, 30]
+        let chances = [10, 10, 5, 40, 35]
 
         let sum = chances.reduce((acc, el) => acc + el, 0)
         let acc = 0
