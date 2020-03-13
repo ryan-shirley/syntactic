@@ -18,7 +18,7 @@ module.exports = {
         )
     },
     seedLevels: async function(writers, categories) {
-        console.log("Seeding writers levels.")
+        console.log("Seeding writers levels. Note this will take some time..")
 
         // Loop all categories
         for (let i = 0; i < categories.length; i++) {
