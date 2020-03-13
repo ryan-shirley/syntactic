@@ -6,7 +6,7 @@ let sports_seeder = require("./sports")
 module.exports = function seedCategories(writers) {
     // Create Writer Groups
     let writerGroup1 = writers.slice(0, 25),
-        writerGroup2 = writers.slice(0, 25)
+        writerGroup2 = writers
 
     // Seed Categories with writers
     let scienceWriters = science_seeder(writerGroup1),
