@@ -57,8 +57,9 @@ module.exports = {
 
         return categories
     },
-    seedProject: function(title, writers, contentSeekers, status) {
+    seedProject: function(titleObj, writers, contentSeekers, status) {
         let _id = this.generateMongoObjectId(),
+            title = titleObj.name,
             end_date = faker.date.past(1), // Past year
             content = `# **${title}** \nWe are releasing our brand **NEW** collection in the summer of 2020`,
             writer = writers[Math.floor(Math.random() * writers.length)],
@@ -104,7 +105,8 @@ module.exports = {
         }
         if (!["draft"].includes(status)) {
             project.brief = {
-                path: `seeded-projects/${_id}/Brief.pdf`
+                path: `seeded-projects/${_id}/Brief.pdf`,
+                analysis: titleObj.analysis
             }
         }
 
