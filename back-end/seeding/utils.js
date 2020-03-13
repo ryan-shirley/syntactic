@@ -60,7 +60,10 @@ module.exports = {
     seedProject: function(titleObj, writers, contentSeekers, status) {
         let _id = this.generateMongoObjectId(),
             title = titleObj.name,
-            end_date = status === 'completed' ? faker.date.past(1) : faker.date.future(1),
+            end_date =
+                status === "completed"
+                    ? faker.date.past(1)
+                    : faker.date.future(1),
             content = `# **${title}** \nWe are releasing our brand **NEW** collection in the summer of 2020`,
             writer = writers[Math.floor(Math.random() * writers.length)],
             content_seeker =
@@ -113,14 +116,20 @@ module.exports = {
         return project
     },
     randomProjectStatus: function() {
-        let possibleStats = [
+        let items = [
             "draft",
             "invitation pending",
             "invitation rejected",
             "writing",
             "completed"
         ]
+        let chances = [10, 10, 5, 45, 30]
 
-        return possibleStats[Math.floor(Math.random() * possibleStats.length)]
+        let sum = chances.reduce((acc, el) => acc + el, 0)
+        let acc = 0
+        chances = chances.map(el => (acc = el + acc))
+        let rand = Math.random() * sum
+
+        return items[chances.filter(el => el <= rand).length]
     }
 }
