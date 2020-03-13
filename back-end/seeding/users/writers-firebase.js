@@ -13,7 +13,8 @@ const users = [
                 name: "writer"
             }
         ],
-        profile_picture: faker.fake("{{internet.avatar}}")
+        profile_picture: faker.fake("{{internet.avatar}}"),
+        completed_onboarding: true
     },
     {
         _id: seeding_utils.generateMongoObjectId(),
@@ -26,7 +27,8 @@ const users = [
                 name: "writer"
             }
         ],
-        profile_picture: faker.fake("{{internet.avatar}}")
+        profile_picture: faker.fake("{{internet.avatar}}"),
+        completed_onboarding: true
     },
     {
         _id: seeding_utils.generateMongoObjectId(),
@@ -39,7 +41,8 @@ const users = [
                 name: "writer"
             }
         ],
-        profile_picture: faker.fake("{{internet.avatar}}")
+        profile_picture: faker.fake("{{internet.avatar}}"),
+        completed_onboarding: true
     },
 ]
 

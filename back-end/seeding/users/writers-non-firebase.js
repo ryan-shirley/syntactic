@@ -19,7 +19,8 @@ for (let i = 0; i < 50; i++) {
                 name: "writer"
             }
         ],
-        profile_picture: faker.fake("{{internet.avatar}}")
+        profile_picture: faker.fake("{{internet.avatar}}"),
+        completed_onboarding: true
     }
 
     users.push(newUser)
