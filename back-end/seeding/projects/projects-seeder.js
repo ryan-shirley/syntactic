@@ -1,5 +1,5 @@
 let science_seeder = require("./science")
-// let computersElectronics_seeder = require("./computersElectronics")
+let computersElectronics_seeder = require("./computersElectronics")
 let foodDrink_seeder = require("./foodDrink")
 // let sports_seeder = require("./sports")
 
@@ -14,9 +14,10 @@ module.exports = function seedProjects(firebaseContentSeekers, firebaseWriters, 
 
     // Seed Projects with writers
     let scienceProjects = science_seeder([cs1], nonFirebaseWriters),
-        foodDrinkProjects = foodDrink_seeder([cs1, cs2, cs3], [w1, w2, w3])
+        foodDrinkProjects = foodDrink_seeder([cs1, cs2, cs3], [w1, w2]),
+        computersElectronicsProjects = computersElectronics_seeder([cs2, cs3], [cs2, cs3])
 
-    let seededProjects = scienceProjects.concat(foodDrinkProjects)
+    let seededProjects = scienceProjects.concat(foodDrinkProjects, computersElectronicsProjects)
 
     return seededProjects
 }
