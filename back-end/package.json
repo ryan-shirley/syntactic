@@ -5,8 +5,10 @@
   "scripts": {
     "heroku-postbuild": "node config/gcpNLPSetup.js",
     "start": "node -r esm ./bin/www",
+    "dev": "PORT=4444 nodemon -r esm ./bin/www",
     "seed": "node -r esm seeder.js",
-    "dev": "PORT=4444 nodemon -r esm ./bin/www"
+    "test": "jest --detectOpenHandles",
+    "test:watch": "jest --watch --detectOpenHandles"
   },
   "dependencies": {
     "@google-cloud/language": "^3.6.2",
@@ -32,11 +34,21 @@
     "stripe": "^8.22.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "axios": "^0.19.2",
+    "babel-jest": "^25.1.0",
     "faker": "^4.1.0",
+    "jest": "^25.1.0",
     "mongoose-seed": "^0.6.0",
-    "nodemon": "^2.0.1"
+    "nodemon": "^2.0.1",
+    "supertest": "^4.0.2"
   },
   "engines": {
     "node": "10.x"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true
   }
 }
