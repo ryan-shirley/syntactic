@@ -1,6 +1,7 @@
 // Collection Seeder Functions
 let seedCategories = require("./categories/categories-seeder")
 let seedProjects = require("./projects/projects-seeder")
+let seedPayments = require("./payments/payments-seeder")
 const seeding_utils = require("./utils")
 
 module.exports = module.exports = {
@@ -15,6 +16,7 @@ module.exports = module.exports = {
 
         let categories = seedCategories(nonFirebaseWriters.concat(firebaseWriters))
         let projects = seedProjects(firebaseContentSeekers, firebaseWriters, nonFirebaseWriters)
+        let payments = seedPayments(projects)
 
         let data = [
             {
@@ -24,6 +26,10 @@ module.exports = module.exports = {
             {
                 model: "Project",
                 documents: projects
+            },
+            {
+                model: "Payment",
+                documents: payments
             }
         ]
 
