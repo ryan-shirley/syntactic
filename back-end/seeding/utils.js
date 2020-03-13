@@ -18,17 +18,24 @@ module.exports = {
         )
     },
     seedLevels: async function(writers, categories) {
+        console.log("Seeding writers levels.")
+
         // Loop all categories
         for (let i = 0; i < categories.length; i++) {
+            let percent = Math.floor((100 * i) / categories.length)
+
+            if (percent % 10 === 0) {
+                console.log(`${percent}%`)
+            }
+
             let category = categories[i],
                 cat_name = category.name,
-                cat_parent = category._parent_category_id,
                 cat_users = category.users
 
             // Loop all users in a category
             for (let j = 0; j < cat_users.length; j++) {
                 let user = cat_users[j],
-                    { user: id, articles_written, confidence } = user
+                    { user: id } = user
 
                 // Generate level
                 let level = await LevelService.generateLevel(cat_name, id)
@@ -45,18 +52,19 @@ module.exports = {
                                 level
                             })
                         } else {
-                            writers[k].levels = [{
-                                category: cat_name,
-                                level
-                            }]
+                            writers[k].levels = [
+                                {
+                                    category: cat_name,
+                                    level
+                                }
+                            ]
                         }
                     }
                 }
-                console.log(`Category: ${cat_name}. User: ${id}. Lv: ${level}`)
             }
         }
 
-        console.log(writers)
+        console.log("Writers levels successfully seeded")
 
         return writers
     },
