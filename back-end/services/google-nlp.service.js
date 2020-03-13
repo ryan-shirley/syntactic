@@ -25,7 +25,7 @@ exports.classifyText = async text => {
     const [classification] = await client.classifyText({
         document
     })
-    categoriesMatched = seperateCategories(classification.categories)
+    categoriesMatched = this.seperateCategories(classification.categories)
 
     return categoriesMatched
 }
@@ -363,9 +363,9 @@ exports.getWriters = async categoriesMatched => {
     }
 
     // Remove Duplicates in each list
-    results.recommended.writers = removeDuplicates(results.recommended.writers)
-    results.relevant.writers = removeDuplicates(results.relevant.writers)
-    results.others.writers = removeDuplicates(results.others.writers)
+    results.recommended.writers = this.removeDuplicates(results.recommended.writers)
+    results.relevant.writers = this.removeDuplicates(results.relevant.writers)
+    results.others.writers = this.removeDuplicates(results.others.writers)
 
     // Filter writer lists so writer only in once and in most relevant list
     results.relevant.writers = results.relevant.writers.filter(
@@ -521,7 +521,7 @@ exports.addCategoriesToWriter = async (cats, userID) => {
 /**
  * seperateCategories() Takes category string and seperates it out
  */
-seperateCategories = categories => {
+exports.seperateCategories = categories => {
     return categories.map(categoryObj => {
         let { name, confidence } = categoryObj
 
@@ -539,7 +539,7 @@ seperateCategories = categories => {
 /**
  * removeDuplicates() Removes duplicate writers from an array
  */
-removeDuplicates = ary => {
+exports.removeDuplicates = ary => {
     return ary.reduce((acc, current) => {
         const x = acc.find(
             item => item.user._id.toString() === current.user._id.toString()

@@ -10,7 +10,7 @@ const baseArticles = 1
 /**
  * requiredForLevel() Return required confidence and articles for a level
  */
-requiredForLevel = level => {
+exports.requiredForLevel = level => {
     // Confidence required
     let confidence =
         Math.floor(baseConfidence * Math.pow(confidenceExponent, level)) / 100
@@ -39,13 +39,13 @@ requiredForLevel = level => {
 /**
  * calcLevel() Return level a user is
  */
-calcLevel = (confidence, numArticles) => {
+exports.calcLevel = (confidence, numArticles) => {
     confidence = confidence / numArticles
 
     var lev = 0
 
     for (let level = 1; level < 10; level++) {
-        let details = requiredForLevel(level)
+        let details = this.requiredForLevel(level)
 
         if (
             details.confidence <= confidence &&
@@ -107,7 +107,7 @@ exports.generateLevel = async (categoryName, userId) => {
     }
 
     // Calculate Level
-    let newLevel = calcLevel(
+    let newLevel = this.calcLevel(
         userResults.confidence,
         userResults.articles_written
     )
