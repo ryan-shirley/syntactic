@@ -100,8 +100,8 @@ router.route("/dashboard").get(checkIfAuthenticated, async (req, res) => {
         })
     })
 
-    let weekFromNow = new Date()
-    weekFromNow.setDate(weekFromNow.getDate() + 3 * 7)
+    let weeksFromNow = new Date()
+    weeksFromNow.setDate(weeksFromNow.getDate() + 3 * 14)
 
     let data = {
         stats: {
@@ -109,7 +109,7 @@ router.route("/dashboard").get(checkIfAuthenticated, async (req, res) => {
             completedProjects: projects.filter(p => p.status === "completed")
                 .length,
             invitationPending: projects.filter(
-                p => p.status === "invitation pending"
+                p => (p.status === "invitation pending" || p.status === "invitation rejected")
             ).length,
             billing: payments
                 .filter(p => p.status === "paid")
@@ -117,11 +117,11 @@ router.route("/dashboard").get(checkIfAuthenticated, async (req, res) => {
         },
         projects: {
             invitationPending: projects.filter(
-                p => p.status === "invitation pending"
+                p => (p.status === "invitation pending" || p.status === "invitation rejected")
             ),
             dueSoon: projects
                 .filter(
-                    p => p.end_date < weekFromNow && p.status !== "completed"
+                    p => p.end_date < weeksFromNow && p.status !== "completed"
                 )
                 .sort((a, b) => new Date(a.end_date) - new Date(b.end_date))
         }
