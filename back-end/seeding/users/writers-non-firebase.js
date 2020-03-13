@@ -19,6 +19,9 @@ for (let i = 0; i < 50; i++) {
                 name: "writer"
             }
         ],
+        profile: {
+            bio: faker.fake("{{lorem.sentences}}")
+        },
         profile_picture: faker.fake("{{internet.avatar}}"),
         completed_onboarding: true
     }

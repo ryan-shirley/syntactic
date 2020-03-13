@@ -17,6 +17,10 @@ for (let i = 0; i < 2; i++) {
                 name: "content seeker"
             }
         ],
+        profile: {
+            bio: faker.fake("{{lorem.sentences}}"),
+            business: faker.fake("{{lorem.sentences}}")
+        },
         profile_picture: faker.fake("{{internet.avatar}}"),
         completed_onboarding: true
     }
