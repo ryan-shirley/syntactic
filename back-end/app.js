@@ -1,5 +1,7 @@
-require("newrelic")
 require("dotenv").config()
+if(process.env.NODE_ENV === 'production') {
+    require("newrelic")
+}
 
 var createError = require("http-errors")
 var express = require("express")
@@ -19,7 +21,7 @@ mongoose
         useCreateIndex: true
     })
     .then(() => {
-        console.log(`Successfully connected to MongoDB Atlas!`)
+        // console.log(`Successfully connected to MongoDB Atlas!`)
     })
     .catch(error => {
         console.log("Connection failed!")
