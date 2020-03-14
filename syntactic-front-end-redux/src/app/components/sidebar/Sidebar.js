@@ -24,7 +24,7 @@ const Sidebar = props => {
         <div id="sidebar-wrapper" className={"bg-dark" + (isSidebarOpenMobile ? " openMobile" : "")}>
             <div className="sidebar-heading">
                 <Link to="/" onClick={toggleSidebar}>
-                    <img src="/logo.svg" alt="Syntactic" className="logo" />
+                    <img src="/syntactic-logo.svg" alt="Syntactic" className="logo" />
                 </Link>
             </div>
             {links}
