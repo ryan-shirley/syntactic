@@ -7,7 +7,7 @@
     "start": "node -r esm ./bin/www",
     "dev": "PORT=4444 nodemon -r esm ./bin/www",
     "seed": "node -r esm seeder.js",
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "test:watch": "jest --watch --detectOpenHandles"
   },
   "dependencies": {
