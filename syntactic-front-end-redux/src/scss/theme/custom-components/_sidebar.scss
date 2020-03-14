@@ -29,10 +29,15 @@
     }
 
     .sidebar-heading {
-        padding: 1.125rem 1.25rem;
+        padding: 15px 1.25rem;
+        height: 64px;
         font-size: 1.2rem;
         background-color: darken($dark, 10%);
         margin-bottom: 20px;
+
+        .logo {
+            max-height: 30px;
+        }
 
         a {
             color: $white;
