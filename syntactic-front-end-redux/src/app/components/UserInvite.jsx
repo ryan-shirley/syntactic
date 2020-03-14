@@ -9,9 +9,13 @@ import {
     OverlayTrigger
 } from "react-bootstrap"
 
+// Fonts
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCertificate } from "@fortawesome/free-solid-svg-icons"
+
 export default class UserInvite extends Component {
     render() {
-        let { writer, writersList } = this.props
+        let { writer, writersList, recommended } = this.props
 
         // All categories from project
         let categories = writersList.recommended.categories.concat(
@@ -58,6 +62,9 @@ export default class UserInvite extends Component {
                     overlay={popover}
                 >
                     <Card body className="writer">
+                        {recommended && <Badge pill variant="orange" className="recommended">
+                        <FontAwesomeIcon icon={faCertificate} className="mr-1" /> Best Match
+                        </Badge>}
                         <Image
                             src={writer.user.profile_picture || "/img/default-profile.jpg"}
                             className="profile rounded-circle img-fluid"

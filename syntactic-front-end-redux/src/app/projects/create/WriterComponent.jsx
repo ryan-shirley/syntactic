@@ -23,7 +23,7 @@ class WriterComponent extends Component {
 
         // Recommended
         let recommendedWriters
-        recommended && (recommendedWriters = recommended.writers.map(writer => <UserInvite key={writer._id} writer={writer} categories={recommended.categories} onInviteClick={this.onInviteClick} writersList={writersList} />))
+        recommended && (recommendedWriters = recommended.writers.map(writer => <UserInvite key={writer._id} writer={writer} recommended={true} categories={recommended.categories} onInviteClick={this.onInviteClick} writersList={writersList} />))
         // Relevant
         let relevantWriters
         relevant && (relevantWriters = relevant.writers.map(writer => <UserInvite key={writer._id} writer={writer} categories={relevant.categories} onInviteClick={this.onInviteClick} writersList={writersList} />))

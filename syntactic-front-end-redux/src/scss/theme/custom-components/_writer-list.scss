@@ -12,6 +12,11 @@
 }
 
 .writer {
+    .recommended {
+        position: absolute;
+        top: -10px;
+    }
+
     .profile {
         margin-bottom: $spacer;
     }
