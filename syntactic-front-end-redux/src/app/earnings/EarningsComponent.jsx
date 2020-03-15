@@ -6,12 +6,12 @@ import DataLoading from "../components/DataLoading"
 import PaymentsGraph from "../components/PaymentsGraph"
 import PaymentsList from "../components/PaymentsList"
 
-class BillingComponent extends Component {
+class Earnings extends Component {
     constructor(props) {
         super(props)
 
-        // Load all payments
-        props.getAllPayments()
+        // Load all earnings
+        props.getAllEarnings()
     }
 
     render() {
@@ -22,12 +22,12 @@ class BillingComponent extends Component {
         )
 
         let paymentsList = isLoadingdata ? <DataLoading /> : (
-            <PaymentsList payments={payments} canPay={true} setPaymentBeingPayed={this.props.setPaymentBeingPayed} history={this.props.history} />
+            <PaymentsList payments={payments} canPay={false} history={this.props.history} />
         )
 
         return (
             <>
-                <h2 className="mb-3">Billing</h2>
+                <h2 className="mb-3">Earnings</h2>
                 {paymentGraph}
 
                 <h3 className="mb-3">All Payments</h3>
@@ -37,4 +37,4 @@ class BillingComponent extends Component {
     }
 }
 
-export default BillingComponent
+export default Earnings

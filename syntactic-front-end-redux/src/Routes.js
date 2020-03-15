@@ -27,6 +27,7 @@ import ProjectTextEditor from "./app/projects/show/ProjectTextEditorComponent"
 import ProjectFinish from "./app/projects/show/ProjectFinishComponent"
 import LevelsContainer from "./app/levels/LevelsContainer"
 import BillingContainer from "./app/billing/BillingContainer"
+import EarningsContainer from "./app/earnings/EarningsContainer"
 import PaymentPayContainer from "./app/billing/PaymentContainer"
 
 // Page - Auth - Content Seeker Only
@@ -156,6 +157,14 @@ const appLayoutRoutes = [
         middleware: {
             type: 'private',
             role: 'content seeker'
+        }
+    },
+    {
+        path: '/earnings',
+        page: EarningsContainer,
+        middleware: {
+            type: 'private',
+            role: 'writer'
         }
     },
     {

@@ -17,7 +17,7 @@ class PaymentsList extends Component {
     }
 
     render() {
-        let { payments } = this.props
+        let { payments, canPay } = this.props
 
         // Table Columns
         let columns = [
@@ -27,18 +27,29 @@ class PaymentsList extends Component {
                 sortable: true,
                 maxWidth: "250px",
                 cell: row => (
-                    <Moment format="DD/MM/YYYY">
-                        {row.createdAt}
-                    </Moment>
+                    <Moment format="DD/MM/YYYY">{row.createdAt}</Moment>
                 )
             },
             {
-                name: "Project/Writer",
+                name: `Project/${canPay ? "Writer" : "Client"}`,
                 selector: "project_id.title",
                 sortable: true,
                 cell: row => (
-                    <Link to={"/projects/" + row.project_id._id} className="text-reset">
-                        {row.project_id.title}<br /><span className="body-text-light">{row.receiver_id.first_name + ' ' + row.receiver_id.last_name}</span>
+                    <Link
+                        to={"/projects/" + row.project_id._id}
+                        className="text-reset"
+                    >
+                        {row.project_id.title}
+                        <br />
+                        <span className="body-text-light">
+                            {canPay
+                                ? row.receiver_id.first_name +
+                                  " " +
+                                  row.receiver_id.last_name
+                                : row.payer_id.first_name +
+                                  " " +
+                                  row.payer_id.last_name}
+                        </span>
                     </Link>
                 )
             },
@@ -66,8 +77,11 @@ class PaymentsList extends Component {
                         {row.status}
                     </Badge>
                 )
-            },
-            {
+            }
+        ]
+
+        if (canPay) {
+            columns.push({
                 name: "Action",
                 sortable: false,
                 maxWidth: "150px",
@@ -80,8 +94,8 @@ class PaymentsList extends Component {
                             Pay
                         </Button>
                     )
-            }
-        ]
+            })
+        }
 
         return (
             <DataTable

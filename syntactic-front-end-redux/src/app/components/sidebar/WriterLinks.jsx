@@ -9,7 +9,6 @@ import {
     faHome,
     faThumbtack,
     faBolt,
-    faWallet,
     faMoneyBill
 } from "@fortawesome/free-solid-svg-icons"
 
@@ -33,13 +32,9 @@ const WriterLinks = props => {
                 <FontAwesomeIcon icon={faBolt} />
                 Levels
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/billing" onClick={toggleSidebar}>
-                <FontAwesomeIcon icon={faWallet} />
-                Billing*
-            </Nav.Link>
             <Nav.Link as={NavLink} to="/earnings" onClick={toggleSidebar}>
                 <FontAwesomeIcon icon={faMoneyBill} />
-                Earnings*
+                Earnings
             </Nav.Link>
         </Nav>
     )
