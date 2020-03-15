@@ -21,7 +21,7 @@ class MainNavbar extends React.Component {
             <Navbar expand="md" className="public-nav">
                 <Navbar.Brand as={Link} to="/">
                     <Image
-                        src="/logo-dark.png"
+                        src="https://firebasestorage.googleapis.com/v0/b/syntactic-iadt-year-4-fb.appspot.com/o/assets%2Flogo-dark.png?alt=media"
                         alt="Syntactic"
                         className="logo"
                     />

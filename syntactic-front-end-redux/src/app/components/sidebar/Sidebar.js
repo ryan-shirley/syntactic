@@ -24,7 +24,7 @@ const Sidebar = props => {
         <div id="sidebar-wrapper" className={"bg-dark" + (isSidebarOpenMobile ? " openMobile" : "")}>
             <div className="sidebar-heading">
                 <Link to="/" onClick={toggleSidebar}>
-                    <img src="/logo.png" alt="Syntactic" className="logo" />
+                    <img src="https://firebasestorage.googleapis.com/v0/b/syntactic-iadt-year-4-fb.appspot.com/o/assets%2Flogo.png?alt=media" alt="Syntactic" className="logo" />
                 </Link>
             </div>
             {links}

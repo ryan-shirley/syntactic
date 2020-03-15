@@ -29,7 +29,7 @@ const HomeContainer = () => {
                     <Col sm={6}>
                         <span className="writers">
                             <Image
-                                src={"/img/writers.jpg"}
+                                src={"https://firebasestorage.googleapis.com/v0/b/syntactic-iadt-year-4-fb.appspot.com/o/assets%2Fwriters.jpg?alt=media"}
                                 className="img-fluid"
                                 alt="Syntactic Writers"
                             />
@@ -64,7 +64,7 @@ const HomeContainer = () => {
                     <Col className="order-1 order-md-12">
                         <span className="content-seekers">
                             <Image
-                                src={"/img/content-seekers.jpg"}
+                                src={"https://firebasestorage.googleapis.com/v0/b/syntactic-iadt-year-4-fb.appspot.com/o/assets%2Fcontent-seekers.jpg?alt=media"}
                                 className="img-fluid"
                                 alt="Syntactic Content Seekers"
                             />
@@ -74,7 +74,7 @@ const HomeContainer = () => {
 
                 <footer>
                     <Image
-                        src="/logo-dark.png"
+                        src="https://firebasestorage.googleapis.com/v0/b/syntactic-iadt-year-4-fb.appspot.com/o/assets%2Flogo-dark.png?alt=media"
                         alt="Syntactic"
                         className="logo"
                     />
