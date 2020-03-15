@@ -51,7 +51,7 @@ exports.uploadFileToCloudStorage = async (file, destination) => {
                 cacheControl: "public, max-age=31536000"
             },
             public: true,
-            destination
+            destination: process.env.NODE_ENV + '/' + destination
         })
 
     return upload[0].metadata.mediaLink
@@ -70,7 +70,7 @@ exports.deleteFolderFromCloudStorage = async folder => {
 
     await storage
         .bucket(process.env.FIREBASE_STORAGE_BUCKET)
-        .deleteFiles({ prefix: folder }, function(err) {
+        .deleteFiles({ prefix: process.env.NODE_ENV + '/' + folder }, function(err) {
             if (err) throw err
         })
 
