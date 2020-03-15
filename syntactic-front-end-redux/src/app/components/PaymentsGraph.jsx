@@ -52,7 +52,43 @@ class PaymentsGraph extends Component {
             return { month: group, value: dataByMonth[group] }
         })
 
-        return finalResult
+        // Fill in empty months between results
+        let formattedResults = [],
+            lastResult
+        for (let i = 0; i < finalResult.length; i++) {
+            let result = finalResult[i]
+
+            if (i === 0) {
+                formattedResults.push(result)
+            } else {
+                let thisMonth = result.month.substr(0, 3),
+                    thisMonthIndex = monthNames.indexOf(thisMonth),
+                    lastMonth = lastResult.month.substr(0, 3),
+                    lastMonthIndex = monthNames.indexOf(lastMonth)
+
+                while (thisMonthIndex - lastMonthIndex > 1) {
+                    // Missing one month or more
+                    let nextMonth = monthNames[lastMonthIndex + 1]
+
+                    // Add Missing month
+                    formattedResults.push({
+                        month: nextMonth,
+                        value: 0
+                    })
+
+                    // Update last month
+                    lastMonthIndex += 1
+                    lastMonth = nextMonth
+                }
+
+                // Add month
+                formattedResults.push(result)
+            }
+
+            lastResult = result
+        }
+
+        return formattedResults
     }
 
     render() {
