@@ -6,7 +6,7 @@ import { Route } from "react-router-dom"
 import { connect } from "react-redux"
 
 // Components
-import Navbar from "../components/navbar/Navbar"
+import Navbar from "../components/navbar/app/Navbar"
 import Sidebar from "../components/sidebar/Sidebar"
 import { Row, Col } from "react-bootstrap"
 
