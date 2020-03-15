@@ -49,46 +49,62 @@ class PaymentsGraph extends Component {
 
         // Now just turn the hash into an array.
         var finalResult = Object.keys(dataByMonth).map(function(group) {
-            return { month: group, value: dataByMonth[group] }
+            return { month: group, value: dataByMonth[group], index: monthNames.indexOf(group.substr(0, 3)) }
         })
-
+        
         // Fill in empty months between results
-        let formattedResults = [],
-            lastResult
+        let formattedResults = []
         for (let i = 0; i < finalResult.length; i++) {
-            let result = finalResult[i]
+            let result = finalResult[i],
+                lastResult = finalResult[i-1]
 
             if (i === 0) {
                 formattedResults.push(result)
             } else {
-                let thisMonth = result.month.substr(0, 3),
-                    thisMonthIndex = monthNames.indexOf(thisMonth),
-                    lastMonth = lastResult.month.substr(0, 3),
-                    lastMonthIndex = monthNames.indexOf(lastMonth)
+                let diff = result.index - lastResult.index
 
-                while (thisMonthIndex - lastMonthIndex > 1) {
-                    // Missing one month or more
-                    let nextMonth = monthNames[lastMonthIndex + 1]
+                if(diff === 1) {
+                    // Next Month
+                    formattedResults.push(result)
+                } else if (diff > 1) {
+                    // In between Months
+                    for (let j = 1; j < diff; j++) {
+                        formattedResults.push({
+                            month: monthNames[lastResult.index + j],
+                            value: 0,
+                            index: lastResult.index + j
+                        })
+                    }
 
-                    // Add Missing month
-                    formattedResults.push({
-                        month: nextMonth,
-                        value: 0
-                    })
+                    // Next Month
+                    formattedResults.push(result)
+                } else if (diff < 0) {
 
-                    // Update last month
-                    lastMonthIndex += 1
-                    lastMonth = nextMonth
+                    // End of year months
+                    for (let j = 1; j < 12 - lastResult.index; j++) {
+                        formattedResults.push({
+                            month: monthNames[lastResult.index + j],
+                            value: 0,
+                            index: lastResult.index + j
+                        })
+                    }
+
+                    // Start of year months 
+                    for (let j = 0; j < result.index; j++) {
+                        formattedResults.push({
+                            month: monthNames[j],
+                            value: 0,
+                            index: j
+                        })
+                    }
+
+                    // Next Month
+                    formattedResults.push(result)
                 }
-
-                // Add month
-                formattedResults.push(result)
             }
-
-            lastResult = result
         }
 
-        return formattedResults
+        return finalResult
     }
 
     render() {
