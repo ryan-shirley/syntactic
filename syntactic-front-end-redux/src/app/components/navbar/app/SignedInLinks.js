@@ -5,7 +5,7 @@ import { Image, Dropdown } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 // Actions
-import { signOut } from "../../../store/actions/authActions"
+import { signOut } from "../../../../store/actions/authActions"
 
 /**
  * SignedInLinks() Links for main navigation only for authenticated users

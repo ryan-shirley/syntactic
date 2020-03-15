@@ -36,14 +36,6 @@ import ProjectCreate from "./app/projects/create/ProjectCreateContainer"
 // All Routes to use the app layout
 const appLayoutRoutes = [
     {
-        path: '/',
-        page: Home,
-        exact: true,
-        middleware: {
-            type: 'public'
-        }
-    },
-    {
         path: '/login',
         page: SignIn,
         middleware: {
@@ -178,6 +170,14 @@ const appLayoutRoutes = [
 
 // Full-With Routes
 const fullWithRoutes = [
+    {
+        path: '/',
+        page: Home,
+        exact: true,
+        middleware: {
+            type: 'public'
+        }
+    },
     {
         path: '/onboarding/writer',
         page: OnboardingWriter,

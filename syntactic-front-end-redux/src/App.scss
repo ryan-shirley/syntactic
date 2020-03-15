@@ -13,7 +13,10 @@
 @import './scss/hamburgers//pre_defaults';
 
 // Hamburgers Component Overrides
-@import './scss/hamburgers/hamburgers-ovverrides';
+@import './scss/hamburgers/hamburgers-overrides';
+
+// Firebase UI Component Overrides
+@import './scss/firebase-ui/firebase-ui-overrides';
 
 // Theme Styles
 @import './scss/theme/app';

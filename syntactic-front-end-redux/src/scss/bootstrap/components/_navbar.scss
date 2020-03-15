@@ -29,3 +29,52 @@
         font-size: small;
     }
 }
+
+.public-nav {
+    margin-bottom: $spacer-lg * 2;
+
+    .navbar-brand {
+        width: 250px;
+
+        img {
+            height: 30px;
+        }
+    }
+
+    .button-group {
+        text-align: right;
+        width: 250px;
+
+        .btn-link {
+            color: $body-color;
+        }
+    }
+
+    .navbar-nav {
+        .nav-link {
+            padding: $spacer $spacer-lg;
+            position: relative;
+
+            &:after {
+                content: "";
+                position: absolute;
+                width: 15px;
+                height: 2px;
+                top: 28px;
+                right: -10px;
+                background-color: darken($body-bg-dark, 5%);
+                z-index: -1;
+            }
+
+            &:last-child:after {
+                display: none;
+            }
+
+            @media (max-width: 767px) {
+                &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+}
