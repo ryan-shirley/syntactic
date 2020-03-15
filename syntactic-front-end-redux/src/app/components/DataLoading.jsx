@@ -1,17 +1,12 @@
 import React, { Component } from "react"
 import { Spinner } from "react-bootstrap"
+import UseAnimations from "react-useanimations"
 
 export default class DataLoading extends Component {
     render() {
         return (
             <div className="loading-screen">
-                <Spinner
-                    animation="grow"
-                    variant="primary"
-                    size="xl"
-                    role="status"
-                >
-                </Spinner>
+                <UseAnimations animationKey="loading2" />
             </div>
         )
     }

@@ -1,10 +1,11 @@
 .loading-screen {
     text-align: center;
     padding: 60px;
+    color: $primary;
 
-    .spinner-border, .spinner-grow {
-        width: 4rem;
-        height: 4rem;
-        border-width: .5rem;
+    > div {
+        width: 100px !important;
+        text-align: center;
+        margin: 0 auto;
     }
 }
