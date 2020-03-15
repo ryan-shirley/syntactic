@@ -1,0 +1,6 @@
+# Remove These files from deployment
+*.md
+/src
+/public
+
+package-lock.json
