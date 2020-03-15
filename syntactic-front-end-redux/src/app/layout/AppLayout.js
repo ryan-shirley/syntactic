@@ -56,6 +56,7 @@ const AppLayout = ({
                 <Navbar />
                 <main
                     className="container-fluid"
+                    onClick={() => isSidebarOpenMobile && toggleSidebar()}
                 >
                     {isFullWidth ? (
                         <>
