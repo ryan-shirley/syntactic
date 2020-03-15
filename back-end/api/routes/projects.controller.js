@@ -472,8 +472,6 @@ router
                 updatedProjectDetails
             )
 
-            console.log(newProject)
-
             // Remove files from express
             for (var i = 0; i < files.length; i++) {
                 let file = files[i].path
