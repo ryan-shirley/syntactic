@@ -2,6 +2,9 @@
 import React from "react"
 import { Route } from "react-router-dom"
 
+// Redux
+import { connect } from "react-redux"
+
 // Components
 import Navbar from "../components/navbar/Navbar"
 import Sidebar from "../components/sidebar/Sidebar"
@@ -13,7 +16,9 @@ const AppLayout = ({
     exact,
     children,
     isExact,
-    isFullWidth
+    isFullWidth,
+    isSidebarOpenMobile,
+    toggleSidebar
 }) => {
     let page = exact ? (
         <Route exact path={path} component={component} />
@@ -49,7 +54,9 @@ const AppLayout = ({
 
             <div id="page-content-wrapper">
                 <Navbar />
-                <main className="container-fluid">
+                <main
+                    className="container-fluid"
+                >
                     {isFullWidth ? (
                         <>
                             {page}
@@ -75,4 +82,16 @@ const AppLayout = ({
     )
 }
 
-export default AppLayout
+const mapStateToProps = state => {
+    return {
+        isSidebarOpenMobile: state.auth.isSidebarOpenMobile
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        toggleSidebar: () => dispatch({ type: "TOGGLE_MOBILE_SIDEBAR" })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppLayout)
