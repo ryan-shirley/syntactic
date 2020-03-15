@@ -2,7 +2,7 @@
 import React from "react"
 
 // Components
-import Navbar from "./components/navbar/app/Navbar"
+import Navbar from "./components/navbar/main/Navbar"
 import { Row, Col, Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
