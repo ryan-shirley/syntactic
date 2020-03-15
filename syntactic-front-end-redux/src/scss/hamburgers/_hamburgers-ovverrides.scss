@@ -1,0 +1,19 @@
+.hamburger {
+    &:focus {
+        outline: none;
+    }
+
+    &.is-active {
+        .hamburger-inner, .hamburger-inner::after {
+            width: 30px;
+        }
+    }
+
+    .hamburger-inner {
+        width: 15px;
+    }
+
+    .hamburger-inner::after {
+        width: 20px;
+    }
+}

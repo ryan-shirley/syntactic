@@ -9,5 +9,11 @@
 // Bootstrap Component Overrides
 @import './scss/bootstrap/bootstrap-overrides';
 
+// Hamburgers Pre Default Variables
+@import './scss/hamburgers//pre_defaults';
+
+// Hamburgers Component Overrides
+@import './scss/hamburgers/hamburgers-ovverrides';
+
 // Theme Styles
 @import './scss/theme/app';
