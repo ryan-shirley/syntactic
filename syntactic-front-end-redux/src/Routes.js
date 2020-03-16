@@ -4,6 +4,7 @@ import LayoutManager from './app/layout/LayoutManager'
 
 // Pages - No Auth
 import Home from "./app/home/HomeContainer"
+import Tech from "./app/home/TechContainer"
 import SignIn from "./app/auth/SignIn"
 import SignUpWriter from "./app/auth/SignUpWriter"
 import SignUpContentSeeker from "./app/auth/SignUpContentSeeker"
@@ -142,6 +143,14 @@ const fullWithRoutes = [
     {
         path: '/',
         page: Home,
+        exact: true,
+        middleware: {
+            type: 'public'
+        }
+    },
+    {
+        path: '/tech',
+        page: Tech,
         exact: true,
         middleware: {
             type: 'public'

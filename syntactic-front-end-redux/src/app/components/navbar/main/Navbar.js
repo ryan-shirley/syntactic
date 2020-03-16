@@ -88,9 +88,9 @@ class MainNavbar extends React.Component {
                         <Nav.Link as={NavLink} to="/">
                             Home
                         </Nav.Link>
-                        <Nav.Link as={NavLink} to="/features">
+                        {/* <Nav.Link as={NavLink} to="/features">
                             Features
-                        </Nav.Link>
+                        </Nav.Link> */}
                         <Nav.Link as={NavLink} to="/tech">
                             Tech
                         </Nav.Link>
