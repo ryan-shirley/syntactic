@@ -63,47 +63,61 @@ export const signUp = (newUser, role) => {
     return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
 
-        dispatch({ type: "AUTH_REQUEST_PROCESSING_STARTED" })
+        if (newUser.password !== newUser.conf_password) {
+            let error = {
+                message: "Error with passwords",
+                fields: {
+                    conf_password: "Passwords do not match"
+                }
+            }
 
-        firebase
-            .auth()
-            .createUserWithEmailAndPassword(newUser.email, newUser.password)
-            .then(result => {
-                const displayName = `${newUser.first_name} ${newUser.last_name}`
+            dispatch({ type: "SIGNUP_ERROR", payload: error })
+        } else {
+            dispatch({ type: "AUTH_REQUEST_PROCESSING_STARTED" })
 
-                // Add display name to Firebase profile
-                result.user
-                    .updateProfile({
-                        displayName
-                    })
-                    .then(() => {
-                        // console.log("New user signed up on Firebase!", result)
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(newUser.email, newUser.password)
+                .then(result => {
+                    const displayName = `${newUser.first_name} ${newUser.last_name}`
 
-                        newUser.uid = result.user.uid
-                        newUser.role =
-                            role === "writer" ? "writer" : "content seeker"
+                    // Add display name to Firebase profile
+                    result.user
+                        .updateProfile({
+                            displayName
+                        })
+                        .then(() => {
+                            // console.log("New user signed up on Firebase!", result)
 
-                        axios
-                            .post(API_URL + "/register", newUser)
-                            .then(resp => {
-                                dispatch({
-                                    type: "SIGNUP_SUCCESS",
-                                    payload: resp.data
+                            newUser.uid = result.user.uid
+                            newUser.role =
+                                role === "writer" ? "writer" : "content seeker"
+
+                            axios
+                                .post(API_URL + "/register", newUser)
+                                .then(resp => {
+                                    dispatch({
+                                        type: "SIGNUP_SUCCESS",
+                                        payload: resp.data
+                                    })
                                 })
-                            })
-                            .catch(err => {
-                                dispatch({
-                                    type: "SIGNUP_ERROR",
-                                    payload: {
-                                        message: err.response.data.message
-                                    }
+                                .catch(err => {
+                                    dispatch({
+                                        type: "SIGNUP_ERROR",
+                                        payload: {
+                                            message: err.response.data.message
+                                        }
+                                    })
                                 })
-                            })
+                        })
+                })
+                .catch(err => {
+                    dispatch({
+                        type: "SIGNUP_ERROR",
+                        payload: { message: err }
                     })
-            })
-            .catch(err => {
-                dispatch({ type: "SIGNUP_ERROR", payload: { message: err } })
-            })
+                })
+        }
     }
 }
 
@@ -214,15 +228,15 @@ export const getUser = () => {
 /**
  * updateUser() Upate user
  */
-export const updateUser = (userDTO) => {
+export const updateUser = userDTO => {
     return dispatch => {
         dispatch({ type: "USER_REQUEST_PROCESSING" })
-        
-        API.uploadFilePut('/users/' + userDTO._id, userDTO)
+
+        API.uploadFilePut("/users/" + userDTO._id, userDTO)
             .then(data => {
                 // dispatch({ type: "PROJECT_UPDATED_SUCCESSFULLY", payload: data.project })
                 // dispatch({ type: "PROJECT_WRITER_LIST_RECEIVED", payload: data.writers })
-            }) 
+            })
             .catch(error => {
                 // dispatch({ type: "PROJECTS_REQUEST_ERROR", payload: error })
             })

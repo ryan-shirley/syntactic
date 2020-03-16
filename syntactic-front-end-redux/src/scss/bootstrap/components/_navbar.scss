@@ -14,12 +14,6 @@
         padding: 10px 15px;
     }
 
-    .dropdown-toggle {
-        background: none;
-        border: none;
-        outline: none;
-    }
-
     .sidebar-toggle {
         font-size: 12px;
         padding: $spacer/4 $spacer/2;
@@ -27,6 +21,14 @@
 
     time {
         font-size: small;
+    }
+}
+
+.profile {
+    .dropdown-toggle {
+        background: none;
+        border: none;
+        outline: none;
     }
 }
 

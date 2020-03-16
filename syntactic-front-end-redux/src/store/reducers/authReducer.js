@@ -86,7 +86,7 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 requestProcessing: false,
-                error: action.payload.message
+                error: action.payload
             }
 
         case "NO_USER_IN_MONGO":

@@ -3,6 +3,7 @@ import React, { Component } from "react"
 // Components
 import Button from "../components/Button"
 import { TextArea } from "../components/Form"
+import { Container } from "react-bootstrap"
 
 class OnboardingWriterComponent extends Component {
     constructor(props) {
@@ -43,7 +44,7 @@ class OnboardingWriterComponent extends Component {
     render() {
         // Once completed update status in store
         if (this.props.onboarding.completed) {
-            this.props.history.push('/dashboard')
+            this.props.history.push("/dashboard")
         }
 
         let stage = this.props.onboarding.stage
@@ -159,7 +160,9 @@ class OnboardingWriterComponent extends Component {
                             <Button
                                 displayStyle="primary"
                                 onClick={e =>
-                                    this.props.analyseTextProject(this.state.text)
+                                    this.props.analyseTextProject(
+                                        this.state.text
+                                    )
                                 }
                                 disabled={
                                     this.props.onboarding.requestProcessing
@@ -181,39 +184,44 @@ class OnboardingWriterComponent extends Component {
         }
 
         return (
-            <div className="row mt-5">
-                <div className="col-12">
-                    <div className="card">
-                        <h5 className="card-header text-center">
-                            <button
-                                type="button"
-                                className="btn btn-primary mr-3"
-                            >
-                                Stage{" "}
-                                <span className="badge badge-light ml-2">
-                                    {stage}
-                                </span>
-                            </button>
+            <Container>
+                <div className="row mt-5">
+                    <div className="col-12">
+                        <div className="card">
+                            <h5 className="card-header text-center">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary mr-3"
+                                >
+                                    Stage{" "}
+                                    <span className="badge badge-light ml-2">
+                                        {stage}
+                                    </span>
+                                </button>
 
-                            <button type="button" className="btn btn-primary">
-                                Content amount{" "}
-                                <span className="badge badge-light ml-2">
-                                    {this.props.onboarding.contentCount}
-                                </span>
-                            </button>
-                        </h5>
-                        <div className="card-body text-center">
-                            <h2 className="card-title">{title}</h2>
-                            <p className="card-text">{text}</p>
-                            {form}
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                >
+                                    Content amount{" "}
+                                    <span className="badge badge-light ml-2">
+                                        {this.props.onboarding.contentCount}
+                                    </span>
+                                </button>
+                            </h5>
+                            <div className="card-body text-center">
+                                <h2 className="card-title">{title}</h2>
+                                <p className="card-text">{text}</p>
+                                {form}
 
-                            {buttons}
+                                {buttons}
 
-                            {submitFormButton}
+                                {submitFormButton}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Container>
         )
     }
 }

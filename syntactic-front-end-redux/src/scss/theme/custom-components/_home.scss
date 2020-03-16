@@ -99,27 +99,28 @@
             margin-right: $spacer-lg;
         }
     }
+}
 
-    footer {
-        margin-bottom: $spacer-lg;
-        text-align: center;
+footer {
+    margin-top: $spacer-lg;
+    margin-bottom: $spacer-lg;
+    text-align: center;
+    color: $body-color-light;
+    text-transform: uppercase;
+
+    .logo {
+        width: 150px;
+        margin: 0 auto;
+        display: block;
+        margin-bottom: $spacer;
+    }
+
+    p {
+        font-size: 12px;
+    }
+
+    a {
         color: $body-color-light;
-        text-transform: uppercase;
-
-        .logo {
-            width: 150px;
-            margin: 0 auto;
-            display: block;
-            margin-bottom: $spacer;
-        }
-
-        p {
-            font-size: 12px;
-        }
-
-        a {
-            color: $body-color-light;
-            text-decoration: underline;
-        }
+        text-decoration: underline;
     }
 }

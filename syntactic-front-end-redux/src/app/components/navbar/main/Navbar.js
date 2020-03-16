@@ -1,13 +1,26 @@
 // React
 import React from "react"
 
+// Redux
+import { connect } from "react-redux"
+
 // Components
 import { Link, NavLink } from "react-router-dom"
-import { Navbar, Nav, Image, Button } from "react-bootstrap"
+import {
+    Navbar,
+    Nav,
+    Image,
+    Button,
+    DropdownButton,
+    Dropdown
+} from "react-bootstrap"
+
+// Links
+import SignedInLinks from "../app/SignedInLinks"
 
 class MainNavbar extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             isNavOpen: false
@@ -16,6 +29,31 @@ class MainNavbar extends React.Component {
 
     render() {
         let { isNavOpen } = this.state
+        const { auth, user } = this.props
+
+        const links = !auth.uid ? (
+            <>
+                <Button as={Link} variant="link" to="/login">
+                    Sign In
+                </Button>
+                <DropdownButton
+                    id="register-dropdown"
+                    title="Register"
+                    className="d-inline"
+                    alignRight
+                    drop="down"
+                >
+                    <Dropdown.Item as={Link} to="/register/writer">
+                        Writer
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/register/content-seeker">
+                        Content Seeker
+                    </Dropdown.Item>
+                </DropdownButton>
+            </>
+        ) : (
+            <SignedInLinks user={user} />
+        )
 
         return (
             <Navbar expand="md" className="public-nav">
@@ -57,18 +95,18 @@ class MainNavbar extends React.Component {
                             Tech
                         </Nav.Link>
                     </Nav>
-                    <div className="button-group">
-                        <Button as={Link} variant="link" to="/login">
-                            Sign In
-                        </Button>
-                        <Button as={Link} variant="primary" to="/register">
-                            Register
-                        </Button>
-                    </div>
+                    <div className="button-group">{links}</div>
                 </Navbar.Collapse>
             </Navbar>
         )
     }
 }
 
-export default MainNavbar
+const mapStateToProps = state => {
+    return {
+        auth: state.firebase.auth,
+        user: state.auth.user
+    }
+}
+
+export default connect(mapStateToProps)(MainNavbar)

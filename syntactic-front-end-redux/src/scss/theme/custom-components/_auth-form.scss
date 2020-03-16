@@ -1,0 +1,9 @@
+.auth-form {
+    .hero-image {
+        width: 100%;
+        height: calc(100vh - 72px - 4rem);
+        object-fit: cover;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+}

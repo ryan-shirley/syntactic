@@ -1,0 +1,11 @@
+.hover-grow {
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.03);
+
+        &.clickable:hover {
+            cursor: pointer;
+        }
+    }
+}

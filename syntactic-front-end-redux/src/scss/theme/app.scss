@@ -1,7 +1,9 @@
 // Theme Styles
 @import "./text";
+@import "./hover-grow";
 
 // Components
+@import "./custom-components/auth-form";
 @import "./custom-components/home";
 @import "./custom-components/page-content";
 @import "./custom-components/sidebar";

@@ -12,7 +12,7 @@ import { signOut } from "../../../../store/actions/authActions"
  */
 const SignedInLinks = props => {
     return (
-        <Dropdown alignRight>
+        <Dropdown alignRight className="profile">
             <Dropdown.Toggle as="button">
                 <Image
                     src={props.user.profile_picture || "/img/default-profile.jpg"}

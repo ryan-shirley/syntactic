@@ -36,37 +36,6 @@ import ProjectCreate from "./app/projects/create/ProjectCreateContainer"
 // All Routes to use the app layout
 const appLayoutRoutes = [
     {
-        path: '/login',
-        page: SignIn,
-        middleware: {
-            type: 'public',
-            restricted: true
-        }
-    },
-    {
-        path: '/register/writer',
-        page: SignUpWriter,
-        middleware: {
-            type: 'public',
-            restricted: true
-        }
-    },
-    {
-        path: '/register/content-seeker',
-        page: SignUpContentSeeker,
-        middleware: {
-            type: 'public',
-            restricted: true
-        }
-    },
-    {
-        path: '/account-type',
-        page: RoleComponent,
-        middleware: {
-            type: 'pre-private'
-        }
-    },
-    {
         path: '/dashboard',
         page: Dashboard,
         middleware: {
@@ -176,6 +145,37 @@ const fullWithRoutes = [
         exact: true,
         middleware: {
             type: 'public'
+        }
+    },
+    {
+        path: '/login',
+        page: SignIn,
+        middleware: {
+            type: 'public',
+            restricted: true
+        }
+    },
+    {
+        path: '/register/writer',
+        page: SignUpWriter,
+        middleware: {
+            type: 'public',
+            restricted: true
+        }
+    },
+    {
+        path: '/register/content-seeker',
+        page: SignUpContentSeeker,
+        middleware: {
+            type: 'public',
+            restricted: true
+        }
+    },
+    {
+        path: '/account-type',
+        page: RoleComponent,
+        middleware: {
+            type: 'pre-private'
         }
     },
     {
