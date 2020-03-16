@@ -5,7 +5,7 @@ import admin from "../config/firebase-service"
  * signUp() Saves new user into Monogo
  */
 exports.signUp = async userDTO => {
-    const { first_name, last_name, email, uid, role } = userDTO
+    const { first_name, last_name, email, uid, role, location } = userDTO
 
     try {
         // Create new user in Mongo DB
@@ -13,6 +13,7 @@ exports.signUp = async userDTO => {
             first_name,
             last_name,
             email,
+            location,
             completed_onboarding: false,
             uid,
             role: [

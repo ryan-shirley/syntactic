@@ -72,6 +72,20 @@ export const signUp = (newUser, role) => {
             }
 
             dispatch({ type: "SIGNUP_ERROR", payload: error })
+        } else if (newUser.country === "" || newUser.city === "") {
+            let error = {
+                message: "Error County/City",
+                fields: {}
+            }
+
+            if(newUser.country === "") {
+                error.fields.country = "Country can't be empty"
+            }
+            if(newUser.city === "") {
+                error.fields.city = "City can't be empty"
+            }
+
+            dispatch({ type: "SIGNUP_ERROR", payload: error })
         } else {
             dispatch({ type: "AUTH_REQUEST_PROCESSING_STARTED" })
 
@@ -92,6 +106,7 @@ export const signUp = (newUser, role) => {
                             newUser.uid = result.user.uid
                             newUser.role =
                                 role === "writer" ? "writer" : "content seeker"
+                            newUser.location = newUser.city + ', ' + newUser.country
 
                             axios
                                 .post(API_URL + "/register", newUser)
@@ -125,7 +140,7 @@ export const signUp = (newUser, role) => {
  * signUpWithRoleMongo() Signs up a new user using in
  * mongo with set role.
  */
-export const signUpWithRoleMongo = role => {
+export const signUpWithRoleMongo = (role, location) => {
     return (dispatch, getState, { getFirebase }) => {
         let state = getState()
         let { email, uid, displayName } = state.firebase.auth
@@ -139,6 +154,7 @@ export const signUpWithRoleMongo = role => {
             first_name,
             last_name,
             email,
+            location,
             uid,
             role
         }

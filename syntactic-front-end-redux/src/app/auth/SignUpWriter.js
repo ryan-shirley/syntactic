@@ -13,22 +13,40 @@ import { Container, Row, Col, Form, Button, Image } from "react-bootstrap"
 import FirebaseProviderSignIn from "../components/FirebaseProviderSignIn"
 import { Link } from "react-router-dom"
 
+// Data
+import csc from "country-state-city"
+
 class SignUpWriter extends Component {
-    state = {
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: "",
-        conf_password: ""
+    constructor() {
+        super()
+
+        this.state = {
+            first_name: "",
+            last_name: "",
+            email: "",
+            country: "",
+            city: "",
+            password: "",
+            conf_password: "",
+            countries: csc.getAllCountries(),
+            cities: []
+        }
     }
 
     /**
      * handleChange() Handle form input
      */
     handleChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        if (e.target.name === "countryId") {
+            this.setState({
+                country: csc.getCountryById(e.target.value).sortname,
+                cities: csc.getStatesOfCountry(e.target.value)
+            })
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     /**
@@ -107,6 +125,65 @@ class SignUpWriter extends Component {
                                     </span>
                                 )}
                             </Form.Group>
+
+                            <Form.Row>
+                                <Col>
+                                    <Form.Group controlId="formCountry">
+                                        <Form.Label>Country</Form.Label>
+                                        <Form.Control
+                                            as="select"
+                                            name="countryId"
+                                            onChange={this.handleChange}
+                                        >
+                                            <option></option>
+                                            {this.state.countries.map(
+                                                country => (
+                                                    <option
+                                                        key={country.id}
+                                                        value={country.id}
+                                                    >
+                                                        {country.name}
+                                                    </option>
+                                                )
+                                            )}
+                                        </Form.Control>
+
+                                        {error && error.fields && (
+                                            <span className="badge badge-pill badge-danger">
+                                                {error.fields.country}
+                                            </span>
+                                        )}
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId="formCity">
+                                        <Form.Label>City</Form.Label>
+                                        <Form.Control
+                                            as="select"
+                                            name="city"
+                                            onChange={this.handleChange}
+                                        >
+                                            {this.state.cities.length > 0 && (
+                                                <option></option>
+                                            )}
+                                            {this.state.cities.map(city => (
+                                                <option
+                                                    key={city.id}
+                                                    value={city.name}
+                                                >
+                                                    {city.name}
+                                                </option>
+                                            ))}
+                                        </Form.Control>
+
+                                        {error && error.fields && (
+                                            <span className="badge badge-pill badge-danger">
+                                                {error.fields.city}
+                                            </span>
+                                        )}
+                                    </Form.Group>
+                                </Col>
+                            </Form.Row>
 
                             <Form.Group controlId="formPassword">
                                 <Form.Label>Password</Form.Label>

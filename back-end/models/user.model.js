@@ -50,6 +50,10 @@ let UserSchema = new mongoose.Schema({
         type: [RoleSchema],
         required: true
     },
+    location: {
+        type: String,
+        required: true
+    },
     profile: {
         bio: {
             type: String,
