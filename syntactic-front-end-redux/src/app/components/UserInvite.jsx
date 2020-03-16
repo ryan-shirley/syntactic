@@ -80,7 +80,7 @@ export default class UserInvite extends Component {
                             {writer.user.first_name +
                                 " " +
                                 writer.user.last_name}{" "}
-                            <span className="location">New York, NY*</span>
+                            <span className="location">{writer.user.location}</span>
                         </p>
 
                         <p>
