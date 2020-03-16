@@ -1,5 +1,6 @@
 import React from "react"
 import { Route } from "react-router-dom"
+import Navbar from "../components/navbar/main/Navbar"
 
 const FullLayout = ({ component, path, children, isExact }) => {
     let childRoutes =
@@ -24,6 +25,8 @@ const FullLayout = ({ component, path, children, isExact }) => {
 
     return (
         <>
+            <Navbar />
+            
             <Route path={path} component={component} />
 
             {rootChild}

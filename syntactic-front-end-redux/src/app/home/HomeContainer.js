@@ -3,7 +3,6 @@ import React from "react"
 
 // Components
 import { Container, Row, Col, Image } from "react-bootstrap"
-import Navbar from "../components/navbar/main/Navbar"
 import FirebaseSignIn from "../components/FirebaseProviderSignIn"
 
 // Fonts
@@ -13,8 +12,6 @@ import { faCopyright } from "@fortawesome/free-solid-svg-icons"
 const HomeContainer = () => {
     return (
         <div className="home">
-            <Navbar />
-
             <Container>
                 <section className="hero">
                     <h1>Empower your business with AI!</h1>
