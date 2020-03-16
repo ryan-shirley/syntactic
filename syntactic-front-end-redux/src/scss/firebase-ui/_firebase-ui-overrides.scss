@@ -1,6 +1,7 @@
 .firebaseui-container {
     .firebaseui-idp-google {
         background-color: $dark !important;
+        margin-bottom: $spacer-lg;
 
         .firebaseui-idp-text {
             color: $white;
