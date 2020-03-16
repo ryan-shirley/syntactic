@@ -19,6 +19,7 @@ for (let i = 0; i < 50; i++) {
                 name: "writer"
             }
         ],
+        location: faker.fake("{{address.city}}, {{address.countryCode}}"),
         profile: {
             bio: faker.fake("{{lorem.sentences}}")
         },

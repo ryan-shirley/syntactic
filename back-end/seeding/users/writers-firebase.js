@@ -13,6 +13,7 @@ const users = [
                 name: "writer"
             }
         ],
+        location: faker.fake("{{address.city}}, {{address.countryCode}}"),
         profile: {
             bio: faker.fake("{{lorem.sentences}}")
         },
@@ -30,6 +31,7 @@ const users = [
                 name: "writer"
             }
         ],
+        location: faker.fake("{{address.city}}, {{address.countryCode}}"),
         profile: {
             bio: faker.fake("{{lorem.sentences}}")
         },
@@ -47,6 +49,7 @@ const users = [
                 name: "writer"
             }
         ],
+        location: faker.fake("{{address.city}}, {{address.countryCode}}"),
         profile: {
             bio: faker.fake("{{lorem.sentences}}")
         },

@@ -13,6 +13,7 @@ const users = [
                 name: "content seeker"
             }
         ],
+        location: faker.fake("{{address.city}}, {{address.countryCode}}"),
         profile: {
             bio: faker.fake("{{lorem.sentences}}"),
             business: faker.fake("{{lorem.sentences}}")
@@ -31,6 +32,7 @@ const users = [
                 name: "content seeker"
             }
         ],
+        location: faker.fake("{{address.city}}, {{address.countryCode}}"),
         profile: {
             bio: faker.fake("{{lorem.sentences}}"),
             business: faker.fake("{{lorem.sentences}}")
@@ -49,6 +51,7 @@ const users = [
                 name: "content seeker"
             }
         ],
+        location: faker.fake("{{address.city}}, {{address.countryCode}}"),
         profile: {
             bio: faker.fake("{{lorem.sentences}}"),
             business: faker.fake("{{lorem.sentences}}")
