@@ -7,20 +7,8 @@ import { connect } from "react-redux"
 // Actions
 import { signIn } from "../../store/actions/authActions"
 
-// Firebase Auth
-import { StyledFirebaseAuth } from "react-firebaseui"
-import firebase from "firebase/app"
-import "firebase/auth"
-
-// Firebase UI.
-const uiConfig = {
-    // Popup signin flow rather than redirect flow.
-    signInFlow: "redirect",
-    // Redirect to /dashboard after sign in is successful.
-    signInSuccessUrl: "/dashboard",
-    // We will display Google as the auth provider.
-    signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID]
-}
+// Components
+import FirebaseProviderSignIn from "../components/FirebaseProviderSignIn"
 
 class SignIn extends Component {
     state = {
@@ -105,10 +93,7 @@ class SignIn extends Component {
 
                     <p className="text-center">Or</p>
 
-                    <StyledFirebaseAuth
-                        uiConfig={uiConfig}
-                        firebaseAuth={firebase.auth()}
-                    />
+                    <FirebaseProviderSignIn />
                 </div>
             </div>
         )
