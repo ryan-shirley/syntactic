@@ -2,7 +2,6 @@
 import React from "react"
 
 // Components
-import Navbar from "./components/navbar/main/Navbar"
 import { Row, Col, Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
@@ -14,7 +13,6 @@ const NotFound404 = () => {
     return (
         <div className="d-flex">
             <div id="page-content-wrapper">
-                <Navbar />
                 <main className="container-fluid">
                     <Row className="justify-content-md-center mt-5 text-center">
                         <Col md={4}>
