@@ -31,7 +31,7 @@ class MainNavbar extends React.Component {
         let { isNavOpen } = this.state
         const { auth, user } = this.props
 
-        const links = !auth.uid ? (
+        const links = !auth.uid || !user.id ? (
             <>
                 <Button as={Link} variant="link" to="/login">
                     Sign In
@@ -64,7 +64,6 @@ class MainNavbar extends React.Component {
                         className="logo"
                     />
                 </Navbar.Brand>
-
                 <button
                     className={
                         "navbar-toggler hamburger hamburger--squeeze" +
@@ -94,6 +93,9 @@ class MainNavbar extends React.Component {
                         <Nav.Link as={NavLink} to="/tech">
                             Tech
                         </Nav.Link>
+                        {auth.uid && <Nav.Link as={NavLink} to="/dashboard">
+                            App
+                        </Nav.Link>}
                     </Nav>
                     <div className="button-group">{links}</div>
                 </Navbar.Collapse>
