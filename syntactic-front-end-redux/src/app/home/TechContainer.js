@@ -151,7 +151,7 @@ const TechContainer = () => {
 
                         <p className="copy">
                             Adobe XD was used heavily in the design process for
-                            craeting high fidelity mockups that would be later
+                            creating high fidelity mockups that would be later
                             used a reference for implemention. Along with this
                             the{" "}
                             <a
@@ -172,6 +172,7 @@ const TechContainer = () => {
                             >
                                 unsplash.com
                             </a>
+                            .
                         </p>
 
                         {designSlider}
@@ -184,10 +185,10 @@ const TechContainer = () => {
 
                         <h4 className="title">Fast and modern stack</h4>
                         <p className="copy">
-                            React at the core, helped by Redux for state
+                            React at the core, along with Redux for state
                             management. A customised version of bootstrap was
                             complied with the use of SASS to achieve the same
-                            style that was created in interface designs.
+                            style from the interface designs.
                         </p>
 
                         {frontEndSlider}
@@ -237,14 +238,14 @@ const TechContainer = () => {
 
                         <p className="copy">
                             The Google Natural Language API was used to handle
-                            the processing of the users content to generate
-                            information about the writers while also being able
+                            the processing of the users content, to generate
+                            information about the writers, while also being able
                             to match a project brief to a list of relevant
                             writers.
                         </p>
 
                         <p className="copy">
-                            Testing the logic in express was done using Jest.
+                            Testing the logic in Express was done using Jest.
                         </p>
 
                         {backEndSlider}
@@ -257,9 +258,9 @@ const TechContainer = () => {
 
                         <h4 className="title">Serving the world</h4>
                         <p className="copy">
-                            A Heroku pipline was used to automatically deploy
+                            A Heroku pipeline was used to automatically deploy
                             updates from GitHub. MongoDB is hosted on a MongoDB
-                            Atlas cluster on AWS in Ireland.
+                            Atlas cluster on AWS.
                         </p>
 
                         {deploymentSlider}
