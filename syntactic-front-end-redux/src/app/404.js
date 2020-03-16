@@ -4,6 +4,7 @@ import React from "react"
 // Components
 import { Row, Col, Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import Footer from "./components/Footer"
 
 // Fonts
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -13,8 +14,8 @@ const NotFound404 = () => {
     return (
         <div className="d-flex">
             <div id="page-content-wrapper">
-                <main className="container-fluid">
-                    <Row className="justify-content-md-center mt-5 text-center">
+                <main className="container-fluid mb-5">
+                    <Row className="justify-content-md-center my-5 text-center">
                         <Col md={4}>
                             <h1 className="mb-3">Oops! Why are you here?</h1>
                             <p>
@@ -38,6 +39,7 @@ const NotFound404 = () => {
                         </Col>
                     </Row>
                 </main>
+                <Footer />
             </div>
         </div>
     )
