@@ -6,7 +6,6 @@ import { Link } from "react-router-dom"
 // Links
 import WriterLinks from "./WriterLinks"
 import ContentSeekerLinks from "./ContentSeekerLinks"
-import GuestLinks from "./GuestLinks"
 
 const Sidebar = props => {
     const { user, isSidebarOpenMobile, toggleSidebar } = props
@@ -17,7 +16,7 @@ const Sidebar = props => {
 
         links = userRole === "writer" ? <WriterLinks toggleSidebar={toggleSidebar} /> : <ContentSeekerLinks toggleSidebar={toggleSidebar} />
     } else {
-        links = <GuestLinks toggleSidebar={toggleSidebar} />
+        links = null
     }
 
     return (
