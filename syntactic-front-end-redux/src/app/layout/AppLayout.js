@@ -70,7 +70,7 @@ const AppLayout = ({
                         </>
                     ) : (
                         <Row className="justify-content-md-center mt-5">
-                            <Col md={10} lg={8}>
+                            <Col md={10} lg={11}>
                                 {page}
                                 {rootChild}
                                 {childRoutes}
